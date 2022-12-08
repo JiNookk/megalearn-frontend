@@ -1,10 +1,11 @@
-// in this file you can append custom step methods to 'I' object
-
-module.exports = function() {
+module.exports = function () {
+  // eslint-disable-next-line no-undef
   return actor({
-
-    // Define custom steps here, use 'this' to access default methods of I.
-    // It is recommended to place a general 'login' function here.
-
+    login({ userName, password }) {
+      this.click('로그인');
+      this.fillField('아이디', userName);
+      this.fillField('비밀번호', password);
+      this.click('[type=submit]');
+    },
   });
-}
+};

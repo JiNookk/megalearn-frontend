@@ -1,6 +1,6 @@
 export default class Store {
   constructor() {
-    this.listener = new Set();
+    this.listeners = new Set();
   }
 
   subscribe(listener) {

@@ -1,23 +1,13 @@
+import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
+import LoginForm from './LoginForm';
+
 export default function LoginPage() {
+  const [, setAccessToken] = useLocalStorage('accessToken');
+
+  const navigate = useNavigate();
+
   return (
-    <form>
-      <div>
-        <label htmlFor="input-userName">아이디</label>
-        <input
-          id="input-userName"
-          type="text"
-        />
-      </div>
-      <div>
-        <label htmlFor="input-password">비밀번호</label>
-        <input
-          id="input-password"
-          type="password"
-        />
-      </div>
-      <button type="submit">
-        로그인
-      </button>
-    </form>
+    <LoginForm handleAccessToken={setAccessToken} navigate={navigate} />
   );
 }

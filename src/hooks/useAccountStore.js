@@ -1,7 +1,15 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { accountStore } from '../stores/AccountStore';
+import useForceUpdate from './useForceUpdate';
 
 export default function useAccountStore() {
-  const [, forceUpdate] = useState(0);
+  const forceUpdate = useForceUpdate();
 
-  return () => forceUpdate((value) => value + 1);
+  useEffect(() => {
+    accountStore.subscribe(forceUpdate);
+
+    return () => accountStore.unsubscribe(forceUpdate);
+  });
+
+  return accountStore;
 }

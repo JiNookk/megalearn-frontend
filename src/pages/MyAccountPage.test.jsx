@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from './App';
+import MyAccountPage from './MyAccountPage';
 
-test('App', () => {
+test('MyAccountPage', () => {
   render((
     <MemoryRouter>
-      <App />
+      <MyAccountPage />
     </MemoryRouter>
   ));
 
-  screen.getByText(/인프런에서/);
+  screen.getByText('내 학습');
 });

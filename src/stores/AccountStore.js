@@ -13,3 +13,5 @@ export default class AccountStore extends Store {
     return { accessToken: 'ACCESS.TOKEN' };
   }
 }
+
+export const accountStore = new AccountStore();
