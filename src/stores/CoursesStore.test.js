@@ -1,7 +1,5 @@
 import CoursesStore from './CoursesStore';
 
-const context = describe;
-
 describe('CoursesStore', () => {
   let coursesStore;
 

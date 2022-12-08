@@ -16,7 +16,7 @@ export default function Lecture() {
         type="text/html"
         width="720"
         height="405"
-        src={`https://www.youtube.com/embed/${lectureStore.lecture.videoPath}`}
+        src={`https://www.youtube.com/embed/${lectureStore.lecture.videoUrl}`}
         frameBorder="0"
         allowFullScreen
       />

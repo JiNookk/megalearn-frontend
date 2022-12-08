@@ -8,8 +8,8 @@ describe('LectureStore', () => {
   });
 
   describe('fetchLecture', () => {
-    it('requests lecture data', () => {
-      lectureStore.fetchLecture({ lectureId: 1 });
+    it('requests lecture data', async () => {
+      await lectureStore.fetchLecture({ courseId: 1, lectureId: 1 });
 
       const { lecture } = lectureStore;
 
