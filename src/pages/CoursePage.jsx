@@ -19,6 +19,6 @@ export default function CoursePage() {
   }, []);
 
   return (
-    <Course course={courseStore.course} handleNavigate={handleNavigate} />
+    <Course handleNavigate={handleNavigate} />
   );
 }

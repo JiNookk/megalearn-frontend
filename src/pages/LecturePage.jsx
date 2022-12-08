@@ -12,6 +12,6 @@ export default function LecturePage() {
   }, []);
 
   return (
-    <Lecture lecture={lectureStore.lecture} />
+    <Lecture />
   );
 }

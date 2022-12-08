@@ -1,18 +1,22 @@
-export default function Lecture({ lecture }) {
+import useLectureStore from '../hooks/useLectureStore';
+
+export default function Lecture() {
+  const lectureStore = useLectureStore();
+
   return (
     <div>
       <article>
         <p>
-          {lecture.title}
+          {lectureStore.lecture.title}
         </p>
       </article>
       <iframe
-        title={lecture.title}
+        title={lectureStore.lecture.title}
         id="ytplayer"
         type="text/html"
         width="720"
         height="405"
-        src={`https://www.youtube.com/embed/${lecture.videoPath}`}
+        src={`https://www.youtube.com/embed/${lectureStore.lecture.videoPath}`}
         frameBorder="0"
         allowFullScreen
       />

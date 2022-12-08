@@ -10,6 +10,6 @@ export default function MyCoursesPage() {
   }, []);
 
   return (
-    <MyCourses courses={coursesStore.myCourses} />
+    <MyCourses />
   );
 }

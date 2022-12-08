@@ -1,5 +1,9 @@
-export default function Course({ course, handleNavigate }) {
-  const { recentlySeenLectureId: lectureId } = course;
+import useCourseStore from '../hooks/useCourseStore';
+
+export default function Course({ handleNavigate }) {
+  const courseStore = useCourseStore();
+
+  const { recentlySeenLectureId: lectureId } = courseStore.course;
 
   const handleClick = () => {
     handleNavigate({ lectureId });
@@ -14,29 +18,29 @@ export default function Course({ course, handleNavigate }) {
         <p>
           분야:
           {' '}
-          {course.category}
+          {courseStore.course.category}
         </p>
-        <p>{course.title}</p>
+        <p>{courseStore.course.title}</p>
         <p>
           별점:
           {' '}
-          {course.stars}
+          {courseStore.course.stars}
         </p>
         <p>
           수강생:
           {' '}
-          {course.studentCount}
+          {courseStore.course.studentCount}
           명
         </p>
         <p>
           지식공유자:
           {' '}
-          {course.instructor}
+          {courseStore.course.instructor}
         </p>
         <p>
           해시태그:
           {' '}
-          {course.hashTags?.join(', ')}
+          {courseStore.course.hashTags?.join(', ')}
         </p>
       </article>
     </div>
