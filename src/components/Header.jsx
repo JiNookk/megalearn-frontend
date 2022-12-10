@@ -1,8 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 
 export default function Header() {
-  const [accessToken] = useLocalStorage('accessToken', '');
+  const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
+
+  const handleLogout = () => {
+    setAccessToken('');
+    navigate('/');
+  };
 
   return (
     <nav>
@@ -28,6 +34,9 @@ export default function Header() {
           <Link to="/">
             지식공유자
           </Link>
+          <button type="button" onClick={handleLogout}>
+            로그아웃
+          </button>
         </ul>
       ) : (
         <ul>

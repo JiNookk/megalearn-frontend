@@ -7,5 +7,36 @@ module.exports = function () {
       this.fillField('비밀번호', password);
       this.click('[type=submit]');
     },
+
+    postInquiry({ title, body, lectureTime }) {
+      this.click('글 작성하기');
+
+      this.fillField('제목', title);
+      this.fillField('해시태그', '테스트');
+
+      if (lectureTime) {
+        this.fillField('분', lectureTime.minutes);
+        this.fillField('초', lectureTime.seconds);
+      }
+
+      this.fillField('내용', body);
+      this.checkOption('익명');
+
+      this.click('올리기');
+    },
+
+    resetInquiryDB() {
+      this.amOnPage('http://localhost:8000/backdoor/reset-inquiries-db');
+    },
+
+    amOnLecturePage() {
+      this.amOnPage('/');
+      this.login({ userName: 'test123', password: 'Password123!' });
+
+      this.click('마이페이지');
+      this.click('내 학습');
+      this.click('강의 1');
+      this.click('이어 학습하기');
+    },
   });
 };

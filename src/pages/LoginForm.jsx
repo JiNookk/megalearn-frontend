@@ -1,5 +1,6 @@
 import useAccountStore from '../hooks/useAccountStore';
 import useLoginFormStore from '../hooks/useLoginFormStore';
+import { apiService } from '../services/ApiService';
 
 export default function LoginForm({ handleAccessToken, navigate }) {
   const accountStore = useAccountStore();
@@ -11,6 +12,8 @@ export default function LoginForm({ handleAccessToken, navigate }) {
     const { accessToken } = accountStore.login({ userName, password });
 
     handleAccessToken(accessToken);
+    apiService.setAccessToken(accessToken);
+
     navigate('/');
 
     event.preventDefault();

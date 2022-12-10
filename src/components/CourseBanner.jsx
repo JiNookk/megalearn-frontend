@@ -1,12 +1,12 @@
 import useCourseStore from '../hooks/useCourseStore';
 
-export default function Course({ handleNavigate }) {
+export default function CourseBanner({ onNavigate }) {
   const courseStore = useCourseStore();
 
-  const { recentlySeenLectureId: lectureId } = courseStore.course;
+  const { currentLectureId: lectureId } = courseStore.course;
 
   const handleClick = () => {
-    handleNavigate({ lectureId });
+    onNavigate({ lectureId });
   };
 
   return (
