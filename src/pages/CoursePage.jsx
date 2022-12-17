@@ -1,24 +1,34 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Course from '../components/Course';
+import CourseBanner from '../components/CourseBanner';
+import CurriCulum from '../components/CurriCulum';
 import useCourseStore from '../hooks/useCourseStore';
+import useLecturesStore from '../hooks/useLecturesStore';
 
 export default function CoursePage() {
   const navigate = useNavigate();
 
   const courseStore = useCourseStore();
+  const lecturesStore = useLecturesStore();
 
   const courseId = window.location.pathname.split('/')[2];
 
-  const handleNavigate = ({ lectureId }) => {
-    navigate(`/courses/${courseId}/unit/${lectureId}`);
+  const onNavigate = ({ lectureId }) => {
+    navigate(`/courses/${courseId}/unit/${lectureId}`, {
+      state: { courseId, lectureId },
+    });
   };
 
   useEffect(() => {
     courseStore.fetchCourse({ courseId });
+
+    lecturesStore.fetchLectures({ courseId });
   }, []);
 
   return (
-    <Course handleNavigate={handleNavigate} />
+    <div>
+      <CourseBanner onNavigate={onNavigate} />
+      <CurriCulum onNavigate={onNavigate} />
+    </div>
   );
 }

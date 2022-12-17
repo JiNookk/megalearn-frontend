@@ -1,4 +1,4 @@
-const { default: LectureStore } = require('./LectureStore');
+import LectureStore from './LectureStore';
 
 describe('LectureStore', () => {
   let lectureStore;

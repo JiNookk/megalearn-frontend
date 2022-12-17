@@ -13,7 +13,7 @@ export default function App() {
   const [, setAccessToken] = useLocalStorage('accessToken');
 
   useEffect(() => {
-    setAccessToken('');
+    // setAccessToken('');
   }, []);
 
   return (

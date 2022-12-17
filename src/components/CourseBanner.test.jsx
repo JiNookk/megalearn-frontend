@@ -3,15 +3,15 @@ import {
 } from '@testing-library/react';
 import { courseStore } from '../stores/CourseStore';
 
-import Course from './Course';
+import CourseBanner from './CourseBanner';
 
-const handleNavigate = jest.fn();
+const onNavigate = jest.fn();
 
-test('Course', async () => {
+test('CourseBanner', async () => {
   await courseStore.fetchCourse({ courseId: 1 });
 
   render((
-    <Course handleNavigate={handleNavigate} />
+    <CourseBanner onNavigate={onNavigate} />
   ));
 
   screen.getByText('분야: 개발,프로그래밍 > 백엔드');
@@ -23,7 +23,7 @@ test('Course', async () => {
 
   fireEvent.click(screen.getByText('이어 학습하기'));
 
-  const { recentlySeenLectureId: lectureId } = courseStore.course;
+  const { currentLectureId: lectureId } = courseStore.course;
 
-  expect(handleNavigate).toBeCalledWith({ lectureId });
+  expect(onNavigate).toBeCalledWith({ lectureId });
 });
