@@ -71,7 +71,7 @@ const server = setupServer(
       return res(ctx.json({
         id: 2,
         title: '테스트 2강',
-        videoUrl: '1klKQndsi',
+        videoUrl: 'eeiLCzJmKro',
         courseId: 1,
       }));
     }
@@ -196,6 +196,46 @@ const server = setupServer(
       lectureId,
       id: 1,
     }));
+  }),
+
+  rest.get(`${baseUrl}/lectures/:lectureId/notes`, (req, res, ctx) => {
+    const { lectureId } = req.params;
+
+    if (+lectureId === 1) {
+      return res(ctx.json({
+        notes: [{
+          content: 'content',
+          lectureTime: { minute: 1, second: 24 },
+          lectureId: 1,
+          id: 1,
+        }, {
+          content: 'content2',
+          lectureTime: { minute: 2, second: 24 },
+          lectureId: 1,
+          id: 2,
+        }],
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.patch(`${baseUrl}/notes/:noteId`, async (req, res, ctx) => {
+    const { noteId } = req.params;
+    const { content } = await req.json();
+
+    return res(ctx.json({
+      content,
+      lectureTime: { minute: 1, second: 24 },
+      lectureId: 1,
+      id: noteId,
+    }));
+  }),
+
+  rest.delete(`${baseUrl}/notes/:noteId`, async (req, res, ctx) => {
+    const { noteId } = req.params;
+
+    return res(ctx.json({ noteId: +noteId }));
   }),
 );
 

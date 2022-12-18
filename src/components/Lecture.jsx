@@ -1,26 +1,40 @@
+import ReactPlayer from 'react-player';
+import styled from 'styled-components';
 import useLectureStore from '../hooks/useLectureStore';
+import useVideoStore from '../hooks/useVideoStore';
+
+const Container = styled.div`
+  width: 100%;
+  margin-block: 2rem;
+`;
+
+const ButtonContainer = styled.article`
+  text-align: center;
+`;
 
 export default function Lecture() {
   const lectureStore = useLectureStore();
+  const videoStore = useVideoStore();
 
   return (
-    <div>
+    <Container>
       <article>
         <p>
           {lectureStore.lecture.title}
         </p>
       </article>
-      <iframe
-        title={lectureStore.lecture.title}
-        id="ytplayer"
-        type="text/html"
-        width="720"
-        height="405"
-        src={`https://www.youtube.com/embed/${lectureStore.lecture.videoUrl}`}
-        frameBorder="0"
-        allowFullScreen
+
+      <ReactPlayer
+        id="react-player"
+        url={`https://www.youtube.com/watch?v=${lectureStore.lecture.videoUrl}`}
+        ref={videoStore.ref}
+        playing={videoStore.isPlay}
+        controls={videoStore.control}
+        // loop={isLoop}
+        width={videoStore.width}
+        height={videoStore.height}
       />
-      <article>
+      <ButtonContainer>
         <button type="button">
           재생하기
         </button>
@@ -30,7 +44,7 @@ export default function Lecture() {
         <button type="button">
           다음 수업
         </button>
-      </article>
-    </div>
+      </ButtonContainer>
+    </Container>
   );
 }

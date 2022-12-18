@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { noteFormStore } from '../stores/NoteFormStore';
+import { noteFormStore } from '../stores/formstores/NoteFormStore';
 import useForceUpdate from './useForceUpdate';
 
 export default function useNoteFormStore() {

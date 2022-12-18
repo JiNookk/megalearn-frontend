@@ -17,7 +17,8 @@ Scenario('without writing any notes', ({ I }) => {
   I.click('노트');
 
   // THEN
-  I.see('작성한 노트는 본인에게만 보입니다 :) - 수업 내용을 간단히 메모해보세요!');
+  I.see(/작성한 노트는 본인에게만 보입니다/);
+  I.see(/수업 내용을 간단히 메모해보세요!/);
 });
 
 Scenario('with a note', ({ I }) => {
@@ -26,12 +27,13 @@ Scenario('with a note', ({ I }) => {
 
   // WHEN
   I.click('노트');
-  I.fillField('노트 내용', 'test');
+  I.fillField('노트', 'test');
   I.click('노트 입력');
 
   // THEN
   I.see('test');
-  I.see('~분 ~초');
+  I.see(/분/);
+  I.see(/초/);
   I.see('수정');
   I.see('삭제');
 });

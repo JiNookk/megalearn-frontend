@@ -26,10 +26,14 @@ test('LectureTab', async () => {
     </MemoryRouter>
   ));
 
+  fireEvent.click(screen.getByText('목차'));
   fireEvent.click(screen.getByText('질문하기'));
   fireEvent.click(screen.getByText('노트'));
 
   await waitFor(() => {
+    expect(mockNavigate).toBeCalledWith('/courses/1/unit/1?tab=curriculum', {
+      state: { courseId: 1, lectureId: 1 },
+    });
     expect(mockNavigate).toBeCalledWith('/courses/1/unit/1?tab=inquiryBoard', {
       state: { courseId: 1, lectureId: 1 },
     });

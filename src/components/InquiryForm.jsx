@@ -4,11 +4,13 @@ import getQueryParam from '../utils/getQueryParam';
 import useInquiryPostFormStore from '../hooks/useInquiryPostFormStore';
 import useInquiryStore from '../hooks/useInquiryStore';
 import ErrorModal from './ErrorModal';
+import useVideoStore from '../hooks/useVideoStore';
 
 export default function InquiryForm({ onNavigate }) {
   const [isModal, setIsModal] = useState(false);
   const { state } = useLocation();
   const { courseId, lectureId } = state;
+  const videoStore = useVideoStore();
 
   const type = getQueryParam({ category: 'tab' });
   const inquiryId = getQueryParam({ category: 'inquiryId' });
@@ -84,16 +86,19 @@ export default function InquiryForm({ onNavigate }) {
           id="input-minute"
           type="number"
           placeholder="분"
-          value={inquiryPostFormStore.minute}
+          value={inquiryPostFormStore.minute === ''
+            ? videoStore.currentTime().minute
+            : inquiryPostFormStore.minute}
           onChange={(e) => inquiryPostFormStore.changeMinute(e.target.value)}
         />
-
         <label htmlFor="input-second">초</label>
         <input
           id="input-second"
           type="number"
           placeholder="초"
-          value={inquiryPostFormStore.second}
+          value={inquiryPostFormStore.second === ''
+            ? videoStore.currentTime().second
+            : inquiryPostFormStore.second}
           onChange={(e) => inquiryPostFormStore.changeSecond(e.target.value)}
         />
       </div>

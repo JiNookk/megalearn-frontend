@@ -14,7 +14,7 @@ Before(({ I }) => {
 Scenario('when update note', ({ I }) => {
   // GIVEN
   I.click('노트');
-  I.fillField('노트 내용', 'test');
+  I.fillField('노트', 'test');
   I.click('노트 입력');
 
   // WHEN
@@ -29,7 +29,7 @@ Scenario('when update note', ({ I }) => {
 Scenario('when updating note is canceled', ({ I }) => {
   // GIVEN
   I.click('노트');
-  I.fillField('노트 내용', 'test');
+  I.fillField('노트', 'test');
   I.click('노트 입력');
 
   // WHEN

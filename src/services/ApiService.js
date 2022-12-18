@@ -141,6 +141,30 @@ export default class ApiService {
 
     return data;
   }
+
+  async fetchNotes({ lectureId }) {
+    const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/notes`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.notes;
+  }
+
+  async updateNote({ noteId, content }) {
+    const { data } = await axios.patch(`${baseUrl}/notes/${noteId}`, {
+      content,
+    });
+
+    return data;
+  }
+
+  async deleteNote({ noteId }) {
+    const { data } = await axios.delete(`${baseUrl}/notes/${noteId}`);
+
+    return data;
+  }
 }
 
 export const apiService = new ApiService();

@@ -14,6 +14,10 @@ jest.mock('../hooks/useInquiryStore', () => () => ({
   post: mockPost,
 }));
 
+jest.mock('../hooks/useVideoStore', () => () => ({
+  currentTime: () => ({ minute: 1, second: 2 }),
+}));
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
