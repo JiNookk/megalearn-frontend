@@ -1,4 +1,4 @@
-import Store from './Store';
+import Store from '../Store';
 
 export default class NoteFormStore extends Store {
   constructor() {
@@ -9,6 +9,12 @@ export default class NoteFormStore extends Store {
 
   changeContent(content) {
     this.content = content;
+
+    this.publish();
+  }
+
+  reset() {
+    this.content = '';
 
     this.publish();
   }

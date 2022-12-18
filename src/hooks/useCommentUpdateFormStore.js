@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { commentUpdateFormStore } from '../stores/CommentUpdateFormStore';
+import { commentUpdateFormStore } from '../stores/formstores/CommentUpdateFormStore';
 import useForceUpdate from './useForceUpdate';
 
 export default function useCommentUpdateFormStore() {

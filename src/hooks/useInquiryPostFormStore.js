@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { inquiryPostFormStore } from '../stores/InquiryPostFormStore';
+import { inquiryPostFormStore } from '../stores/formstores/InquiryPostFormStore';
 import useForceUpdate from './useForceUpdate';
 
 export default function useInquiryPostFormStore() {

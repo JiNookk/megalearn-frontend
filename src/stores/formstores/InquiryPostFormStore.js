@@ -1,4 +1,4 @@
-import Store from './Store';
+import Store from '../Store';
 
 export default class InquiryPostFormStore extends Store {
   constructor() {
@@ -76,6 +76,8 @@ export default class InquiryPostFormStore extends Store {
     this.hashTags = [];
     this.content = '';
     this.anonymous = false;
+    this.minute = '';
+    this.second = '';
 
     this.publish();
   }

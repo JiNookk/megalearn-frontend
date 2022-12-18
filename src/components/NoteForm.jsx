@@ -1,11 +1,13 @@
 import { useLocation } from 'react-router-dom';
 import useNoteFormStore from '../hooks/useNoteFormStore';
 import useNoteStore from '../hooks/useNoteStore';
+import useVideoStore from '../hooks/useVideoStore';
 
-export default function NoteForm({ onNavigate }) {
+export default function NoteForm() {
   const { state } = useLocation();
   const { lectureId } = state;
 
+  const videoStore = useVideoStore();
   const noteFormStore = useNoteFormStore();
   const noteStore = useNoteStore();
 
@@ -14,7 +16,9 @@ export default function NoteForm({ onNavigate }) {
 
     const { content } = noteFormStore;
 
-    noteStore.save({ lectureId, content, lectureTime: 1 });
+    noteStore.save({ lectureId, content, lectureTime: videoStore.currentTime() });
+
+    noteFormStore.reset();
   };
 
   return (

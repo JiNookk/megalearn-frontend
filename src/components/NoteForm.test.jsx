@@ -12,6 +12,13 @@ jest.mock('../hooks/useNoteStore', () => () => ({
   save: mockSave,
 }));
 
+jest.mock('../hooks/useVideoStore', () => () => ({
+  currentTime: () => ({
+    minute: 1,
+    second: 24,
+  }),
+}));
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({

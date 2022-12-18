@@ -1,6 +1,6 @@
-import Store from './Store';
+import Store from '../Store';
 
-export default class CommentFormStore extends Store {
+export default class NoteUpdateFormStore extends Store {
   constructor() {
     super();
 
@@ -20,4 +20,4 @@ export default class CommentFormStore extends Store {
   }
 }
 
-export const commentFormStore = new CommentFormStore();
+export const noteUpdateFormStore = new NoteUpdateFormStore();
