@@ -5,7 +5,7 @@ import LecturePage from './LecturePage';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
-    state: { courseId: 1 },
+    state: { courseId: 1, lectureId: 1 },
   }),
 }));
 
@@ -27,8 +27,8 @@ test('LecturePage', async () => {
     </MemoryRouter>
   ));
 
-  screen.getByText('이전 수업');
-  screen.getByText('다음 수업');
+  screen.getByText('< 이전 수업');
+  screen.getByText('다음 수업 >');
   screen.getByText('질문하기');
 
   await waitFor(() => {

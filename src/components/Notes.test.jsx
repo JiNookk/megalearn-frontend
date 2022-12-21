@@ -2,6 +2,8 @@ import {
   render, screen, waitFor,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 
 import Notes from './Notes';
 
@@ -18,14 +20,16 @@ describe('Notes', () => {
   beforeEach(() => {
     render((
       <MemoryRouter>
-        <Notes onNavigate={onNavigate} />
+        <ThemeProvider theme={defaultTheme}>
+          <Notes onNavigate={onNavigate} />
+        </ThemeProvider>
       </MemoryRouter>
     ));
   });
 
   it('renders screen', async () => {
     screen.getByRole('heading', { name: '노트' });
-    screen.getByText('내 노트 모두보기');
+    screen.getByText('| 내 노트 모두보기');
     screen.getByText(/작성된 노트는 본인에게만 보입니다/);
     screen.getByText(/수업 내용을 간단히 메모해보세요!/);
 

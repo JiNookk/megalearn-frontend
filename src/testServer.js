@@ -237,6 +237,88 @@ const server = setupServer(
 
     return res(ctx.json({ noteId: +noteId }));
   }),
+
+  rest.get(`${baseUrl}/courses/:courseId/sections`, (req, res, ctx) => {
+    const { courseId } = req.params;
+
+    if (+courseId === 1) {
+      return res(ctx.json({
+        sections: [{
+          id: 1,
+          title: '섹션 1',
+          progresses: [{
+            id: 1,
+            title: '테스트 1강',
+          }, {
+            id: 2,
+            title: '테스트 2강',
+          }],
+        }, {
+          id: 2,
+          title: '섹션 2',
+          progresses: [{
+            id: 3,
+            title: '테스트 3강',
+          }],
+        }],
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.get(`${baseUrl}/courses/:courseId/progresses`, (req, res, ctx) => {
+    const { courseId } = req.params;
+
+    if (+courseId === 1) {
+      return res(ctx.json({
+        progresses: [{
+          id: 1,
+          title: '테스트 1강',
+          status: 'unwatched',
+        }, {
+          id: 2,
+          title: '테스트 2강',
+          status: 'completed',
+        }, {
+          id: 3,
+          title: '테스트 3강',
+          status: 'unwatched',
+        }],
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.get(`${baseUrl}/lectures/:lectureId/progress`, (req, res, ctx) => {
+    const { lectureId } = req.params;
+
+    if (+lectureId === 1) {
+      return res(ctx.json({
+        id: 1,
+        title: '테스트 1강',
+        status: 'unwatched',
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.patch(`${baseUrl}/progresses/:progressId`, (req, res, ctx) => {
+    const { progressId } = req.params;
+
+    if (+progressId === 1) {
+      return res(ctx.json({
+        id: 1,
+        title: '테스트 1강',
+        status: 'completed',
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
 );
 
 export default server;

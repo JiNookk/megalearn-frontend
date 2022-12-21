@@ -47,6 +47,7 @@ export default function Inquiry({ onNavigate }) {
 
   return (
     <div>
+
       <article>
         <p>#질문</p>
         <h2>{inquiryStore.inquiry.title}</h2>

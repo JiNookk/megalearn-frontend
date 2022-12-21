@@ -13,6 +13,8 @@ export default function CoursePage() {
 
   const courseId = window.location.pathname.split('/')[2];
 
+  // 내가 원하는것 `/courses/${courseId}/unit/${lectureId}/productId={lectureProduct}
+  // 근데 왜 lectureProductId를 가져오지 못할까? => 애초에 account가 여기에 없기 때문에 프론트에서 처리해줄 숭 ㅓㅂㅅ다.
   const onNavigate = ({ lectureId }) => {
     navigate(`/courses/${courseId}/unit/${lectureId}`, {
       state: { courseId, lectureId },

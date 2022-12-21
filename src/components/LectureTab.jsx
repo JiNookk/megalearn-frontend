@@ -6,18 +6,11 @@ import InquiryBoard from './InquiryBoard';
 import Inquiry from './Inquiry';
 import InquiryForm from './InquiryForm';
 import Notes from './Notes';
-import CurriCulum from './CurriCulum';
 import CurriCulumTab from './CurriCulumTab';
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* width: 100%; */
-`;
+import { TabContainer } from './ui/Tab';
 
 const Article = styled.article`
+  height: 100%;
   width: 30vw;
   padding: 0 3rem;
 `;
@@ -25,6 +18,8 @@ const Article = styled.article`
 const TabButtons = styled.article`
   display: flex;
   flex-direction: column;
+
+  background-color: rgb(248,249,250);
 `;
 
 const ExitButton = styled.button`
@@ -34,7 +29,7 @@ const ExitButton = styled.button`
   z-index: 999;
   
   position: absolute;
-  top: 25%;
+  top: 8%;
   right: 8%;
   transform: translate(-50%, -50%);
     
@@ -84,10 +79,10 @@ export default function LectureTab() {
   };
 
   return (
-    <Container>
+    <TabContainer>
       {isTabOn && (
         <Article>
-          {category === 'curriculum' ? (<CurriCulumTab onNavigate={onNavigate} />) : null}
+          {category === 'curriculum' ? (<CurriCulumTab onTabOff={setIsTabOn} />) : null}
           {category === 'inquiryBoard' ? (<InquiryBoard onNavigate={onNavigate} />) : null}
           {category === 'post' ? (<InquiryForm onNavigate={onNavigate} />) : null}
           {category === 'update' ? (<InquiryForm onNavigate={onNavigate} />) : null}
@@ -108,6 +103,6 @@ export default function LectureTab() {
           노트
         </button>
       </TabButtons>
-    </Container>
+    </TabContainer>
   );
 }
