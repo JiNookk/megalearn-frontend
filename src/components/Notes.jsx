@@ -5,9 +5,34 @@ import useNoteStore from '../hooks/useNoteStore';
 import NoteUpdateForm from './NoteUpdateForm';
 import NoteForm from './NoteForm';
 import useVideoStore from '../hooks/useVideoStore';
+import { TabHeading } from './ui/Tab';
+import PrimaryButton from './ui/PrimaryButton';
 
-const List = styled.li`
-  list-style: none;
+const Container = styled.article`
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #ccc;
+  }
+`;
+
+const List = styled.ul`
+  li{
+    list-style: none;
+    border-top: 1px solid black;
+  
+    padding:1rem;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 2rem;
 `;
 
 export default function Notes() {
@@ -33,19 +58,20 @@ export default function Notes() {
   }, []);
 
   return (
-    <article>
-      <div>
+    <Container>
+      <TabHeading>
         <h2>
           노트
         </h2>
+        {' '}
         <span>
-          내 노트 모두보기
+          | 내 노트 모두보기
         </span>
-      </div>
+      </TabHeading>
       {noteStore.notes.length ? (
-        <ul>
+        <List>
           {noteStore.notes.map((note) => (
-            <List key={note.id}>
+            <li key={note.id}>
               {note.status === 'update' ? (
                 <NoteUpdateForm note={note} />
               ) : (
@@ -53,26 +79,26 @@ export default function Notes() {
                   <p>
                     {note.content}
                   </p>
-                  <div>
-                    <button type="button" onClick={() => handleLectureTime(note.lectureTime)}>
+                  <ButtonContainer>
+                    <PrimaryButton type="button" onClick={() => handleLectureTime(note.lectureTime)}>
                       {note.lectureTime.minute}
                       :
                       {note.lectureTime.second}
-                    </button>
+                    </PrimaryButton>
                     <div>
-                      <button type="button" onClick={() => handleUpdateNote(note.id)}>
+                      <PrimaryButton type="button" onClick={() => handleUpdateNote(note.id)}>
                         수정
-                      </button>
-                      <button type="button" onClick={() => handleDeleteNote(note.id)}>
+                      </PrimaryButton>
+                      <PrimaryButton type="button" onClick={() => handleDeleteNote(note.id)}>
                         삭제
-                      </button>
+                      </PrimaryButton>
                     </div>
-                  </div>
+                  </ButtonContainer>
                 </div>
               )}
-            </List>
+            </li>
           ))}
-        </ul>
+        </List>
       ) : (
         <p>
           작성된 노트는 본인에게만 보입니다 :)
@@ -82,6 +108,6 @@ export default function Notes() {
         </p>
       )}
       <NoteForm />
-    </article>
+    </Container>
   );
 }

@@ -8,7 +8,7 @@ export default class VideoStore extends Store {
     this.ref = React.createRef();
     this.isPlay = false;
     this.control = true;
-    this.width = '100%';
+    this.width = '90%';
     this.height = '90vh';
   }
 

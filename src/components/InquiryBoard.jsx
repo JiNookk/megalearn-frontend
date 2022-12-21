@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import dateFormat from '../utils/dateFormat';
 import useInquiryStore from '../hooks/useInquiryStore';
 import SearchForm from './SearchForm';
+import { TabHeading } from './ui/Tab';
 
 const List = styled.li`
   list-style: none;
@@ -34,8 +35,10 @@ export default function InquiryBoard({ onNavigate }) {
   }, []);
 
   return (
-    <div>
-      <h1>질문 게시판</h1>
+    <article>
+      <TabHeading>
+        <h2>질문 게시판</h2>
+      </TabHeading>
       <SearchForm />
       <ul>
         {inquiryStore.inquiryPosts.length ? (
@@ -68,6 +71,6 @@ export default function InquiryBoard({ onNavigate }) {
       <button type="button" onClick={handleClickPostInquiry}>
         글 작성하기
       </button>
-    </div>
+    </article>
   );
 }

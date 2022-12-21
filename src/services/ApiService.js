@@ -165,6 +165,46 @@ export default class ApiService {
 
     return data;
   }
+
+  async fetchSections({ courseId }) {
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/sections`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.sections;
+  }
+
+  async fetchProgress({ lectureId }) {
+    const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/progress`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data;
+  }
+
+  async fetchProgresses({ courseId }) {
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/progresses`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.progresses;
+  }
+
+  async completeLecture({ progressId }) {
+    const { data } = await axios.patch(`${baseUrl}/progresses/${progressId}`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data;
+  }
 }
 
 export const apiService = new ApiService();
