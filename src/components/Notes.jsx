@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import useNoteStore from '../hooks/useNoteStore';
-import NoteUpdateForm from './NoteUpdateForm';
-import NoteForm from './NoteForm';
 import useVideoStore from '../hooks/useVideoStore';
 import { TabHeading } from './ui/Tab';
 import PrimaryButton from './ui/PrimaryButton';
+import NoteUpdateForm from './forms/NoteUpdateForm';
+import NoteForm from './forms/NoteForm';
 
 const Container = styled.article`
   overflow-y: auto;

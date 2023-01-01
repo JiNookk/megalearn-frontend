@@ -25,8 +25,24 @@ module.exports = function () {
       this.click('올리기');
     },
 
-    resetInquiryDB() {
-      this.amOnPage('http://localhost:8000/backdoor/reset-inquiries-db');
+    setupInquiryDB() {
+      this.amOnPage('http://localhost:8000/backdoor/setup-inquiry-db');
+    },
+
+    setupCourseDB() {
+      this.amOnPage('http://localhost:8000/backdoor/setup-course-db');
+    },
+
+    setupLectureDB() {
+      this.amOnPage('http://localhost:8000/backdoor/setup-lecture-db');
+    },
+
+    setupPaymentDB() {
+      this.amOnPage('http://localhost:8000/backdoor/setup-payment-db');
+    },
+
+    setupRatingDB() {
+      this.amOnPage('http://localhost:8000/backdoor/setup-rating-db');
     },
 
     amOnLecturePage() {

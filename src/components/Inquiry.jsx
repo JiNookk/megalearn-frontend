@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import dateFormat from '../utils/dateFormat';
+
 import useCommentStore from '../hooks/useCommentStore';
 import useInquiryStore from '../hooks/useInquiryStore';
-import CommentForm from './CommentForm';
-import CommentUpdateForm from './CommentUpdateForm';
+import { dateFormat } from '../utils/dateFormat';
+import CommentForm from './forms/CommentForm';
+import CommentUpdateForm from './forms/CommentUpdateForm';
 
 const List = styled.li`
   list-style: none;
@@ -57,7 +58,7 @@ export default function Inquiry({ onNavigate }) {
             {' '}
             |
             {' '}
-            {dateFormat(inquiryStore.inquiry.publishTime)}
+            {dateFormat.fromNow(inquiryStore.inquiry.publishTime)}
           </span>
           <span>
             <button

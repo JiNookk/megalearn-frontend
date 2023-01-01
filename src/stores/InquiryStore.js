@@ -27,6 +27,18 @@ export default class InquiryStore extends Store {
     this.publish();
   }
 
+  async fetchInquiriesByInstructorId() {
+    this.inquiryPosts = await apiService.fetchInquiriesByInstructorId();
+
+    this.publish();
+  }
+
+  async fetchFilteredInquiries({ filter }) {
+    this.inquiryPosts = await apiService.fetchInquiriesByInstructorId({ filter });
+
+    this.publish();
+  }
+
   async searchInquiries({ lectureId, lectureTime, content }) {
     this.inquiryPosts = await apiService.searchInquiries({ lectureId, lectureTime, content });
 

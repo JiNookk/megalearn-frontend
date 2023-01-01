@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import MyCourses from '../components/MyCourses';
-import useCoursesStore from '../hooks/useCoursesStore';
+import useCourseStore from '../hooks/useCourseStore';
 
 export default function MyCoursesPage() {
-  const coursesStore = useCoursesStore();
+  const courseStore = useCourseStore();
 
   useEffect(() => {
-    coursesStore.fetchMyCourses();
+    courseStore.fetchMyCourses();
   }, []);
 
   return (

@@ -4,8 +4,10 @@ import { ThemeProvider } from 'styled-components';
 import { Reset } from 'styled-reset';
 import { useLocalStorage } from 'usehooks-ts';
 import Header from './components/Header';
+import CreateCoursePage from './pages/CreateCoursePage';
 import CoursePage from './pages/CoursePage';
 import HomePage from './pages/HomePage';
+import InstructorPage from './pages/InstructorPage';
 import LecturePage from './pages/LecturePage';
 import LoginPage from './pages/LoginPage';
 import MyAccountPage from './pages/MyAccountPage';
@@ -13,6 +15,17 @@ import MyCoursesPage from './pages/MyCoursesPage';
 import darkTheme from './styles/darkTheme';
 import defaultTheme from './styles/defaultTheme';
 import GlobalStyle from './styles/GlobalStyle';
+import UploadCourseInfo from './components/UploadCourseInfo';
+import UploadDescription from './components/UploadDescription';
+import UploadCurriCulum from './components/UploadCurriCulum';
+import UploadCoverImage from './components/UploadCoverImage';
+import CourseSetting from './components/CourseSetting';
+import CourseTitlePage from './pages/CourseTitlePage';
+import InstructorDashBoard from './components/InstructorDashBoard';
+import Questions from './components/Questions';
+import UploadedCourses from './components/UploadedCourses';
+import RatingList from './components/RatingList';
+import Profits from './components/Profits';
 
 export default function App() {
   const [themeName] = useLocalStorage('theme', 'default');
@@ -33,9 +46,20 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/courses/:courseId" element={<CoursePage />} />
-        <Route path="/courses/:courseId/unit/:lectureId" element={<LecturePage />} />
+        <Route path="/courses/:courseId/lectures/:lectureId" element={<LecturePage />} />
         <Route path="/account/dashboard" element={<MyAccountPage />} />
         <Route path="/account/my-courses" element={<MyCoursesPage />} />
+        <Route path="/instructor" element={<InstructorPage Component={InstructorDashBoard} />} />
+        <Route path="/instructor/questions" element={<InstructorPage Component={Questions} />} />
+        <Route path="/instructor/courses" element={<InstructorPage Component={UploadedCourses} />} />
+        <Route path="/instructor/ratings" element={<InstructorPage Component={RatingList} />} />
+        <Route path="/instructor/profits" element={<InstructorPage Component={Profits} />} />
+        <Route path="/create_course" element={<CourseTitlePage />} />
+        <Route path="/courses/:courseId/edit/course_info" element={<CreateCoursePage Component={UploadCourseInfo} />} />
+        <Route path="/courses/:courseId/edit/description" element={<CreateCoursePage Component={UploadDescription} />} />
+        <Route path="/courses/:courseId/edit/curriculum" element={<CreateCoursePage Component={UploadCurriCulum} />} />
+        <Route path="/courses/:courseId/edit/cover_image" element={<CreateCoursePage Component={UploadCoverImage} />} />
+        <Route path="/courses/:courseId/edit/course_setting" element={<CreateCoursePage Component={CourseSetting} />} />
       </Routes>
     </ThemeProvider>
   );

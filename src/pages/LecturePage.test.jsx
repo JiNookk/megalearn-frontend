@@ -10,7 +10,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 beforeEach(() => {
-  const pathname = '/courses/1/unit/1';
+  const pathname = '/courses/1/lectures/1';
 
   global.window = Object.create(window);
   Object.defineProperty(window, 'location', {
@@ -27,11 +27,10 @@ test('LecturePage', async () => {
     </MemoryRouter>
   ));
 
-  screen.getByText('< 이전 수업');
-  screen.getByText('다음 수업 >');
   screen.getByText('질문하기');
 
   await waitFor(() => {
+    screen.getByText('다음 수업 >');
     screen.getByText('테스트 1강');
   });
 });

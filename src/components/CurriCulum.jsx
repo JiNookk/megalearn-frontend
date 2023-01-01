@@ -1,7 +1,7 @@
-import useLecturesStore from '../hooks/useLecturesStore';
+import useLectureStore from '../hooks/useLectureStore';
 
 export default function CurriCulum({ onNavigate }) {
-  const lecturesStore = useLecturesStore();
+  const lectureStore = useLectureStore();
 
   const handleClickLecture = (lectureId) => {
     onNavigate({ lectureId });
@@ -17,7 +17,7 @@ export default function CurriCulum({ onNavigate }) {
               섹션 0. 테스트
             </th>
           </tr>
-          {lecturesStore.lectures.map((lecture) => (
+          {lectureStore.lectures.map((lecture) => (
             <tr key={lecture.id} onClick={() => handleClickLecture(lecture.id)}>
               <th>
                 {lecture.title}

@@ -1,22 +1,20 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CourseBanner from '../components/CourseBanner';
+import CourseBanner from '../components/banners/CourseBanner';
 import CurriCulum from '../components/CurriCulum';
 import useCourseStore from '../hooks/useCourseStore';
-import useLecturesStore from '../hooks/useLecturesStore';
+import useLectureStore from '../hooks/useLectureStore';
 
 export default function CoursePage() {
   const navigate = useNavigate();
 
   const courseStore = useCourseStore();
-  const lecturesStore = useLecturesStore();
+  const lectureStore = useLectureStore();
 
   const courseId = window.location.pathname.split('/')[2];
 
-  // 내가 원하는것 `/courses/${courseId}/unit/${lectureId}/productId={lectureProduct}
-  // 근데 왜 lectureProductId를 가져오지 못할까? => 애초에 account가 여기에 없기 때문에 프론트에서 처리해줄 숭 ㅓㅂㅅ다.
   const onNavigate = ({ lectureId }) => {
-    navigate(`/courses/${courseId}/unit/${lectureId}`, {
+    navigate(`/courses/${courseId}/lectures/${lectureId}`, {
       state: { courseId, lectureId },
     });
   };
@@ -24,7 +22,7 @@ export default function CoursePage() {
   useEffect(() => {
     courseStore.fetchCourse({ courseId });
 
-    lecturesStore.fetchLectures({ courseId });
+    lectureStore.fetchLectures({ courseId });
   }, []);
 
   return (

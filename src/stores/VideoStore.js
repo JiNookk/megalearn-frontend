@@ -23,18 +23,6 @@ export default class VideoStore extends Store {
 
     return { minute: Math.floor(currentTime / 60), second: currentTime % 60 };
   }
-
-  // changeVideoSize({ isTabOn }) {
-  // //   if (isTabOn) {
-  // //     this.width = '60vw';
-
-  //   //     this.publish();
-  //   //     return;
-  //   //   }
-
-  // //   this.width = '90vw';
-  // //   this.publish();
-  // }
 }
 
 export const videoStore = new VideoStore();
