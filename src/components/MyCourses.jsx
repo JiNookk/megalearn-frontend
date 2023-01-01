@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import useCoursesStore from '../hooks/useCoursesStore';
+import useCourseStore from '../hooks/useCourseStore';
 
 export default function MyCourses() {
-  const coursesStore = useCoursesStore();
+  const courseStore = useCourseStore();
 
   return (
     <ul>
-      {coursesStore.myCourses.map((course) => (
+      {courseStore.myCourses.map((course) => (
         <Link to={`/courses/${course.id}`} key={course.id}>
           <img src={course.imagePath} alt="course-thumbnail" />
           <p>{course.title}</p>

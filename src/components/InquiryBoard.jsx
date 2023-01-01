@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import dateFormat from '../utils/dateFormat';
+
 import useInquiryStore from '../hooks/useInquiryStore';
-import SearchForm from './SearchForm';
+
 import { TabHeading } from './ui/Tab';
+import SearchForm from './forms/SearchForm';
+import { dateFormat } from '../utils/dateFormat';
 
 const List = styled.li`
   list-style: none;
@@ -62,7 +64,7 @@ export default function InquiryBoard({ onNavigate }) {
                 -
                 {' '}
                 <span>
-                  {dateFormat(inquiryPost.publishTime)}
+                  {dateFormat.fromNow(inquiryPost.publishTime)}
                 </span>
               </p>
             </List>

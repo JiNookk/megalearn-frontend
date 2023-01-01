@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { coursesStore } from '../stores/CoursesStore';
+import { courseStore } from '../stores/CourseStore';
 import MyCourses from './MyCourses';
 
 test('MyCourses', async () => {
-  await coursesStore.fetchMyCourses();
+  await courseStore.fetchMyCourses();
 
   render((
     <MemoryRouter>

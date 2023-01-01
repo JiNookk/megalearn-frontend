@@ -46,6 +46,16 @@ describe('InquiryStore', () => {
     });
   });
 
+  describe('fetchInquiriesByInstructorId', () => {
+    it('loads inquiries Information', async () => {
+      await inquiryStore.fetchInquiriesByInstructorId();
+
+      const { inquiryPosts } = inquiryStore;
+
+      expect(inquiryPosts.length).toBeTruthy();
+    });
+  });
+
   describe('searchInquiries', () => {
     it('loads inquiries Information with filtering', async () => {
       await inquiryStore.searchInquiries({

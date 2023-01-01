@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Lecture from '../components/Lecture';
-import LectureTab from '../components/LectureTab';
+import LectureTab from '../components/tabs/LectureTab';
 import useLectureStore from '../hooks/useLectureStore';
 import useProgressStore from '../hooks/useProgressStore';
 
@@ -24,6 +24,8 @@ export default function LecturePage() {
     progressStore.fetchProgresses({ courseId });
 
     lectureStore.fetchLecture({ courseId, lectureId });
+
+    lectureStore.fetchLectures({ courseId });
   }, [lectureId]);
 
   return (

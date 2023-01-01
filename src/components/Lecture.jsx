@@ -1,5 +1,5 @@
 import ReactPlayer from 'react-player';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import useProgressStore from '../hooks/useProgressStore';
@@ -15,12 +15,23 @@ const Container = styled.div`
 `;
 
 const Heading = styled.div`
-  padding-left: 5rem;
+  padding-left: 1rem;
   font-size: 1.5rem;
 
   height: 4rem;
   line-height: 4rem;
   background-color: rgb(33,37,41);
+
+  h2{
+    display: inline-block;
+
+    margin-left: 2rem;
+  }
+
+  a{
+    font-size: 1rem;
+    color: white
+  }
 `;
 
 const Media = styled.div`
@@ -48,6 +59,8 @@ const ButtonContainer = styled.article`
 `;
 
 export default function Lecture() {
+  const navigate = useNavigate();
+
   const { state } = useLocation();
   const { lectureId, courseId } = state;
 
@@ -65,11 +78,19 @@ export default function Lecture() {
   };
 
   const handlePreviousLecture = () => {
+    const previousLecture = lectureStore.previousLecture({ lectureId });
 
+    navigate(`/courses/${courseId}/lectures/${previousLecture.id}`, {
+      state: { courseId, lectureId: previousLecture.id },
+    });
   };
 
   const handleNextLecture = () => {
+    const nextLecture = lectureStore.nextLecture({ lectureId });
 
+    navigate(`/courses/${courseId}/lectures/${nextLecture.id}`, {
+      state: { courseId, lectureId: nextLecture.id },
+    });
   };
 
   useEffect(() => {
@@ -79,11 +100,13 @@ export default function Lecture() {
   return (
     <Container>
       <Heading>
+        <Link to={`/courses/${courseId}`}>
+          {'강의 대시보드  '}
+        </Link>
         <h2>
           {lectureStore.lecture.title}
         </h2>
       </Heading>
-
       <Media>
         <ReactPlayer
           id="react-player"
@@ -96,14 +119,17 @@ export default function Lecture() {
           onEnded={handleLectureComplete}
         />
       </Media>
-
       <ButtonContainer>
-        <button type="button" onClick={handlePreviousLecture}>
-          {'< 이전 수업'}
-        </button>
-        <button type="button" onClick={handleNextLecture}>
-          {'다음 수업 >'}
-        </button>
+        {lectureStore.previousLecture({ lectureId }).id && (
+          <button type="button" onClick={handlePreviousLecture}>
+            {'< 이전 수업'}
+          </button>
+        )}
+        {lectureStore.nextLecture({ lectureId }).id && (
+          <button type="button" onClick={handleNextLecture}>
+            {'다음 수업 >'}
+          </button>
+        )}
       </ButtonContainer>
     </Container>
   );
