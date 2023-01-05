@@ -20,17 +20,58 @@ const server = setupServer(
       return res(ctx.json({
         courseId,
         recentlySeenLectureId: 135,
+        price: 35000,
         category: '개발,프로그래밍 > 백엔드',
         title: '강의 1',
         stars: 5.0,
+        level: '입문',
         studentCount: 1234,
         instructor: '오진성',
-        hashTags: ['헛소리 잘하는법', '화나게 하는법'],
+        hashTags: ['단백질', '득근'],
+        news: [{
+          title: 'news title', createdAt: '2022-12-26T01:01:00', content: 'content1',
+        }, {
+          title: 'News2', createdAt: '2022-12-31T01:01:00', content: 'content2',
+        }],
       }));
     }
 
     return res(ctx.status(404));
   }),
+
+  rest.get(`${baseUrl}/courses`, (req, res, ctx) => res(ctx.json({
+    courses: [{
+      id: 1,
+      recentlySeenLectureId: 135,
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 1',
+      stars: 5.0,
+      price: 35000,
+      studentCount: 1234,
+      instructor: '오진성',
+      hashTags: ['단백질', '득근'],
+    }, {
+      id: 2,
+      recentlySeenLectureId: 135,
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 2',
+      stars: 5.0,
+      price: 49000,
+      studentCount: 1234,
+      instructor: '오진성',
+      hashTags: ['단백질', '득근'],
+    }, {
+      id: 3,
+      recentlySeenLectureId: 135,
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 3',
+      stars: 5.0,
+      price: 24000,
+      studentCount: 1234,
+      instructor: '오진성',
+      hashTags: ['단백질', '득근'],
+    }],
+  }))),
 
   rest.post(`${baseUrl}/courses`, async (req, res, ctx) => {
     const { title } = await req.json();
@@ -216,57 +257,97 @@ const server = setupServer(
     return res(ctx.status(404));
   }),
 
-  rest.get(`${baseUrl}/inquiries`, (req, res, ctx) => {
-    const [, authorization] = req.headers;
-    const accessToken = authorization[1];
+  rest.get(`${baseUrl}/inquiries`, (req, res, ctx) => res(ctx.json({
+    inquiries: [{
+      id: 1,
+      publisher: '작성자 1',
+      courseTitle: '강의 1',
+      lectureTitle: '수업 1',
+      title: '제목 1',
+      publishTime: moment(),
+      lectureTime: { minute: 1, second: 24 },
+      status: {
+        value: 'created',
+        replied: 'completed',
+        solved: 'processing',
+      },
+      lectureId: 1,
+    }, {
+      id: 2,
+      publisher: '작성자 2',
+      courseTitle: '강의 2',
+      lectureTitle: '수업 2',
+      title: '제목 2',
+      publishTime: moment(),
+      lectureTime: { minute: 1, second: 24 },
+      status: {
+        value: 'created',
+        replied: 'processing',
+        solved: 'processing',
+      },
+      lectureId: 2,
+    }, {
+      id: 3,
+      publisher: '작성자 3',
+      courseTitle: '강의 3',
+      lectureTitle: '수업 3',
+      lectureTime: { minute: 1, second: 24 },
+      title: '제목 3',
+      publishTime: moment(),
+      status: {
+        value: 'created',
+        replied: 'processing',
+        solved: 'processing',
+      },
+      lectureId: 3,
+    }],
+  }))),
 
-    if (accessToken) {
-      return res(ctx.json({
-        inquiries: [{
-          id: 1,
-          publisher: '작성자 1',
-          courseTitle: '강의 1',
-          lectureTitle: '수업 1',
-          title: '제목 1',
-          publishTime: moment(),
-          status: {
-            value: 'created',
-            replied: 'completed',
-            solved: 'processing',
-          },
-          lectureId: 1,
-        }, {
-          id: 2,
-          publisher: '작성자 2',
-          courseTitle: '강의 2',
-          lectureTitle: '수업 2',
-          title: '제목 2',
-          publishTime: moment(),
-          status: {
-            value: 'created',
-            replied: 'processing',
-            solved: 'processing',
-          },
-          lectureId: 2,
-        }, {
-          id: 3,
-          publisher: '작성자 3',
-          courseTitle: '강의 3',
-          lectureTitle: '수업 3',
-          title: '제목 3',
-          publishTime: moment(),
-          status: {
-            value: 'created',
-            replied: 'processing',
-            solved: 'processing',
-          },
-          lectureId: 3,
-        }],
-      }));
-    }
-
-    return res(ctx.status(404));
-  }),
+  rest.get(`${baseUrl}/courses/:courseId/inquiries`, (req, res, ctx) => res(ctx.json({
+    inquiries: [{
+      id: 1,
+      publisher: '작성자 1',
+      courseTitle: '강의 1',
+      lectureTitle: '수업 1',
+      title: '제목 1',
+      publishTime: moment(),
+      lectureTime: { minute: 1, second: 24 },
+      status: {
+        value: 'created',
+        replied: 'completed',
+        solved: 'processing',
+      },
+      lectureId: 1,
+    }, {
+      id: 2,
+      publisher: '작성자 2',
+      courseTitle: '강의 2',
+      lectureTitle: '수업 2',
+      title: '제목 2',
+      publishTime: moment(),
+      lectureTime: { minute: 1, second: 24 },
+      status: {
+        value: 'created',
+        replied: 'processing',
+        solved: 'processing',
+      },
+      lectureId: 2,
+    }, {
+      id: 3,
+      publisher: '작성자 3',
+      courseTitle: '강의 3',
+      lectureTitle: '수업 3',
+      lectureTime: { minute: 1, second: 24 },
+      title: '제목 3',
+      publishTime: moment(),
+      status: {
+        value: 'created',
+        replied: 'processing',
+        solved: 'processing',
+      },
+      lectureId: 3,
+    }],
+  }))),
 
   rest.get(`${baseUrl}/inquiries/:inquiryId`, (req, res, ctx) => {
     const { inquiryId } = req.params;
@@ -466,6 +547,22 @@ const server = setupServer(
     return res(ctx.status(404));
   }),
 
+  rest.get(`${baseUrl}/progresses`, (req, res, ctx) => res(ctx.json({
+    progresses: [{
+      id: 1,
+      title: '테스트 1강',
+      status: 'unwatched',
+    }, {
+      id: 2,
+      title: '테스트 2강',
+      status: 'completed',
+    }, {
+      id: 3,
+      title: '테스트 3강',
+      status: 'unwatched',
+    }],
+  }))),
+
   rest.get(`${baseUrl}/lectures/:lectureId/progress`, (req, res, ctx) => {
     const { lectureId } = req.params;
 
@@ -512,30 +609,33 @@ const server = setupServer(
         courses: [{
           id: 1,
           recentlySeenLectureId: 135,
+          price: 35000,
           category: '개발,프로그래밍 > 백엔드',
           title: '강의 1',
           stars: 5.0,
           studentCount: 1234,
           instructor: '오진성',
-          hashTags: ['헛소리 잘하는법', '화나게 하는법'],
+          hashTags: ['단백질', '득근'],
         }, {
           id: 2,
           recentlySeenLectureId: 135,
+          price: 35000,
           category: '개발,프로그래밍 > 백엔드',
           title: '강의 2',
           stars: 5.0,
           studentCount: 1234,
           instructor: '오진성',
-          hashTags: ['헛소리 잘하는법', '화나게 하는법'],
+          hashTags: ['단백질', '득근'],
         }, {
           id: 3,
           recentlySeenLectureId: 135,
+          price: 35000,
           category: '개발,프로그래밍 > 백엔드',
           title: '강의 3',
           stars: 5.0,
           studentCount: 1234,
           instructor: '오진성',
-          hashTags: ['헛소리 잘하는법', '화나게 하는법'],
+          hashTags: ['단백질', '득근'],
         }],
       }));
     }

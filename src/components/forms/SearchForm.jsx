@@ -1,10 +1,14 @@
-import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import useInquiryStore from '../../hooks/useInquiryStore';
 import useSearchFormStore from '../../hooks/useSearchFormStore';
 
+const Form = styled.form`
+  margin-block-end: 3rem;
+`;
+
 export default function SearchForm() {
-  const { state } = useLocation();
-  const { lectureId } = state;
+  const lectureId = window.location.pathname.split('/')[4];
+
   const searchFormStore = useSearchFormStore();
   const inquiryStore = useInquiryStore();
 
@@ -14,7 +18,7 @@ export default function SearchForm() {
     const { lectureTime, content } = searchFormStore;
 
     if (!content && !lectureTime) {
-      inquiryStore.fetchInquiries({ lectureId });
+      inquiryStore.fetchInquiriesByLectureId({ lectureId });
       return;
     }
 
@@ -24,21 +28,23 @@ export default function SearchForm() {
   };
 
   return (
-    <form onSubmit={handleSubmitSearchForm}>
+    <Form onSubmit={handleSubmitSearchForm}>
+      {lectureId && (
+        <div>
+          <label htmlFor="input-searchTime">
+            강의 시간
+          </label>
+          <input
+            id="input-searchTime"
+            type="number"
+            placeholder="분"
+            value={searchFormStore.lectureTime}
+            onChange={(e) => searchFormStore.changeLectureTime(e.target.value)}
+          />
+        </div>
+      )}
       <div>
-        <label htmlFor="input-searchTime">
-          강의 시간
-        </label>
-        <input
-          id="input-searchTime"
-          type="number"
-          placeholder="분"
-          value={searchFormStore.lectureTime}
-          onChange={(e) => searchFormStore.changeLectureTime(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="input-searchContent">
+        <label hidden htmlFor="input-searchContent">
           검색
         </label>
         <input
@@ -48,8 +54,8 @@ export default function SearchForm() {
           value={searchFormStore.content}
           onChange={(e) => searchFormStore.changeContent(e.target.value)}
         />
+        <button type="submit">검색하기</button>
       </div>
-      <button type="submit">검색하기</button>
-    </form>
+    </Form>
   );
 }

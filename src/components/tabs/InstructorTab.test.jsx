@@ -16,8 +16,8 @@ test('InstructorTab', async () => {
     </MemoryRouter>
   ));
 
-  screen.getByText('대시보드');
-  screen.getByText('새 강의 만들기');
+  screen.getAllByText('대시보드');
+  screen.getAllByText('새 강의 만들기');
   screen.getByText('강의 관리');
   screen.getByText('강의 질문 관리');
   screen.getByText('수강평 리스트');

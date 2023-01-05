@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import InstructorPanel from '../components/InstructorPanel';
+import InstructorBanner from '../components/banners/InstructorBanner';
 import InstructorTab from '../components/tabs/InstructorTab';
 
-const Container = styled.article`
+const Main = styled.article`
   display: flex;
   
   height: 100%;
@@ -16,19 +15,20 @@ const Container = styled.article`
 export default function InstructorPage({ Component }) {
   const category = window.location.pathname.split('/')[2];
 
-  const [title, setTitle] = useState('대시보드');
-
-  if (category === 'question') {
-    setTitle('강의 질문 관리');
-  }
+  const titles = {
+    courses: '강의 관리',
+    questions: '강의 질문 관리',
+    ratings: '내 강의 수강평',
+    profits: '월별수입',
+  };
 
   return (
     <div>
-      <InstructorPanel title={title} />
-      <Container>
+      <InstructorBanner title={titles[category] || '대시보드'} />
+      <Main>
         <InstructorTab />
         <Component />
-      </Container>
+      </Main>
     </div>
   );
 }

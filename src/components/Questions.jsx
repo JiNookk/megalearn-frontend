@@ -59,8 +59,6 @@ export default function Questions() {
   };
 
   const handleSubmit = (event) => {
-    console.log(event.target.value);
-
     event.preventDefault();
   };
 
@@ -106,9 +104,9 @@ export default function Questions() {
           <option value="reply">최근 답변 순</option>
           <option value="like">추천순</option>
         </select>
-        <label hidden htmlFor="input-content">내용</label>
+        {/* <label hidden htmlFor="input-content">내용</label>
         <input id="input-content" type="text" />
-        <button type="submit">검색</button>
+        <button type="submit">검색</button> */}
       </form>
       <Table>
         <thead>

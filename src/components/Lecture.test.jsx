@@ -6,6 +6,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { lectureStore } from '../stores/LectureStore';
 import Lecture from './Lecture';
 
+delete window.location;
+window.location = new URL('http://localhost:8000/courses/1/lectures/2');
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -21,9 +24,6 @@ describe('Lecture', () => {
   let container;
 
   beforeEach(async () => {
-    await lectureStore.fetchLectures({ courseId: 1 });
-    await lectureStore.fetchLecture({ courseId: 1, lectureId: 2 });
-
     container = render((
       <MemoryRouter>
         <Lecture />
@@ -36,11 +36,10 @@ describe('Lecture', () => {
   });
 
   it('renders components', async () => {
-    screen.getByText('테스트 2강');
-    screen.getByText('< 이전 수업');
-    screen.getByText('다음 수업 >');
-
     await waitFor(() => {
+      screen.getByText('테스트 2강');
+      screen.getByText('< 이전 수업');
+      screen.getByText('다음 수업 >');
       expect(container.getElementsByTagName('iframe')).toBeTruthy();
     });
   });

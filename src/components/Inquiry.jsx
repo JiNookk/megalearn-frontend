@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import useCommentStore from '../hooks/useCommentStore';
 import useInquiryStore from '../hooks/useInquiryStore';
-import { dateFormat } from '../utils/dateFormat';
+import { dateFormat } from '../utils/DateFormat';
 import CommentForm from './forms/CommentForm';
 import CommentUpdateForm from './forms/CommentUpdateForm';
 

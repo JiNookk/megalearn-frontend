@@ -6,16 +6,12 @@ const context = describe;
 const mockSearch = jest.fn();
 const mockFetch = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    state: { courseId: 1, lectureId: 1 },
-  }),
-}));
+delete window.location;
+window.location = new URL('http://localhost:8080/courses/1/lectures/1');
 
 jest.mock('../../hooks/useInquiryStore', () => () => ({
   searchInquiries: mockSearch,
-  fetchInquiries: mockFetch,
+  fetchInquiriesByLectureId: mockFetch,
 }));
 
 describe('SearchForm', () => {
@@ -55,7 +51,7 @@ describe('SearchForm', () => {
 
       fireEvent.click(screen.getByText('검색하기'));
 
-      expect(mockSearch).toBeCalledWith({ lectureId: 1, lectureTime: 3, content: '' });
+      expect(mockSearch).toBeCalledWith({ lectureId: '1', lectureTime: 3, content: '' });
     });
   });
 
@@ -71,7 +67,7 @@ describe('SearchForm', () => {
 
       fireEvent.click(screen.getByText('검색하기'));
 
-      expect(mockSearch).toBeCalledWith({ lectureId: 1, lectureTime: '', content: '하이' });
+      expect(mockSearch).toBeCalledWith({ lectureId: '1', lectureTime: '', content: '하이' });
     });
   });
 });

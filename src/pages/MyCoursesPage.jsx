@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import MyCourses from '../components/MyCourses';
+import Container from '../components/ui/Container';
 import useCourseStore from '../hooks/useCourseStore';
 
 export default function MyCoursesPage() {
@@ -10,6 +11,8 @@ export default function MyCoursesPage() {
   }, []);
 
   return (
-    <MyCourses />
+    <Container>
+      <MyCourses />
+    </Container>
   );
 }

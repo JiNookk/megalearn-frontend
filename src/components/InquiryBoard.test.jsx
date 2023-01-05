@@ -6,12 +6,8 @@ import { MemoryRouter } from 'react-router-dom';
 
 import InquiryBoard from './InquiryBoard';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    state: { courseId: 1, lectureId: 1 },
-  }),
-}));
+delete window.location;
+window.location = new URL('http://localhost:8080/courses/1/lectures/1');
 
 const onNavigate = jest.fn();
 
@@ -35,9 +31,8 @@ describe('InquiryBoard', () => {
 
     await waitFor(() => {
       expect(onNavigate).toBeCalledWith({ tab: 'post', ids: { courseId: 1, lectureId: 1 } });
-      screen.getByText('title');
-      screen.getByText(/tester/);
-      screen.getByText(/JPA/);
+      screen.getByText('제목 1');
+      screen.getAllByText(/작성자/);
     });
   });
 });

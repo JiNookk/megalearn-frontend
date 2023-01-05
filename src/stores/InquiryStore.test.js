@@ -38,7 +38,27 @@ describe('InquiryStore', () => {
 
   describe('fetchInquiries', () => {
     it('loads inquiries Information', async () => {
-      await inquiryStore.fetchInquiries({ lectureId: 1 });
+      await inquiryStore.fetchInquiries();
+
+      const { inquiryPosts } = inquiryStore;
+
+      expect(inquiryPosts.length).toBeTruthy();
+    });
+  });
+
+  describe('fetchInquiriesByLectureId', () => {
+    it('loads inquiries Information', async () => {
+      await inquiryStore.fetchInquiriesByLectureId({ lectureId: 1 });
+
+      const { inquiryPosts } = inquiryStore;
+
+      expect(inquiryPosts.length).toBeTruthy();
+    });
+  });
+
+  describe('fetchInquiriesByCourseId', () => {
+    it('loads inquiries Information', async () => {
+      await inquiryStore.fetchInquiriesByCourseId({ courseId: 1 });
 
       const { inquiryPosts } = inquiryStore;
 
@@ -88,7 +108,7 @@ describe('InquiryStore', () => {
   describe('deleteInquiry', () => {
     it('it loads inquiry data from server', async () => {
       // 어떻게 테스트를 해야할까?
-      await inquiryStore.fetchInquiries({ lectureId: 1 });
+      await inquiryStore.fetchInquiriesByLectureId({ lectureId: 1 });
 
       expect(inquiryStore.inquiryPosts.length).toBe(1);
 

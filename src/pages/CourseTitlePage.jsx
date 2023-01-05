@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Container from '../components/ui/Container';
 import useCourseFormStore from '../hooks/useCourseFormStore';
 import useCourseStore from '../hooks/useCourseStore';
 import useLectureStore from '../hooks/useLectureStore';
@@ -38,7 +39,7 @@ export default function CourseTitlePage() {
   };
 
   return (
-    <article>
+    <Container>
       <h2>
         제목을 입력해주세요!
         <br />
@@ -60,6 +61,6 @@ export default function CourseTitlePage() {
         )}
         <button type="submit">강의만들기</button>
       </form>
-    </article>
+    </Container>
   );
 }

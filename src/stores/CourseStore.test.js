@@ -15,6 +15,14 @@ describe('CourseStore', () => {
     });
   });
 
+  describe('fetchCourses', () => {
+    it('loads courses data', async () => {
+      await courseStore.fetchCourses();
+
+      expect(courseStore.courses.length).toBeTruthy();
+    });
+  });
+
   describe('save', () => {
     it('requests new Course data', async () => {
       await courseStore.save({ title: 'JPA' });

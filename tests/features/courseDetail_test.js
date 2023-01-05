@@ -6,9 +6,6 @@ Before(({ I }) => {
   I.setupRatingDB();
 
   I.amOnPage('/');
-  I.login({ userName: 'test123', password: 'Password123!' });
-
-  I.click('지식공유자');
 });
 
 Scenario('시나리오 #1 - 상세화면 진입(다른 지식공유자의 강의)', ({ I }) => {
@@ -25,7 +22,7 @@ Scenario('시나리오 #1 - 상세화면 진입(다른 지식공유자의 강의
   I.see('수강평');
   I.see('질문 게시판');
   I.see('새소식');
-  I.see('35,000원');
+  I.see('49,000원');
   I.see('수강신청 하기');
   I.see('바구니에 담기');
 });
@@ -52,8 +49,11 @@ Scenario('시나리오 #3 - 상세화면 진입(내가 구매한 강의)', ({ I 
   // WHEN
   I.click('내 학습');
   I.click('강의 1');
+  I.click('대시보드');
 
   // THEN
-  I.see('대시보드', '강의 소개', '수강평', '질문게시판', '새소식');
+  I.see('최근 강의 공지');
+  I.see('최근 질문');
   I.see('내 학습상황');
+  I.see('커리큘럼');
 });
