@@ -15,8 +15,14 @@ export default class ProgressStore extends Store {
     this.publish();
   }
 
-  async fetchProgresses({ courseId }) {
-    this.progresses = await apiService.fetchProgresses({ courseId });
+  async fetchProgresses() {
+    this.progresses = await apiService.fetchProgresses();
+
+    this.publish();
+  }
+
+  async fetchProgressesByCourseId({ courseId }) {
+    this.progresses = await apiService.fetchProgressesByCourseId({ courseId });
 
     this.publish();
   }

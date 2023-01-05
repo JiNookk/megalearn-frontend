@@ -46,6 +46,7 @@
     "react-dom": "^18.2.0",
     "react-player": "^2.11.0",
     "react-router-dom": "^6.4.4",
+    "react-router-hash-link": "^2.4.3",
     "recharts": "^2.2.0",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.4",

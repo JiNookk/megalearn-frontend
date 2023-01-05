@@ -8,6 +8,9 @@ import LectureTab from './LectureTab';
 
 const mockNavigate = jest.fn();
 
+delete window.location;
+window.location = new URL('http://localhost:8000/courses/1/lectures/1');
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -32,13 +35,13 @@ test('LectureTab', async () => {
 
   await waitFor(() => {
     expect(mockNavigate).toBeCalledWith('/courses/1/lectures/1?tab=curriculum', {
-      state: { courseId: 1, lectureId: 1 },
+      state: { courseId: '1', lectureId: '1' },
     });
     expect(mockNavigate).toBeCalledWith('/courses/1/lectures/1?tab=inquiryBoard', {
-      state: { courseId: 1, lectureId: 1 },
+      state: { courseId: '1', lectureId: '1' },
     });
     expect(mockNavigate).toBeCalledWith('/courses/1/lectures/1?tab=notes', {
-      state: { courseId: 1, lectureId: 1 },
+      state: { courseId: '1', lectureId: '1' },
     });
   });
 });

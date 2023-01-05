@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useCourseStore from '../hooks/useCourseStore';
 import usePaymentStore from '../hooks/usePaymentStore';
-import { dateFormat } from '../utils/dateFormat';
+import { dateFormat } from '../utils/DateFormat';
 import numberFormat from '../utils/numberFormat';
 
 const Table = styled.table`

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import CreateCourseBanner from '../components/banners/CreateCoursebanner';
 import CreateCourseTab from '../components/tabs/CreateCourseTab';
+import Container from '../components/ui/Container';
 
-const Container = styled.article`
+const Main = styled.article`
   display: flex;
 
   padding-inline:  1rem;
@@ -13,13 +14,13 @@ const Container = styled.article`
 
 export default function CreateCoursePage({ Component }) {
   return (
-    <div>
+    <Container>
       <CreateCourseBanner />
 
-      <Container>
+      <Main>
         <CreateCourseTab />
         <Component />
-      </Container>
-    </div>
+      </Main>
+    </Container>
   );
 }

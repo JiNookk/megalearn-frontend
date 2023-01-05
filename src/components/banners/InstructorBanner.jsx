@@ -7,14 +7,13 @@ const Panel = styled.div`
   display: flex;
   align-items: center;
 
-  height: 5rem;
-  padding-inline: 1rem;
+  padding: 2rem 1rem;
   
   background-color: rgb(51,59,61);
   color : white;
 `;
 
-export default function InstructorPanel({ title }) {
+export default function InstructorBanner({ title }) {
   return (
     <Panel>
       <h2>{title}</h2>

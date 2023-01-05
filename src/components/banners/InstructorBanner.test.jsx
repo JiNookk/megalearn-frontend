@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import InstructorPanel from './InstructorPanel';
+import InstructorBanner from './InstructorBanner';
 
-test('InstructorPanel', async () => {
+test('InstructorBanner', async () => {
   render((
     <MemoryRouter>
-      <InstructorPanel title="대시보드" />
+      <InstructorBanner title="대시보드" />
     </MemoryRouter>
   ));
 

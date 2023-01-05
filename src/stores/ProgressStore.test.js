@@ -24,7 +24,15 @@ describe('ProgressStore', () => {
 
   describe('fetchProgresses', () => {
     it('loads progress data', async () => {
-      await progressStore.fetchProgresses({ courseId: 1 });
+      await progressStore.fetchProgresses();
+
+      expect(progressStore.progresses.length).toBeTruthy();
+    });
+  });
+
+  describe('fetchProgressesByCourseId', () => {
+    it('loads progress data', async () => {
+      await progressStore.fetchProgressesByCourseId({ courseId: 1 });
 
       expect(progressStore.progresses.length).toBeTruthy();
     });

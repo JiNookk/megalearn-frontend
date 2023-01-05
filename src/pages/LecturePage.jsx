@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Lecture from '../components/Lecture';
 import LectureTab from '../components/tabs/LectureTab';
+import Container from '../components/ui/Container';
 import useLectureStore from '../hooks/useLectureStore';
 import useProgressStore from '../hooks/useProgressStore';
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
+const LectureContainer = styled(Container)`
+    flex-direction: row;
+    justify-content: space-between;
 `;
 
 export default function LecturePage() {
@@ -29,9 +30,9 @@ export default function LecturePage() {
   }, [lectureId]);
 
   return (
-    <Container>
+    <LectureContainer>
       <Lecture />
       <LectureTab handleNavigate={navigate} />
-    </Container>
+    </LectureContainer>
   );
 }

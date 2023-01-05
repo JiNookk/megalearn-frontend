@@ -1,4 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import {
+  render, screen, waitFor,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Profits from './Profits';
 
@@ -13,4 +15,9 @@ test('Profits', async () => {
   screen.getByText('구매자');
   screen.getByText('수익');
   screen.getByText('구매일');
+
+  await waitFor(() => {
+    screen.getAllByText('강의 1');
+    screen.getAllByText('35,000 원');
+  });
 });

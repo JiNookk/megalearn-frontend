@@ -1,5 +1,5 @@
 import ReactPlayer from 'react-player';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import useProgressStore from '../hooks/useProgressStore';
@@ -61,13 +61,18 @@ const ButtonContainer = styled.article`
 export default function Lecture() {
   const navigate = useNavigate();
 
-  const { state } = useLocation();
-  const { lectureId, courseId } = state;
+  const courseId = window.location.pathname.split('/')[2];
+  const lectureId = window.location.pathname.split('/')[4];
 
   const lectureStore = useLectureStore();
   const sectionStore = useSectionStore();
   const videoStore = useVideoStore();
   const progressStore = useProgressStore();
+
+  useEffect(() => {
+    lectureStore.fetchLectures({ courseId });
+    lectureStore.fetchLecture({ courseId, lectureId });
+  }, []);
 
   const handleLectureComplete = () => {
     progressStore.completeLecture({ progressId: progressStore.progress.id })

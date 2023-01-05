@@ -4,7 +4,7 @@ const defaultTheme = {
     text: '#000',
     panel: '#DDD',
     primary: 'white',
-    primaryBorder: 'none',
+    primaryBorder: '1px solid #d5dbe2',
     primaryText: '#3a3a3a',
     secondary: '#1ec078',
     secondaryText: '#FFF',

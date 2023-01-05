@@ -9,13 +9,15 @@ import useLectureStore from '../hooks/useLectureStore';
 import usePaymentStore from '../hooks/usePaymentStore';
 import useRatingStore from '../hooks/useRatingStore';
 import Chart from '../utils/Chart';
-import { dateFormat } from '../utils/dateFormat';
+import { dateFormat } from '../utils/DateFormat';
 
 import percentageFormat from '../utils/percentageFormat';
 
 const Container = styled.div`
   width: 100%;
-  padding: 2rem;
+
+  padding-inline-end: 2rem;
+  padding-block: 2rem;
 
   h2{
     font-size: 2rem;

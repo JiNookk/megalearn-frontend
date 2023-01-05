@@ -29,8 +29,18 @@ export default class ApiService {
     return data.myCourses;
   }
 
+  async fetchCourses() {
+    const { data } = await axios.get(`${baseUrl}/courses`);
+
+    return data.courses;
+  }
+
   async fetchCourse({ courseId }) {
-    const { data } = await axios.get(`${baseUrl}/courses/${courseId}`);
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
 
     return data;
   }
@@ -172,8 +182,20 @@ export default class ApiService {
     return data;
   }
 
-  async fetchInquiries({ lectureId }) {
+  async fetchInquiries() {
+    const { data } = await axios.get(`${baseUrl}/inquiries`);
+
+    return data.inquiries;
+  }
+
+  async fetchInquiriesByLectureId({ lectureId }) {
     const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/inquiries`);
+
+    return data.inquiries;
+  }
+
+  async fetchInquiriesByCourseId({ courseId }) {
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/inquiries`);
 
     return data.inquiries;
   }
@@ -318,7 +340,17 @@ export default class ApiService {
     return data;
   }
 
-  async fetchProgresses({ courseId }) {
+  async fetchProgresses() {
+    const { data } = await axios.get(`${baseUrl}/progresses`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.progresses;
+  }
+
+  async fetchProgressesByCourseId({ courseId }) {
     const { data } = await axios.get(`${baseUrl}/courses/${courseId}/progresses`, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,

@@ -18,6 +18,11 @@ const TabContainer = styled.div`
 const TabHeading = styled.div`
   height: 4rem;
   line-height: 4rem;
+
+  h2{
+    font-size: 2rem;
+    font-weight: bold;
+  }
 `;
 
 export { TabContainer, TabHeading };

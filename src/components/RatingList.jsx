@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useCourseStore from '../hooks/useCourseStore';
 import useRatingStore from '../hooks/useRatingStore';
+import { dateFormat } from '../utils/DateFormat';
 
 const Table = styled.table`
   margin-top: 2rem;
@@ -70,7 +71,7 @@ export default function RatingList() {
                   {rating.content}
                 </td>
                 <td>
-                  {rating.createdAt}
+                  {dateFormat.defaultFormat(rating.createdAt)}
                 </td>
               </tr>
             ))}

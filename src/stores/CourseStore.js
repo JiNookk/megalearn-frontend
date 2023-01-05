@@ -22,6 +22,12 @@ export default class CourseStore extends Store {
     this.publish();
   }
 
+  async fetchCourses() {
+    this.courses = await apiService.fetchCourses();
+
+    this.publish();
+  }
+
   async save({ title }) {
     this.savedCourse = await apiService.createCourse({ title });
 

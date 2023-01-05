@@ -60,14 +60,14 @@ export default class LectureStore extends Store {
 
   previousLecture({ lectureId }) {
     const index = this.lectures
-      .findIndex((lecture) => lecture.id === lectureId);
+      .findIndex((lecture) => lecture.id === +lectureId);
 
     return this.lectures[index - 1] || {};
   }
 
   nextLecture({ lectureId }) {
     const index = this.lectures
-      .findIndex((lecture) => lecture.id === lectureId);
+      .findIndex((lecture) => lecture.id === +lectureId);
 
     return this.lectures[index + 1] || {};
   }

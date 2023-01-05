@@ -12,17 +12,29 @@ export default class InquiryStore extends Store {
   async post({
     title, lectureId, hashTags, content, anonymous, minute, second,
   }) {
-    await apiService.createInquiryPost({
+    const inquiry = await apiService.createInquiryPost({
       title, lectureId, hashTags, content, anonymous, minute, second,
     });
 
-    await this.fetchInquiries({ lectureId });
+    this.inquiryPosts = [...this.inquiryPosts, inquiry];
 
     this.publish();
   }
 
-  async fetchInquiries({ lectureId }) {
-    this.inquiryPosts = await apiService.fetchInquiries({ lectureId });
+  async fetchInquiries() {
+    this.inquiryPosts = await apiService.fetchInquiries();
+
+    this.publish();
+  }
+
+  async fetchInquiriesByLectureId({ lectureId }) {
+    this.inquiryPosts = await apiService.fetchInquiriesByLectureId({ lectureId });
+
+    this.publish();
+  }
+
+  async fetchInquiriesByCourseId({ courseId }) {
+    this.inquiryPosts = await apiService.fetchInquiriesByCourseId({ courseId });
 
     this.publish();
   }

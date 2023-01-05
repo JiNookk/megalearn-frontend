@@ -26,6 +26,7 @@ import Questions from './components/Questions';
 import UploadedCourses from './components/UploadedCourses';
 import RatingList from './components/RatingList';
 import Profits from './components/Profits';
+import CoursesPage from './pages/CoursesPage';
 
 export default function App() {
   const [themeName] = useLocalStorage('theme', 'default');
@@ -45,7 +46,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/:courseId" element={<CoursePage />} />
+        <Route path="/courses/:courseId/inquiries" element={<CoursePage />} />
+        <Route path="/courses/:courseId/news" element={<CoursePage />} />
+        <Route path="/courses/:courseId/dashboard" element={<CoursePage />} />
         <Route path="/courses/:courseId/lectures/:lectureId" element={<LecturePage />} />
         <Route path="/account/dashboard" element={<MyAccountPage />} />
         <Route path="/account/my-courses" element={<MyCoursesPage />} />

@@ -45,8 +45,9 @@ const ExitButton = styled.button`
 export default function LectureTab() {
   const [isTabOn, setIsTabOn] = useState(false);
 
-  const { state } = useLocation();
-  const { courseId, lectureId } = state;
+  const courseId = window.location.pathname.split('/')[2];
+  const lectureId = window.location.pathname.split('/')[4];
+
   const category = getQueryParam({ category: 'tab' });
 
   const navigate = useNavigate();
