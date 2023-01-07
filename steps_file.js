@@ -29,8 +29,10 @@ module.exports = function () {
       this.amOnPage('http://localhost:8000/backdoor/setup-inquiry-db');
     },
 
-    setupCourseDB() {
-      this.amOnPage('http://localhost:8000/backdoor/setup-course-db');
+    setupCourseDB({ count }) {
+      return count
+        ? this.amOnPage('http://localhost:8000/backdoor/setup-course-db')
+        : this.amOnPage(`http://localhost:8000/backdoor/setup-course-db?count=${count}`);
     },
 
     setupLectureDB() {
@@ -43,6 +45,10 @@ module.exports = function () {
 
     setupRatingDB() {
       this.amOnPage('http://localhost:8000/backdoor/setup-rating-db');
+    },
+
+    setupCartDB() {
+      this.amOnPage('http://localhost:8000/backdoor/setup-cart-db');
     },
 
     amOnLecturePage() {

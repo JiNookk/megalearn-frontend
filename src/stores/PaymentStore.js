@@ -23,6 +23,18 @@ export default class PaymentStore extends Store {
 
     this.publish();
   }
+
+  async requestPaymentUrl({ courseIds }) {
+    this.url = await apiService.requestPaymentUrl({ courseIds });
+
+    this.publish();
+  }
+
+  async requestPurchase({ pgToken }) {
+    this.url = await apiService.requestPurchase({ pgToken });
+
+    this.publish();
+  }
 }
 
 export const paymentStore = new PaymentStore();

@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useCartStore from '../../hooks/useCartStore';
 import useCourseStore from '../../hooks/useCourseStore';
 import useLectureStore from '../../hooks/useLectureStore';
 import numberFormat from '../../utils/numberFormat';
@@ -45,10 +48,27 @@ const PurchaseWindow = styled.div`
 `;
 
 export default function PurchaseBanner() {
+  const navigate = useNavigate();
+
   const courseId = window.location.pathname.split('/')[2];
 
   const courseStore = useCourseStore();
   const lectureStore = useLectureStore();
+  const cartStore = useCartStore();
+
+  const handleAddCourseToCart = () => {
+    cartStore.addItem({ productId: courseStore.course.id });
+  };
+
+  const handlePurchaseCourse = () => {
+    cartStore.addItem({ productId: courseStore.course.id });
+
+    navigate('/carts');
+  };
+
+  useEffect(() => {
+    cartStore.fetchCart();
+  }, []);
 
   return (
     <div>
@@ -64,13 +84,20 @@ export default function PurchaseBanner() {
             </SecondaryButton>
           ) : (
             <>
-              <SecondaryButton>
-                수강신청 하기
+              <SecondaryButton onClick={handlePurchaseCourse}>
+                {cartStore.cart.items
+                  .filter((item) => item.productId === +courseId)
+                  .length ? '수강 바구니로 이동' : '수강신청 하기'}
               </SecondaryButton>
-              <PrimaryButton>
-                바구니에 담기
-              </PrimaryButton>
+              {!cartStore.cart.items
+                .filter((item) => item.productId === +courseId)
+                .length && (
+                <PrimaryButton onClick={handleAddCourseToCart}>
+                  바구니에 담기
+                </PrimaryButton>
+              )}
             </>
+
           )}
         </PurchaseWindow>
         <CourseInformation>

@@ -11,7 +11,9 @@ Before(({ I }) => {
 Scenario('시나리오 #1 - 강의 목록 확인', ({ I }) => {
   // Given
   I.setupCourseDB({ count: 30 });
-  I.setupPaymentDB({ accountId: 1 });
+  // I.setupPaymentDB({ accountId: 1 });
+
+  I.amOnPage('/');
   I.login({ userName: 'test123', password: 'Password123!' });
 
   // WHEN

@@ -43,4 +43,12 @@ describe('PaymentStore', () => {
       }]);
     });
   });
+
+  describe('requestPaymentUrl', () => {
+    it('request PaymentUrl data', async () => {
+      await paymentStore.requestPaymentUrl({ courseId: 1 });
+
+      expect(paymentStore.url).toBeTruthy();
+    });
+  });
 });

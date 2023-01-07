@@ -27,6 +27,8 @@ import UploadedCourses from './components/UploadedCourses';
 import RatingList from './components/RatingList';
 import Profits from './components/Profits';
 import CoursesPage from './pages/CoursesPage';
+import CartPage from './pages/CartPage';
+import PurchaseSuccessPage from './pages/PurchaseSuccessPage';
 
 export default function App() {
   const [themeName] = useLocalStorage('theme', 'default');
@@ -45,26 +47,28 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/account/dashboard" element={<MyAccountPage />} />
+        <Route path="/account/my-courses" element={<MyCoursesPage />} />
+        <Route path="/carts" element={<CartPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/:courseId" element={<CoursePage />} />
         <Route path="/courses/:courseId/inquiries" element={<CoursePage />} />
         <Route path="/courses/:courseId/news" element={<CoursePage />} />
         <Route path="/courses/:courseId/dashboard" element={<CoursePage />} />
         <Route path="/courses/:courseId/lectures/:lectureId" element={<LecturePage />} />
-        <Route path="/account/dashboard" element={<MyAccountPage />} />
-        <Route path="/account/my-courses" element={<MyCoursesPage />} />
-        <Route path="/instructor" element={<InstructorPage Component={InstructorDashBoard} />} />
-        <Route path="/instructor/questions" element={<InstructorPage Component={Questions} />} />
-        <Route path="/instructor/courses" element={<InstructorPage Component={UploadedCourses} />} />
-        <Route path="/instructor/ratings" element={<InstructorPage Component={RatingList} />} />
-        <Route path="/instructor/profits" element={<InstructorPage Component={Profits} />} />
-        <Route path="/create_course" element={<CourseTitlePage />} />
         <Route path="/courses/:courseId/edit/course_info" element={<CreateCoursePage Component={UploadCourseInfo} />} />
         <Route path="/courses/:courseId/edit/description" element={<CreateCoursePage Component={UploadDescription} />} />
         <Route path="/courses/:courseId/edit/curriculum" element={<CreateCoursePage Component={UploadCurriCulum} />} />
         <Route path="/courses/:courseId/edit/cover_image" element={<CreateCoursePage Component={UploadCoverImage} />} />
         <Route path="/courses/:courseId/edit/course_setting" element={<CreateCoursePage Component={CourseSetting} />} />
+        <Route path="/create_course" element={<CourseTitlePage />} />
+        <Route path="/instructor" element={<InstructorPage Component={InstructorDashBoard} />} />
+        <Route path="/instructor/questions" element={<InstructorPage Component={Questions} />} />
+        <Route path="/instructor/courses" element={<InstructorPage Component={UploadedCourses} />} />
+        <Route path="/instructor/ratings" element={<InstructorPage Component={RatingList} />} />
+        <Route path="/instructor/profits" element={<InstructorPage Component={Profits} />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/purchaseSuccess" element={<PurchaseSuccessPage />} />
       </Routes>
     </ThemeProvider>
   );

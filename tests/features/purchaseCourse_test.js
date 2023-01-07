@@ -14,7 +14,8 @@ Scenario('시나리오 #1 - 강의 결제', ({ I }) => {
   I.click('강의');
 
   // WHEN
-  I.click('강의 1');
+  I.click('강의 2');
+  I.click('수강신청 하기');
   I.click('결제하기');
 
   // THEN

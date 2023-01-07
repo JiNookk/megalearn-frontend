@@ -433,6 +433,66 @@ export default class ApiService {
 
     return data.monthlyPayments;
   }
+
+  // 결제 버튼 클릭 -> CID, ProductId, .... -> 카카오페이 화면 뜸.
+
+  // 결제 버튼 클릭(여기서 어디로 요청을 보냄? kakao X, ) ->
+
+  async requestPaymentUrl({ courseIds }) {
+    const { data } = await axios.post(`${baseUrl}/payments/kakao-ready`, {
+      courseIds,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.paymentUrl;
+  }
+
+  async requestPurchase({ pgToken }) {
+    const { data } = await axios.post(`${baseUrl}/payments`, {
+      pgToken,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data;
+  }
+
+  async addItem({ productId }) {
+    const { data } = await axios.patch(`${baseUrl}/carts/me/add-item/${productId}`, {}, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.itemIds;
+  }
+
+  async removeItem({ productIds }) {
+    const { data } = await axios.patch(`${baseUrl}/carts/me/remove-item`, {
+      itemIds: productIds,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.itemIds;
+  }
+
+  async fetchCart() {
+    const { data } = await axios.get(`${baseUrl}/carts/me`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.itemIds;
+  }
 }
 
 export const apiService = new ApiService();
