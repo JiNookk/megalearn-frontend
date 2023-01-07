@@ -5,6 +5,9 @@ import { courseStore } from '../../stores/CourseStore';
 import defaultTheme from '../../styles/defaultTheme';
 import PurchaseBanner from './PurchaseBanner';
 
+delete window.location;
+window.location = new URL('http://localhost:8080/courses/1');
+
 test('PurchaseBanner', async () => {
   await courseStore.fetchCourse({ courseId: 1 });
 
@@ -23,5 +26,6 @@ test('PurchaseBanner', async () => {
 
   await waitFor(() => {
     screen.getByText('35,000원');
+    screen.getByText('수강 바구니로 이동');
   });
 });

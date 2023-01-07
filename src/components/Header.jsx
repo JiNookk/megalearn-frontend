@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import styled from 'styled-components';
 
@@ -21,7 +21,7 @@ const List = styled.ul`
 export default function Header() {
   const [isLecture, setIsLecture] = useState(false);
 
-  const location = useLocation();
+  const { location } = window;
 
   const navigate = useNavigate();
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
@@ -53,7 +53,7 @@ export default function Header() {
           </List>
           {accessToken ? (
             <List>
-              <Link to="/">
+              <Link to="/carts">
                 장바구니
               </Link>
               <Link to="/account/dashboard">
@@ -76,7 +76,6 @@ export default function Header() {
               </Link>
             </List>
           )}
-
         </Navigation>
       ) : null}
     </div>

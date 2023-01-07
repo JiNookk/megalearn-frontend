@@ -30,13 +30,14 @@ test('CoursePage', async () => {
   screen.getByText('질문 게시판');
   screen.getByText('새소식');
 
+  screen.getByText('수강신청 하기');
+  screen.getByText('바구니에 담기');
+
   await waitFor(() => {
     screen.getAllByText(/섹션/);
     screen.getByText('별점: 3.00');
     screen.getAllByText(/1강/);
 
     screen.getByText('35,000원');
-    screen.getByText('수강신청 하기');
-    screen.getByText('바구니에 담기');
   });
 });

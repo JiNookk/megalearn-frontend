@@ -689,6 +689,10 @@ const server = setupServer(
     }],
   }))),
 
+  rest.post(`${baseUrl}/payments/kakao-ready`, (req, res, ctx) => res(ctx.json({
+    paymentUrl: 'http://localhost:8000',
+  }))),
+
   rest.get(`${baseUrl}/instructor/payments`, (req, res, ctx) => {
     const [, authorization] = req.headers;
 
@@ -748,6 +752,48 @@ const server = setupServer(
           courseId: 3,
           cost: 40_000,
         }],
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.get(`${baseUrl}/carts/me`, (req, res, ctx) => {
+    const [, authorization] = req.headers;
+
+    const accessToken = authorization[1];
+
+    if (accessToken) {
+      return res(ctx.json({
+        itemIds: [1, 2],
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.patch(`${baseUrl}/carts/me/add-item/:itemId`, (req, res, ctx) => {
+    const [, authorization] = req.headers;
+
+    const accessToken = authorization[1];
+
+    if (accessToken) {
+      return res(ctx.json({
+        itemIds: [2],
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
+  rest.patch(`${baseUrl}/carts/me/remove-item`, (req, res, ctx) => {
+    const [, authorization] = req.headers;
+
+    const accessToken = authorization[1];
+
+    if (accessToken) {
+      return res(ctx.json({
+        itemIds: [],
       }));
     }
 
