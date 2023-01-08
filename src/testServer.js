@@ -49,6 +49,7 @@ const server = setupServer(
       price: 35000,
       studentCount: 1234,
       instructor: '오진성',
+      level: '입문',
       hashTags: ['단백질', '득근'],
     }, {
       id: 2,
@@ -59,6 +60,7 @@ const server = setupServer(
       price: 49000,
       studentCount: 1234,
       instructor: '오진성',
+      level: '초급',
       hashTags: ['단백질', '득근'],
     }, {
       id: 3,
@@ -69,6 +71,7 @@ const server = setupServer(
       price: 24000,
       studentCount: 1234,
       instructor: '오진성',
+      level: '중급이상',
       hashTags: ['단백질', '득근'],
     }],
   }))),

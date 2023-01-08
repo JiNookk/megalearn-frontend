@@ -6,9 +6,6 @@ export default class CourseStore extends Store {
     super();
 
     this.course = {};
-
-    this.savedCourse = {};
-
     this.fetchingCourseState = '';
 
     this.courses = [];
@@ -22,23 +19,26 @@ export default class CourseStore extends Store {
     this.publish();
   }
 
-  async fetchCourses() {
-    this.courses = await apiService.fetchCourses();
+  async fetchCourses({ filter, page } = {}) {
+    const { courses, totalPages } = await apiService.fetchCourses({ page, filter });
+
+    this.courses = courses;
+    this.totalPages = totalPages;
 
     this.publish();
   }
 
   async save({ title }) {
-    this.savedCourse = await apiService.createCourse({ title });
+    this.course = await apiService.createCourse({ title });
 
     this.publish();
   }
 
   async update({
-    title, category, description, courseId, thumbnailPath, price,
+    title, category, description, courseId, imagePath, price, level, skill,
   }) {
-    this.savedCourse = await apiService.updateCourse({
-      title, description, category, courseId, thumbnailPath, price,
+    this.course = await apiService.updateCourse({
+      title, description, category, courseId, imagePath, price, level, skill,
     });
 
     this.publish();
@@ -54,7 +54,7 @@ export default class CourseStore extends Store {
   }
 
   async submitCourse({ status, courseId }) {
-    this.savedCourse = await apiService.updateCourse({ status, courseId });
+    this.course = await apiService.updateCourse({ status, courseId });
 
     this.publish();
   }
@@ -67,6 +67,12 @@ export default class CourseStore extends Store {
 
   async fetchUploadedCourses({ filter } = {}) {
     this.uploadedCourses = await apiService.fetchUploadedCourses({ filter });
+
+    this.publish();
+  }
+
+  async deleteSkill({ courseId, skill }) {
+    this.course = await apiService.deleteSkill({ courseId, skill });
 
     this.publish();
   }

@@ -10,13 +10,5 @@ export default function useCourseStore() {
       coverImage: 'imagePath',
       price: 100000,
     },
-    savedCourse: {
-      id: 1,
-      title: 'title',
-      category: 'category',
-      description: '',
-      coverImage: 'imagePath',
-      price: 100000,
-    },
   };
 }

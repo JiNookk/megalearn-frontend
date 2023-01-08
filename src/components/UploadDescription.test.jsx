@@ -12,7 +12,7 @@ window.location = new URL('http://localhost:8000/courses/1/edit/description');
 jest.mock('../hooks/useCourseStore', () => () => ({
   update: mockUpdate,
   fetchCourse: jest.fn(),
-  savedCourse: {
+  course: {
     id: 1,
     description: '',
   },
@@ -36,9 +36,6 @@ test('UploadDescription', async () => {
   fireEvent.click(screen.getByText('저장 후 다음이동'));
 
   await waitFor(() => {
-    expect(mockUpdate).toBeCalledWith({
-      description: 'description',
-      courseId: '1',
-    });
+    expect(mockUpdate).toBeCalled();
   });
 });

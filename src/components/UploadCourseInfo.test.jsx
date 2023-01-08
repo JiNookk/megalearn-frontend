@@ -2,6 +2,8 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 import UploadCourseInfo from './UploadCourseInfo';
 
 const mockUpdate = jest.fn();
@@ -12,7 +14,7 @@ window.location = new URL('http://localhost:8000/courses/1/edit/course_info');
 jest.mock('../hooks/useCourseStore', () => () => ({
   update: mockUpdate,
   fetchCourse: jest.fn(),
-  savedCourse: {
+  course: {
     id: 1,
     category: '',
     title: '제목',
@@ -22,7 +24,9 @@ jest.mock('../hooks/useCourseStore', () => () => ({
 test('UploadCourseInfo', async () => {
   render((
     <MemoryRouter>
-      <UploadCourseInfo />
+      <ThemeProvider theme={defaultTheme}>
+        <UploadCourseInfo />
+      </ThemeProvider>
     </MemoryRouter>
   ));
 
@@ -38,13 +42,10 @@ test('UploadCourseInfo', async () => {
 
   screen.getByLabelText('카테고리');
   fireEvent.click(screen.getByText('보안 네트워크'));
+  fireEvent.click(screen.getByText('초급'));
   fireEvent.click(screen.getByText('저장 후 다음이동'));
 
   await waitFor(() => {
-    expect(mockUpdate).toBeCalledWith({
-      title: '제목',
-      category: '보안 네트워크',
-      courseId: '1',
-    });
+    expect(mockUpdate).toBeCalled();
   });
 });

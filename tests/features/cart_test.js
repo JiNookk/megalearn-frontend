@@ -7,15 +7,16 @@ Before(({ I }) => {
   I.setupCartDB();
 
   I.amOnPage('/');
+
+  I.login({ userName: 'test2', password: 'Password123!' });
+  I.click('강의');
 });
 
 Scenario('시나리오 #1 - 수강바구니 담기', ({ I }) => {
   // Given
-  I.login({ userName: 'test2', password: 'Password123!' });
-  I.click('강의');
+  I.click('강의 2');
 
   // WHEN
-  I.click('강의 2');
   I.click('수강신청 하기');
 
   // THEN
@@ -25,11 +26,9 @@ Scenario('시나리오 #1 - 수강바구니 담기', ({ I }) => {
 
 Scenario('시나리오 #2 - 수강 바구니 항목 삭제', ({ I }) => {
   // Given
-  I.login({ userName: 'test2', password: 'Password123!' });
-  I.click('강의');
+  I.click('강의 2');
 
   // WHEN
-  I.click('강의 2');
   I.click('수강신청 하기');
   I.click('𝖷');
 
@@ -39,8 +38,6 @@ Scenario('시나리오 #2 - 수강 바구니 항목 삭제', ({ I }) => {
 
 Scenario('시나리오 #3 - 여러개의 강의 담기', ({ I }) => {
   // Given
-  I.login({ userName: 'test2', password: 'Password123!' });
-  I.click('강의');
   I.click('강의 2');
   I.click('수강신청 하기');
   I.click('강의');
@@ -52,4 +49,15 @@ Scenario('시나리오 #3 - 여러개의 강의 담기', ({ I }) => {
   // THEN
   I.see('강의 2');
   I.see('강의 3');
+});
+
+Scenario('시나리오 #4 - 장바구니로 이동', ({ I }) => {
+  // Given
+  I.click('마이페이지');
+
+  // WHEN
+  I.click('수강바구니');
+
+  // THEN
+  I.see('결제하기');
 });

@@ -51,6 +51,14 @@ export default function App() {
         <Route path="/account/my-courses" element={<MyCoursesPage />} />
         <Route path="/carts" element={<CartPage />} />
         <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/courses/it-programming" element={<CoursesPage />} />
+        <Route path="/courses/it" element={<CoursesPage />} />
+        <Route path="/courses/data-science" element={<CoursesPage />} />
+        <Route path="/courses/game-dev" element={<CoursesPage />} />
+        <Route path="/courses/creative" element={<CoursesPage />} />
+        <Route path="/courses/business" element={<CoursesPage />} />
+        <Route path="/courses/career" element={<CoursesPage />} />
+        <Route path="/courses/life" element={<CoursesPage />} />
         <Route path="/courses/:courseId" element={<CoursePage />} />
         <Route path="/courses/:courseId/inquiries" element={<CoursePage />} />
         <Route path="/courses/:courseId/news" element={<CoursePage />} />

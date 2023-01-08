@@ -29,10 +29,23 @@ export default class ApiService {
     return data.myCourses;
   }
 
-  async fetchCourses() {
-    const { data } = await axios.get(`${baseUrl}/courses`);
+  async fetchCourses({ page, filter }) {
+    const filterQuery = filter
+      ? `?${['level', 'cost', 'skill', 'content']
+        .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
+        .filter((query) => query)
+        .join('&')}`
+      : '';
 
-    return data.courses;
+    const pageQuery = page ? `page=${page}` : '';
+
+    const query = [filterQuery, pageQuery]
+      .filter((elem) => elem)
+      .join('&');
+
+    const { data } = await axios.get(`${baseUrl}/courses${query}`);
+    const { courses, totalPages } = data;
+    return { courses, totalPages };
   }
 
   async fetchCourse({ courseId }) {
@@ -46,11 +59,11 @@ export default class ApiService {
   }
 
   async updateCourse({
-    title = '', category = '', description = '', thumbnailPath = '', price = 0,
-    status = '', courseId,
+    title = '', category = '', description = '', imagePath = '', price = 0,
+    status = '', level = '', skill = '', courseId,
   }) {
     const { data } = await axios.patch(`${baseUrl}/courses/${courseId}`, {
-      title, category, description, thumbnailPath, price, status,
+      title, category, description, imagePath, price, status, level, skill,
     }, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
@@ -492,6 +505,12 @@ export default class ApiService {
     });
 
     return data.itemIds;
+  }
+
+  async deleteSkill({ courseId, skill }) {
+    const { data } = await axios.delete(`${baseUrl}/courses/${courseId}/skills/${skill}`);
+
+    return data;
   }
 }
 

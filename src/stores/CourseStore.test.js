@@ -27,7 +27,7 @@ describe('CourseStore', () => {
     it('requests new Course data', async () => {
       await courseStore.save({ title: 'JPA' });
 
-      expect(courseStore.savedCourse.title).toBeTruthy();
+      expect(courseStore.course.title).toBeTruthy();
     });
   });
 
@@ -35,7 +35,7 @@ describe('CourseStore', () => {
     it('patches course data', async () => {
       await courseStore.update({ title: 'update', category: 'category', courseId: 1 });
 
-      expect(courseStore.savedCourse.title).toBe('update');
+      expect(courseStore.course.title).toBe('update');
     });
   });
 

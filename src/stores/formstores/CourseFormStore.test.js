@@ -49,6 +49,22 @@ describe('CourseFormStore', () => {
     });
   });
 
+  describe('changeLevel', () => {
+    it('changes level', () => {
+      courseFormStore.changeLevel('입문');
+
+      expect(courseFormStore.level).toBe('입문');
+    });
+  });
+
+  describe('changeSkill', () => {
+    it('changes skill', () => {
+      courseFormStore.changeSkill('js');
+
+      expect(courseFormStore.skill).toBe('js');
+    });
+  });
+
   describe('validateTitle', () => {
     context('title length is less than 5', () => {
       it('sets error message', () => {
@@ -106,12 +122,16 @@ describe('CourseFormStore', () => {
       courseFormStore.changeCategory('hi');
       courseFormStore.changeDescription('hi');
       courseFormStore.changeThumbnailPath('hi');
+      courseFormStore.changeLevel('hi');
+      courseFormStore.changeSkill('hi');
       courseFormStore.reset();
 
       expect(courseFormStore.title).toBe('');
       expect(courseFormStore.category).toBe('');
       expect(courseFormStore.description).toBe('');
       expect(courseFormStore.thumbnail).toBe('');
+      expect(courseFormStore.level).toBe('');
+      expect(courseFormStore.skill).toBe('');
     });
   });
 });
