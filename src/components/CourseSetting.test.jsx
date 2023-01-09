@@ -10,7 +10,7 @@ const mockSave = jest.fn();
 
 jest.mock('../hooks/useCourseStore', () => () => ({
   save: mockSave,
-  savedCourse: {
+  course: {
     id: 1,
   },
 }));

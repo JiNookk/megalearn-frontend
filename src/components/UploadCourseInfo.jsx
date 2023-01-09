@@ -3,13 +3,10 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useCourseFormStore from '../hooks/useCourseFormStore';
 import useCourseStore from '../hooks/useCourseStore';
+import SecondaryButton from './ui/SecondaryButton';
 
 export default function UploadCourseInfo() {
   const navigate = useNavigate();
-
-  // const { state } = useLocation();
-  // const { courseId } = state;
-
   const courseId = window.location.pathname.split('/')[2];
 
   const courseFormStore = useCourseFormStore();
@@ -18,13 +15,13 @@ export default function UploadCourseInfo() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const course = ['title', 'category'].reduce((acc, key) => ({
+    const course = ['title', 'category', 'level'].reduce((acc, key) => ({
       ...acc,
       [key]: courseFormStore[key],
     }), {});
 
-    if (course.title && course.category) {
-      courseStore.update({ ...course, courseId });
+    if (course.title && course.category && course.level) {
+      courseStore.update({ ...courseStore.course, ...course, courseId });
 
       navigate(`/courses/${courseId}/edit/description`, {
         state: { courseId },
@@ -32,17 +29,24 @@ export default function UploadCourseInfo() {
     }
   };
 
+  const handleAddSkill = () => {
+    const { skill } = courseFormStore;
+    courseStore.update({ ...courseStore.course, skill, courseId });
+
+    courseFormStore.changeSkill('');
+  };
+
+  const handleDeleteSkill = (skill) => {
+    courseStore.deleteSkill({ courseId, skill });
+  };
+
   useEffect(() => {
     courseStore.fetchCourse({ courseId });
   }, []);
 
-  // useEffect(() => {
-  //   console.log(state);
-  // }, []);
-
   useEffect(() => {
-    courseFormStore.changeTitle(courseStore.savedCourse.title);
-    courseFormStore.changeCategory(courseStore.savedCourse.category);
+    courseFormStore.changeTitle(courseStore.course.title);
+    courseFormStore.changeCategory(courseStore.course.category);
   }, []);
 
   return (
@@ -61,6 +65,32 @@ export default function UploadCourseInfo() {
         />
       </div>
       <div>
+        <label htmlFor="input-skills">이런 걸 배울 수 있어요</label>
+        <input
+          id="input-skills"
+          type="text"
+          placeholder="ex) 리액트 네이티브 개발"
+          value={courseFormStore.skill}
+          onChange={(e) => courseFormStore.changeSkill(e.target.value)}
+        />
+        <SecondaryButton type="button" onClick={handleAddSkill}>
+          추가하기
+        </SecondaryButton>
+      </div>
+      <ul>
+        {courseStore.course.skillSets
+          ?.map((skill, i) => (
+            <li key={i}>
+              <p>
+                {skill}
+              </p>
+              <button type="button" onClick={() => handleDeleteSkill(skill)}>
+                🗑
+              </button>
+            </li>
+          ))}
+      </ul>
+      <div>
         <label htmlFor="input-category">카테고리</label>
         {['개발 프로그래밍', '보안 네트워크', '데이터 사이언스', '게임 개발', '크리에이티브',
           '직무 마케팅', '학문 외국어', '커리어', '교양', '그 외']
@@ -71,6 +101,19 @@ export default function UploadCourseInfo() {
               type="button"
               value={category}
               onClick={(e) => courseFormStore.changeCategory(e.target.value)}
+            />
+          ))}
+      </div>
+      <div>
+        <label htmlFor="input-level">강의 수준</label>
+        {['입문', '초급', '중급이상']
+          .map((level, i) => (
+            <input
+              key={i}
+              id="input-level"
+              type="button"
+              value={level}
+              onClick={(e) => courseFormStore.changeLevel(e.target.value)}
             />
           ))}
       </div>

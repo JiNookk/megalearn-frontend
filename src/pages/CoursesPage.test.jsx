@@ -1,11 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 import CoursesPage from './CoursesPage';
 
 test('CoursesPage', async () => {
   render((
     <MemoryRouter>
-      <CoursesPage />
+      <ThemeProvider theme={defaultTheme}>
+        <CoursesPage />
+      </ThemeProvider>
     </MemoryRouter>
   ));
 

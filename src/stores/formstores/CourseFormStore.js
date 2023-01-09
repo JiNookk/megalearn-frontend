@@ -9,6 +9,8 @@ export default class CourseFormStore extends Store {
     this.description = '';
     this.price = 0;
     this.thumbnail = '';
+    this.level = '';
+    this.skill = '';
     this.error = { message: '' };
   }
 
@@ -42,6 +44,18 @@ export default class CourseFormStore extends Store {
     this.publish();
   }
 
+  changeLevel(level) {
+    this.level = level;
+
+    this.publish();
+  }
+
+  changeSkill(skill) {
+    this.skill = skill;
+
+    this.publish();
+  }
+
   validateTitle() {
     this.error.message = this.title.length < 5 ? '5자 이상 작성해주세요.' : '';
 
@@ -68,6 +82,8 @@ export default class CourseFormStore extends Store {
     this.description = '';
     this.thumbnail = '';
     this.price = 0;
+    this.level = '';
+    this.skill = '';
 
     this.publish();
   }

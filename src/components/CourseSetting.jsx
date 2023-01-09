@@ -20,7 +20,7 @@ export default function CourseSetting() {
       [key]: courseFormStore[key],
     }), {});
 
-    courseStore.update({ courseId, ...updated });
+    courseStore.update({ ...courseStore.course, courseId, ...updated });
 
     event.preventDefault();
   };

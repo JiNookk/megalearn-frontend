@@ -23,7 +23,7 @@ export default function CourseTitlePage() {
       }), {});
 
       await courseStore.save(course);
-      const courseId = courseStore.savedCourse.id;
+      const courseId = courseStore.course.id;
 
       await sectionStore.save({ courseId, title: '첫 번째 섹션의 제목을 입력해주세요.', goal: '' });
       const sectionId = sectionStore.sections[sectionStore.sections.length - 1].id;

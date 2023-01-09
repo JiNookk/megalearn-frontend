@@ -21,7 +21,7 @@ export default function UploadDescription() {
     }), {});
 
     if (course.description) {
-      courseStore.update({ ...course, courseId });
+      courseStore.update({ ...courseStore.course, ...course, courseId });
 
       navigate(`/courses/${courseId}/edit/curriculum`, {
         state: { courseId },
@@ -34,7 +34,7 @@ export default function UploadDescription() {
   }, []);
 
   useEffect(() => {
-    courseFormStore.changeDescription(courseStore.savedCourse.description);
+    courseFormStore.changeDescription(courseStore.course.description);
   }, []);
 
   return (

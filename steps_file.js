@@ -29,10 +29,10 @@ module.exports = function () {
       this.amOnPage('http://localhost:8000/backdoor/setup-inquiry-db');
     },
 
-    setupCourseDB({ count }) {
+    setupCourseDB({ count } = {}) {
       return count
-        ? this.amOnPage('http://localhost:8000/backdoor/setup-course-db')
-        : this.amOnPage(`http://localhost:8000/backdoor/setup-course-db?count=${count}`);
+        ? this.amOnPage(`http://localhost:8000/backdoor/setup-course-db?count=${count}`)
+        : this.amOnPage('http://localhost:8000/backdoor/setup-course-db');
     },
 
     setupLectureDB() {
