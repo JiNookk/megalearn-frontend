@@ -7,8 +7,8 @@ describe('CourseStore', () => {
     courseStore = new CourseStore();
   });
 
-  describe('fetchMyCourses', () => {
-    it('loads my courses data', async () => {
+  describe('fetchCourse', () => {
+    it('loads course data', async () => {
       await courseStore.fetchCourse({ courseId: 1 });
 
       expect(courseStore.course.title).toBeTruthy();
@@ -55,7 +55,7 @@ describe('CourseStore', () => {
     it('requests my courses data', async () => {
       await courseStore.fetchMyCourses();
 
-      expect(courseStore.myCourses.length).toBeTruthy();
+      expect(courseStore.courses.length).toBeTruthy();
     });
   });
 
@@ -64,6 +64,14 @@ describe('CourseStore', () => {
       await courseStore.fetchUploadedCourses();
 
       expect(courseStore.uploadedCourses.length).toBeTruthy();
+    });
+  });
+
+  describe('fetchWishList', () => {
+    it('loads my wish list', async () => {
+      await courseStore.fetchWishList();
+
+      expect(courseStore.courses.length).toBeTruthy();
     });
   });
 });

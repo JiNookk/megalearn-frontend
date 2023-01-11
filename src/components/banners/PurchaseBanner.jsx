@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useCartStore from '../../hooks/useCartStore';
 import useCourseStore from '../../hooks/useCourseStore';
 import useLectureStore from '../../hooks/useLectureStore';
+import useLikeStore from '../../hooks/useLikeStore';
 import numberFormat from '../../utils/numberFormat';
 import PrimaryButton from '../ui/PrimaryButton';
 import SecondaryButton from '../ui/SecondaryButton';
@@ -20,13 +21,6 @@ const Panel = styled.div`
   margin-block-start: 6rem;
   border: 1px solid #f1f3f5;  
   border-radius: .5rem;
-`;
-
-const CourseInformation = styled.ul`
-  list-style: disc;
-  width: 100%;
-  padding: 2rem 2rem;
-  background: #f8f9fa;
 `;
 
 const PurchaseWindow = styled.div`
@@ -47,6 +41,32 @@ const PurchaseWindow = styled.div`
   }
 `;
 
+const Like = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-block-start: 1.5rem;
+
+  button{
+    border: none;
+    background: none;
+    padding: 1rem;
+    margin: 0;
+  }
+
+  p{
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+`;
+
+const CourseInformation = styled.ul`
+  list-style: disc;
+  width: 100%;
+  padding: 2rem 2rem;
+  background: #f8f9fa;
+`;
+
 export default function PurchaseBanner() {
   const navigate = useNavigate();
 
@@ -55,6 +75,7 @@ export default function PurchaseBanner() {
   const courseStore = useCourseStore();
   const lectureStore = useLectureStore();
   const cartStore = useCartStore();
+  const likeStore = useLikeStore();
 
   const handleAddCourseToCart = () => {
     cartStore.addItem({ productId: courseStore.course.id });
@@ -66,8 +87,14 @@ export default function PurchaseBanner() {
     navigate('/carts');
   };
 
+  const handleToggleLike = () => {
+    likeStore.toggleLike({ id: likeStore.like.id });
+  };
+
   useEffect(() => {
     cartStore.fetchCart();
+    likeStore.fetchCourseLikes();
+    likeStore.fetchMyCourseLike({ courseId });
   }, []);
 
   return (
@@ -97,8 +124,19 @@ export default function PurchaseBanner() {
                 </PrimaryButton>
               )}
             </>
-
           )}
+          <Like>
+            <button type="button" onClick={handleToggleLike}>
+              {likeStore.like.clicked ? '❤️' : '🤍'}
+            </button>
+            {' '}
+            <p>
+              {likeStore.likes
+                .filter((like) => like.courseId === +courseId)
+                .filter((like) => like.clicked)
+                .length}
+            </p>
+          </Like>
         </PurchaseWindow>
         <CourseInformation>
           <li>

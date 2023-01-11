@@ -1,15 +1,21 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import MyCoursesPage from './MyCoursesPage';
+import MyPosts from './MyPosts';
 
-test('MyCoursesPage', async () => {
+test('MyPosts', async () => {
   render((
     <MemoryRouter>
-      <MyCoursesPage />
+      <MyPosts />
     </MemoryRouter>
   ));
 
+  screen.getByText('전체');
+  screen.getByText('해결');
+  screen.getByText('미해결');
+
   await waitFor(() => {
+    screen.getByText('title');
+    screen.getByText(/tester/);
     screen.getByText('강의 1');
   });
 });

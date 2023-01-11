@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import SubTitle from '../components/ui/\bSubTitle';
+import SubTitle from '../components/ui/SubTitle';
 import Image from '../components/ui/Image';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import SecondaryButton from '../components/ui/SecondaryButton';

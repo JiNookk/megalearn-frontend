@@ -16,8 +16,20 @@ export default class LectureStore extends Store {
     this.publish();
   }
 
-  async fetchLectures({ courseId }) {
-    this.lectures = await apiService.fetchLectures({ courseId });
+  async fetchLectures() {
+    this.lectures = await apiService.fetchLectures();
+
+    this.publish();
+  }
+
+  async fetchMyLectures() {
+    this.lectures = await apiService.fetchMyLectures();
+
+    this.publish();
+  }
+
+  async fetchLecturesByCourseId({ courseId }) {
+    this.lectures = await apiService.fetchLecturesByCourseId({ courseId });
 
     this.publish();
   }

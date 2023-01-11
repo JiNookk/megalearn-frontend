@@ -48,8 +48,8 @@ export default function UploadCurriCulum() {
 
   useEffect(() => {
     courseStore.fetchCourse({ courseId });
-    lectureStore.fetchLectures({ courseId });
-    sectionStore.fetchSections({ courseId });
+    lectureStore.fetchLecturesByCourseId({ courseId });
+    sectionStore.fetchSectionsByCourseId({ courseId });
   }, []);
 
   return (

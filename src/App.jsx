@@ -11,7 +11,6 @@ import InstructorPage from './pages/InstructorPage';
 import LecturePage from './pages/LecturePage';
 import LoginPage from './pages/LoginPage';
 import MyAccountPage from './pages/MyAccountPage';
-import MyCoursesPage from './pages/MyCoursesPage';
 import darkTheme from './styles/darkTheme';
 import defaultTheme from './styles/defaultTheme';
 import GlobalStyle from './styles/GlobalStyle';
@@ -29,6 +28,9 @@ import Profits from './components/Profits';
 import CoursesPage from './pages/CoursesPage';
 import CartPage from './pages/CartPage';
 import PurchaseSuccessPage from './pages/PurchaseSuccessPage';
+import NotePage from './pages/NotePage';
+import InquiryPage from './pages/InquiryPage';
+import OrderPage from './pages/OrderPage';
 
 export default function App() {
   const [themeName] = useLocalStorage('theme', 'default');
@@ -48,7 +50,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/account/dashboard" element={<MyAccountPage />} />
-        <Route path="/account/my-courses" element={<MyCoursesPage />} />
+        <Route path="/account/my-courses" element={<MyAccountPage />} />
+        <Route path="/account/my-notes" element={<MyAccountPage />} />
+        <Route path="/account/my-posts" element={<MyAccountPage />} />
+        <Route path="/account/likes" element={<MyAccountPage />} />
         <Route path="/carts" element={<CartPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="/courses/it-programming" element={<CoursesPage />} />
@@ -70,12 +75,15 @@ export default function App() {
         <Route path="/courses/:courseId/edit/cover_image" element={<CreateCoursePage Component={UploadCoverImage} />} />
         <Route path="/courses/:courseId/edit/course_setting" element={<CreateCoursePage Component={CourseSetting} />} />
         <Route path="/create_course" element={<CourseTitlePage />} />
+        <Route path="/inquiries/:inquiryId" element={<InquiryPage />} />
         <Route path="/instructor" element={<InstructorPage Component={InstructorDashBoard} />} />
         <Route path="/instructor/questions" element={<InstructorPage Component={Questions} />} />
         <Route path="/instructor/courses" element={<InstructorPage Component={UploadedCourses} />} />
         <Route path="/instructor/ratings" element={<InstructorPage Component={RatingList} />} />
         <Route path="/instructor/profits" element={<InstructorPage Component={Profits} />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/mynote" element={<NotePage />} />
+        <Route path="/my-orders" element={<OrderPage />} />
         <Route path="/purchaseSuccess" element={<PurchaseSuccessPage />} />
       </Routes>
     </ThemeProvider>

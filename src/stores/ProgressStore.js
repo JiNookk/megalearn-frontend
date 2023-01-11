@@ -7,6 +7,7 @@ export default class ProgressStore extends Store {
 
     this.progress = {};
     this.progresses = [];
+    this.weeklyProgresses = [];
   }
 
   async fetchProgress({ lectureId }) {
@@ -21,6 +22,12 @@ export default class ProgressStore extends Store {
     this.publish();
   }
 
+  async fetchWeeklyProgresses({ date }) {
+    this.weeklyProgresses = await apiService.fetchWeeklyProgresses({ date });
+
+    this.publish();
+  }
+
   async fetchProgressesByCourseId({ courseId }) {
     this.progresses = await apiService.fetchProgressesByCourseId({ courseId });
 
@@ -29,6 +36,12 @@ export default class ProgressStore extends Store {
 
   async completeLecture({ progressId }) {
     this.progress = await apiService.completeLecture({ progressId });
+
+    this.publish();
+  }
+
+  async updateTime({ time, progressId }) {
+    this.progress = await apiService.updateTime({ time, progressId });
 
     this.publish();
   }

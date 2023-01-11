@@ -58,8 +58,8 @@ export default function CurriCulum() {
   const lectureStore = useLectureStore();
 
   useEffect(() => {
-    sectionStore.fetchSections({ courseId });
-    lectureStore.fetchLectures({ courseId });
+    sectionStore.fetchSectionsByCourseId({ courseId });
+    lectureStore.fetchLecturesByCourseId({ courseId });
   }, []);
 
   return (

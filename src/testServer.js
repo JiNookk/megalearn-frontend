@@ -5,39 +5,22 @@ import { setupServer } from 'msw/node';
 import baseUrl from './config';
 
 const server = setupServer(
+  rest.post(`${baseUrl}/courses`, async (req, res, ctx) => {
+    const { title } = await req.json();
+
+    return res(ctx.json({
+      id: 2,
+      title,
+    }));
+  }),
+
   rest.get(`${baseUrl}/account/my-courses`, (req, res, ctx) => res(ctx.json({
-    myCourses: [{
+    courses: [{
       id: 1, title: '강의 1', imagePath: '이미지 패스', progress: 50,
     }, {
       id: 2, title: '강의 2', imagePath: '이미지 패스', progress: 70,
     }],
   }))),
-
-  rest.get(`${baseUrl}/courses/:courseId`, (req, res, ctx) => {
-    const { courseId } = req.params;
-
-    if (courseId === '1') {
-      return res(ctx.json({
-        courseId,
-        recentlySeenLectureId: 135,
-        price: 35000,
-        category: '개발,프로그래밍 > 백엔드',
-        title: '강의 1',
-        stars: 5.0,
-        level: '입문',
-        studentCount: 1234,
-        instructor: '오진성',
-        hashTags: ['단백질', '득근'],
-        news: [{
-          title: 'news title', createdAt: '2022-12-26T01:01:00', content: 'content1',
-        }, {
-          title: 'News2', createdAt: '2022-12-31T01:01:00', content: 'content2',
-        }],
-      }));
-    }
-
-    return res(ctx.status(404));
-  }),
 
   rest.get(`${baseUrl}/courses`, (req, res, ctx) => res(ctx.json({
     courses: [{
@@ -76,13 +59,67 @@ const server = setupServer(
     }],
   }))),
 
-  rest.post(`${baseUrl}/courses`, async (req, res, ctx) => {
-    const { title } = await req.json();
-
-    return res(ctx.json({
+  rest.get(`${baseUrl}/courses/wishes`, (req, res, ctx) => res(ctx.json({
+    courses: [{
+      id: 1,
+      recentlySeenLectureId: 135,
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 1',
+      stars: 5.0,
+      price: 35000,
+      studentCount: 1234,
+      instructor: '오진성',
+      level: '입문',
+      hashTags: ['단백질', '득근'],
+    }, {
       id: 2,
-      title,
-    }));
+      recentlySeenLectureId: 135,
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 2',
+      stars: 5.0,
+      price: 49000,
+      studentCount: 1234,
+      instructor: '오진성',
+      level: '초급',
+      hashTags: ['단백질', '득근'],
+    }, {
+      id: 3,
+      recentlySeenLectureId: 135,
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 3',
+      stars: 5.0,
+      price: 24000,
+      studentCount: 1234,
+      instructor: '오진성',
+      level: '중급이상',
+      hashTags: ['단백질', '득근'],
+    }],
+  }))),
+
+  rest.get(`${baseUrl}/courses/:courseId`, (req, res, ctx) => {
+    const { courseId } = req.params;
+
+    if (courseId === '1') {
+      return res(ctx.json({
+        courseId,
+        recentlySeenLectureId: 135,
+        price: 35000,
+        category: '개발,프로그래밍 > 백엔드',
+        title: '강의 1',
+        stars: 5.0,
+        level: '입문',
+        studentCount: 1234,
+        instructor: '오진성',
+        hashTags: ['단백질', '득근'],
+        news: [{
+          title: 'news title', createdAt: '2022-12-26T01:01:00', content: 'content1',
+        }, {
+          title: 'News2', createdAt: '2022-12-31T01:01:00', content: 'content2',
+        }],
+      }));
+    }
+
+    return res(ctx.status(404));
   }),
 
   rest.patch(`${baseUrl}/courses/:courseId`, async (req, res, ctx) => {
@@ -144,36 +181,71 @@ const server = setupServer(
     return res(ctx.status(404));
   }),
 
-  rest.get(`${baseUrl}/lectures`, (req, res, ctx) => {
-    const [, authorization] = req.headers;
-    const accessToken = authorization[1];
+  rest.get(`${baseUrl}/lectures`, (req, res, ctx) => res(ctx.json({
+    lectures: [{
+      id: 1,
+      title: '테스트 1강',
+      videoUrl: '8AmBytdl7BM',
+      courseId: 1,
+      sectionId: 1,
+    }, {
+      id: 2,
+      title: '테스트 2강',
+      videoUrl: '1klKQndsi',
+      courseId: 2,
+      sectionId: 3,
+    }, {
+      id: 3,
+      title: '테스트 3강',
+      videoUrl: 'asdfhi12h',
+      courseId: 3,
+      sectionId: 3,
+    }],
+  }))),
 
-    if (accessToken) {
-      return res(ctx.json({
-        lectures: [{
-          id: 1,
-          title: '테스트 1강',
-          videoUrl: '8AmBytdl7BM',
-          courseId: 1,
-          sectionId: 1,
-        }, {
-          id: 2,
-          title: '테스트 2강',
-          videoUrl: '1klKQndsi',
-          courseId: 2,
-          sectionId: 3,
-        }, {
-          id: 3,
-          title: '테스트 3강',
-          videoUrl: 'asdfhi12h',
-          courseId: 3,
-          sectionId: 3,
-        }],
-      }));
-    }
+  rest.get(`${baseUrl}/lectures/me`, (req, res, ctx) => res(ctx.json({
+    lectures: [{
+      id: 1,
+      title: '테스트 1강',
+      videoUrl: '8AmBytdl7BM',
+      courseId: 1,
+      sectionId: 1,
+    }, {
+      id: 2,
+      title: '테스트 2강',
+      videoUrl: '1klKQndsi',
+      courseId: 2,
+      sectionId: 3,
+    }, {
+      id: 3,
+      title: '테스트 3강',
+      videoUrl: 'asdfhi12h',
+      courseId: 3,
+      sectionId: 3,
+    }],
+  }))),
 
-    return res(ctx.status(404));
-  }),
+  rest.get(`${baseUrl}/lectures/instructor`, (req, res, ctx) => res(ctx.json({
+    lectures: [{
+      id: 1,
+      title: '테스트 1강',
+      videoUrl: '8AmBytdl7BM',
+      courseId: 1,
+      sectionId: 1,
+    }, {
+      id: 2,
+      title: '테스트 2강',
+      videoUrl: '1klKQndsi',
+      courseId: 2,
+      sectionId: 3,
+    }, {
+      id: 3,
+      title: '테스트 3강',
+      videoUrl: 'asdfhi12h',
+      courseId: 3,
+      sectionId: 3,
+    }],
+  }))),
 
   rest.get(`${baseUrl}/courses/:courseId/lectures/:lectureId`, (req, res, ctx) => {
     const { courseId, lectureId } = req.params;
@@ -264,6 +336,7 @@ const server = setupServer(
     inquiries: [{
       id: 1,
       publisher: '작성자 1',
+      hits: 0,
       courseTitle: '강의 1',
       lectureTitle: '수업 1',
       title: '제목 1',
@@ -310,6 +383,7 @@ const server = setupServer(
     inquiries: [{
       id: 1,
       publisher: '작성자 1',
+      hits: 0,
       courseTitle: '강의 1',
       lectureTitle: '수업 1',
       title: '제목 1',
@@ -324,6 +398,7 @@ const server = setupServer(
     }, {
       id: 2,
       publisher: '작성자 2',
+      hits: 0,
       courseTitle: '강의 2',
       lectureTitle: '수업 2',
       title: '제목 2',
@@ -338,6 +413,7 @@ const server = setupServer(
     }, {
       id: 3,
       publisher: '작성자 3',
+      hits: 0,
       courseTitle: '강의 3',
       lectureTitle: '수업 3',
       lectureTime: { minute: 1, second: 24 },
@@ -352,16 +428,34 @@ const server = setupServer(
     }],
   }))),
 
+  rest.get(`${baseUrl}/inquiries/me`, (req, res, ctx) => res(ctx.json({
+    inquiries: [{
+      title: 'title',
+      publisher: 'tester',
+      hits: 0,
+      hashTag: 'hashTag',
+      content: 'JPA',
+      anonymous: true,
+      id: 1,
+      courseId: 1,
+      time: Date(),
+      lectureTime: { minute: 1, second: 24 },
+    }],
+  }))),
+
   rest.get(`${baseUrl}/inquiries/:inquiryId`, (req, res, ctx) => {
     const { inquiryId } = req.params;
 
-    if (inquiryId === '1') {
+    if (+inquiryId === 1) {
       return res(ctx.json({
+        title: '질문 1',
         publisher: 'tester',
+        hits: 0,
         publishTime: moment(),
         hashTags: ['#JPA'],
         content: '강의에서 사용하는 의존성 정보가 궁금합니다~',
         lectureTime: { minute: 1, second: 24 },
+        status: { solved: 'processing' },
         emoticons: ['🤔', '👏'],
       }));
     }
@@ -377,6 +471,7 @@ const server = setupServer(
         inquiries: [{
           title: 'title',
           publisher: 'tester',
+          hits: 0,
           hashTag: 'hashTag',
           content: 'JPA',
           anonymous: true,
@@ -408,6 +503,31 @@ const server = setupServer(
 
     return res(ctx.json({
       inquiryId, title, hashTags, content, minute, second,
+    }));
+  }),
+
+  rest.patch(`${baseUrl}/inquiries/:inquiryId/solved`, async (req, res, ctx) => {
+    const { inquiryId } = req.params;
+
+    return res(ctx.json({
+      inquiryId, status: { solved: 'completed' },
+    }));
+  }),
+
+  rest.patch(`${baseUrl}/inquiries/:inquiryId/hits`, async (req, res, ctx) => {
+    const { inquiryId } = req.params;
+
+    return res(ctx.json({
+      id: inquiryId,
+      title: '질문 1',
+      publisher: 'tester',
+      hits: 1,
+      publishTime: moment(),
+      hashTags: ['#JPA'],
+      content: '강의에서 사용하는 의존성 정보가 궁금합니다~',
+      lectureTime: { minute: 1, second: 24 },
+      status: { solved: 'processing' },
+      emoticons: ['🤔', '👏'],
     }));
   }),
 
@@ -452,6 +572,20 @@ const server = setupServer(
     return res(ctx.status(404));
   }),
 
+  rest.get(`${baseUrl}/notes/me`, (req, res, ctx) => res(ctx.json({
+    notes: [{
+      content: 'content',
+      lectureTime: { minute: 1, second: 24 },
+      lectureId: 1,
+      id: 1,
+    }, {
+      content: 'content2',
+      lectureTime: { minute: 2, second: 24 },
+      lectureId: 1,
+      id: 2,
+    }],
+  }))),
+
   rest.patch(`${baseUrl}/notes/:noteId`, async (req, res, ctx) => {
     const { noteId } = req.params;
     const { content } = await req.json();
@@ -479,6 +613,27 @@ const server = setupServer(
       title,
     }));
   }),
+
+  rest.get(`${baseUrl}/sections`, (req, res, ctx) => res(ctx.json({
+    sections: [{
+      id: 1,
+      title: '섹션 1',
+      progresses: [{
+        id: 1,
+        title: '테스트 1강',
+      }, {
+        id: 2,
+        title: '테스트 2강',
+      }],
+    }, {
+      id: 2,
+      title: '섹션 2',
+      progresses: [{
+        id: 3,
+        title: '테스트 3강',
+      }],
+    }],
+  }))),
 
   rest.get(`${baseUrl}/courses/:courseId/sections`, (req, res, ctx) => {
     const { courseId } = req.params;
@@ -602,6 +757,22 @@ const server = setupServer(
     return res(ctx.status(404));
   }),
 
+  rest.patch(`${baseUrl}/progresses/:progressId/time`, async (req, res, ctx) => {
+    const { progressId } = req.params;
+    const { second, minute } = await req.json();
+
+    if (+progressId === 1) {
+      return res(ctx.json({
+        id: 1,
+        title: '테스트 1강',
+        status: 'completed',
+        lectureTime: { second, minute },
+      }));
+    }
+
+    return res(ctx.status(404));
+  }),
+
   rest.get(`${baseUrl}/instructor/my-courses`, (req, res, ctx) => {
     const [, authorization] = req.headers;
 
@@ -694,6 +865,35 @@ const server = setupServer(
 
   rest.post(`${baseUrl}/payments/kakao-ready`, (req, res, ctx) => res(ctx.json({
     paymentUrl: 'http://localhost:8000',
+  }))),
+
+  rest.get(`${baseUrl}/payments/me`, (req, res, ctx) => res(ctx.json({
+    payments: [{
+      id: 1,
+      courseId: 1,
+      cost: 35_000,
+      courseTitle: '테스트 1강',
+    }, {
+      id: 2,
+      courseId: 3,
+      cost: 40_000,
+      courseTitle: '테스트 3강',
+    }, {
+      id: 3,
+      courseId: 2,
+      cost: 24_000,
+      courseTitle: '테스트 2강',
+    }, {
+      id: 4,
+      courseId: 2,
+      cost: 24_000,
+      courseTitle: '테스트 2강',
+    }, {
+      id: 5,
+      courseId: 1,
+      cost: 35_000,
+      courseTitle: '테스트 1강',
+    }],
   }))),
 
   rest.get(`${baseUrl}/instructor/payments`, (req, res, ctx) => {
@@ -802,6 +1002,26 @@ const server = setupServer(
 
     return res(ctx.status(404));
   }),
+
+  rest.get(`${baseUrl}/likes`, (req, res, ctx) => res(ctx.json({
+    likes: [{
+      courseId: 1,
+      clicked: false,
+    }, {
+      courseId: 2,
+      clicked: false,
+    }],
+  }))),
+
+  rest.get(`${baseUrl}/courses/:courseId/likes/me`, (req, res, ctx) => res(ctx.json({
+    courseId: 1,
+    clicked: false,
+  }))),
+
+  rest.patch(`${baseUrl}/likes/:likeId`, (req, res, ctx) => res(ctx.json({
+    courseId: 1,
+    clicked: true,
+  }))),
 );
 
 export default server;

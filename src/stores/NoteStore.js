@@ -6,6 +6,7 @@ export default class NoteStore extends Store {
     super();
 
     this.notes = [];
+    this.weeklyNotes = [];
   }
 
   async save({ lectureId, content, lectureTime }) {
@@ -16,8 +17,20 @@ export default class NoteStore extends Store {
     this.publish();
   }
 
-  async fetchNotes({ lectureId }) {
-    this.notes = await apiService.fetchNotes({ lectureId });
+  async fetchNotesByLectureId({ lectureId }) {
+    this.notes = await apiService.fetchNotesByLectureId({ lectureId });
+
+    this.publish();
+  }
+
+  async fetchMyNotes() {
+    this.notes = await apiService.fetchMyNotes();
+
+    this.publish();
+  }
+
+  async fetchWeeklyNotes({ date }) {
+    this.weeklyNotes = await apiService.fetchWeeklyNotes({ date });
 
     this.publish();
   }
@@ -46,7 +59,8 @@ export default class NoteStore extends Store {
   }
 
   cancelUpdate() {
-    this.notes = [...this.notes].map((note) => ({ ...note, status: 'normal' }));
+    this.notes = [...this.notes]
+      .map((note) => ({ ...note, status: 'normal' }));
 
     this.publish();
   }

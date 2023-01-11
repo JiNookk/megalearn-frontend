@@ -16,6 +16,12 @@ export default class PaymentStore extends Store {
     this.publish();
   }
 
+  async fetchMyPayments() {
+    this.payments = await apiService.fetchMyPayments();
+
+    this.publish();
+  }
+
   async fetchMonthlyPayments() {
     this.recentPayments = await apiService.fetchMonthlyPayments();
 

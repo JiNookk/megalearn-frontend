@@ -14,9 +14,9 @@ describe('SectionStore', () => {
     sectionStore = new SectionStore();
   });
 
-  describe('fetchSections', () => {
+  describe('fetchSectionsByCourseId', () => {
     it('loads note data', async () => {
-      await sectionStore.fetchSections({ courseId: 1 });
+      await sectionStore.fetchSectionsByCourseId({ courseId: 1 });
 
       const { sections } = sectionStore;
 
@@ -36,7 +36,7 @@ describe('SectionStore', () => {
 
   describe('update', () => {
     it('requests new section data', async () => {
-      await sectionStore.fetchSections({ courseId: 1 });
+      await sectionStore.fetchSectionsByCourseId({ courseId: 1 });
       await sectionStore.update({
         title: 'update',
         goal: 'goal',
@@ -50,7 +50,7 @@ describe('SectionStore', () => {
 
   describe('delete', () => {
     it('deletes section data', async () => {
-      await sectionStore.fetchSections({ courseId: 1 });
+      await sectionStore.fetchSectionsByCourseId({ courseId: 1 });
 
       expect(sectionStore.sections.length).toBe(2);
 

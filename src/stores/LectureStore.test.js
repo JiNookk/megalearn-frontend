@@ -31,7 +31,7 @@ describe('LectureStore', () => {
 
   describe('update', () => {
     it('requests new lecture data', async () => {
-      await lectureStore.fetchLectures({ courseId: 1 });
+      await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
       await lectureStore.update({
         title: 'update',
         videoUrl: 'videourl',
@@ -45,7 +45,7 @@ describe('LectureStore', () => {
 
   describe('delete', () => {
     it('deletes lecture data', async () => {
-      await lectureStore.fetchLectures({ courseId: 1 });
+      await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
       expect(lectureStore.lectures.length).toBe(3);
 
@@ -55,9 +55,9 @@ describe('LectureStore', () => {
     });
   });
 
-  describe('fetchLectures', () => {
+  describe('fetchLecturesByCourseId', () => {
     it('requests lecture data', async () => {
-      await lectureStore.fetchLectures({ courseId: 1 });
+      await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
       const { lectures } = lectureStore;
 
@@ -78,7 +78,7 @@ describe('LectureStore', () => {
   describe('previousLecture', () => {
     context('when previous lecture is present', () => {
       it('returns previous lecture data', async () => {
-        await lectureStore.fetchLectures({ courseId: 1 });
+        await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
         const previousLecture = lectureStore.previousLecture({ lectureId: 2 });
 
@@ -88,7 +88,7 @@ describe('LectureStore', () => {
 
     context('when previous lecture is not present', () => {
       it('returns blank object', async () => {
-        await lectureStore.fetchLectures({ courseId: 1 });
+        await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
         const previousLecture = lectureStore.previousLecture({ lectureId: 1 });
 
@@ -100,7 +100,7 @@ describe('LectureStore', () => {
   describe('nextLecture', () => {
     context('when next lecture is present', () => {
       it('returns next lecture data', async () => {
-        await lectureStore.fetchLectures({ courseId: 1 });
+        await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
         const nextLecture = lectureStore.nextLecture({ lectureId: 1 });
 
@@ -110,7 +110,7 @@ describe('LectureStore', () => {
 
     context('when next lecture is not present', () => {
       it('returns blank object', async () => {
-        await lectureStore.fetchLectures({ courseId: 1 });
+        await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
         const nextLecture = lectureStore.nextLecture({ lectureId: 3 });
 

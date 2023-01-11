@@ -86,7 +86,7 @@ export default function CourseDashBoard() {
   useEffect(() => {
     inquiryStore.fetchInquiriesByCourseId({ courseId });
     progressStore.fetchProgresses();
-    lectureStore.fetchLectures({ courseId });
+    lectureStore.fetchLecturesByCourseId({ courseId });
   }, []);
 
   return (
