@@ -6,10 +6,11 @@ export default class VideoStore extends Store {
     super();
 
     this.ref = React.createRef();
-    this.isPlay = false;
+    this.isPlay = true;
     this.control = true;
     this.width = '90%';
     this.height = '90vh';
+    this.lectureTime = {};
   }
 
   play({ lectureTime }) {
@@ -22,6 +23,12 @@ export default class VideoStore extends Store {
     const currentTime = Math.floor(this.ref.current?.getCurrentTime());
 
     return { minute: Math.floor(currentTime / 60), second: currentTime % 60 };
+  }
+
+  setLectureTime({ lectureTime }) {
+    this.lectureTime = lectureTime;
+
+    this.publish();
   }
 }
 

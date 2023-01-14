@@ -1,5 +1,5 @@
 import {
-  fireEvent, render, screen, waitFor,
+  render, screen, waitFor,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { lectureStore } from '../stores/LectureStore';
@@ -12,7 +12,7 @@ delete window.location;
 window.location = new URL('http://localhost:8000/courses/1');
 
 test('CurriCulum', async () => {
-  await lectureStore.fetchLectures({ courseId: 1 });
+  await lectureStore.fetchLecturesByCourseId({ courseId: 1 });
 
   render((
     <MemoryRouter>

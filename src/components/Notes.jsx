@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import useNoteStore from '../hooks/useNoteStore';
 import useVideoStore from '../hooks/useVideoStore';
@@ -36,8 +35,8 @@ const ButtonContainer = styled.div`
 `;
 
 export default function Notes() {
-  const { state } = useLocation();
-  const { lectureId } = state;
+  const lectureId = window.location.pathname.split('/')[4];
+
   const noteStore = useNoteStore();
   const videoStore = useVideoStore();
 
@@ -54,7 +53,7 @@ export default function Notes() {
   };
 
   useEffect(() => {
-    noteStore.fetchNotes({ lectureId });
+    noteStore.fetchNotesByLectureId({ lectureId });
   }, []);
 
   return (

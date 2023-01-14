@@ -11,12 +11,11 @@ describe('CommentStore', () => {
     it('requests new Comment to Server', async () => {
       await commentStore.post({
         inquiryId: 1,
-        author: 'tester',
         content: 'hey 모두들 안녕',
       });
 
       expect(commentStore.comments.length).toBeTruthy();
-      expect(commentStore.comments[0].author).toBe('tester');
+      expect(commentStore.comments[0].content).toBe('hey 모두들 안녕');
     });
   });
 

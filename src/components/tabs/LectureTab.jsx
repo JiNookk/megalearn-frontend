@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import getQueryParam from '../../utils/getQueryParam';
 import InquiryBoard from '../InquiryBoard';
 import Inquiry from '../Inquiry';
@@ -80,6 +80,12 @@ export default function LectureTab() {
   const handleTabOff = () => {
     setIsTabOn(false);
   };
+
+  useEffect(() => {
+    if (category) {
+      setIsTabOn(true);
+    }
+  }, []);
 
   return (
     <TabContainer>

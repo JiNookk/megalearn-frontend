@@ -1,6 +1,6 @@
 export default function useSectionStore() {
   return {
-    fetchSections: jest.fn(),
+    fetchSectionsByCourseId: jest.fn(),
     sections: [{
       id: 1,
     }, {

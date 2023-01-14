@@ -48,7 +48,7 @@ export default function CoursePage() {
 
   useEffect(() => {
     courseStore.fetchCourse({ courseId });
-    lectureStore.fetchLectures({ courseId });
+    lectureStore.fetchLecturesByCourseId({ courseId });
   }, []);
 
   return (

@@ -17,7 +17,7 @@ export default function CurriCulumTab({ onTabOff }) {
   const progressStore = useProgressStore();
 
   useEffect(() => {
-    sectionStore.fetchSections({ courseId });
+    sectionStore.fetchSectionsByCourseId({ courseId });
   }, []);
 
   const handleNavigate = (lectureId) => {

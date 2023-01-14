@@ -1,3 +1,4 @@
+import moment from 'moment';
 import NoteStore from './NoteStore';
 
 describe('NoteStore', () => {
@@ -17,9 +18,9 @@ describe('NoteStore', () => {
     });
   });
 
-  describe('fetchNote', () => {
+  describe('fetchNotesByLectureId', () => {
     it('loads note data', async () => {
-      await noteStore.fetchNotes({ lectureId: 1 });
+      await noteStore.fetchNotesByLectureId({ lectureId: 1 });
 
       const { notes } = noteStore;
 
@@ -27,9 +28,29 @@ describe('NoteStore', () => {
     });
   });
 
+  describe('fetchMyNotes', () => {
+    it('loads note data', async () => {
+      await noteStore.fetchMyNotes();
+
+      const { notes } = noteStore;
+
+      expect(notes.length).toBeTruthy();
+    });
+  });
+
+  describe('fetchWeeklyNotes', () => {
+    it('loads note data', async () => {
+      await noteStore.fetchWeeklyNotes({ date: moment().format() });
+
+      const { weeklyNotes } = noteStore;
+
+      expect(weeklyNotes.length).toBeTruthy();
+    });
+  });
+
   describe('updateNote', () => {
     it('update note data', async () => {
-      await noteStore.fetchNotes({ lectureId: 1 });
+      await noteStore.fetchNotesByLectureId({ lectureId: 1 });
 
       expect(noteStore.notes[0].content).toBe('content');
 
@@ -41,7 +62,7 @@ describe('NoteStore', () => {
 
   describe('changeStatus', () => {
     it('changes Status to Update', async () => {
-      await noteStore.fetchNotes({ lectureId: 1 });
+      await noteStore.fetchNotesByLectureId({ lectureId: 1 });
 
       await noteStore.changeStatus({ noteId: 1 });
 
@@ -57,7 +78,7 @@ describe('NoteStore', () => {
 
   describe('cancelUpdate', () => {
     it('changes notes Status to normal', async () => {
-      await noteStore.fetchNotes({ lectureId: 1 });
+      await noteStore.fetchNotesByLectureId({ lectureId: 1 });
 
       await noteStore.changeStatus({ noteId: 1 });
 
@@ -73,7 +94,7 @@ describe('NoteStore', () => {
 
   describe('deleteNote', () => {
     it('delete note data', async () => {
-      await noteStore.fetchNotes({ lectureId: 1 });
+      await noteStore.fetchNotesByLectureId({ lectureId: 1 });
 
       expect(noteStore.notes.length).toBe(2);
 

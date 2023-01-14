@@ -15,7 +15,7 @@ describe('PaymentStore', () => {
   });
 
   describe('fetchPayments', () => {
-    it('loads note data', async () => {
+    it('loads payment data', async () => {
       await paymentStore.fetchPayments();
 
       const { payments } = paymentStore;
@@ -24,8 +24,18 @@ describe('PaymentStore', () => {
     });
   });
 
+  describe('fetchMyPayments', () => {
+    it('loads payment data', async () => {
+      await paymentStore.fetchMyPayments();
+
+      const { payments } = paymentStore;
+
+      expect(payments.length).toBeTruthy();
+    });
+  });
+
   describe('fetchPayments', () => {
-    it('loads note data', async () => {
+    it('loads payment data', async () => {
       await paymentStore.fetchMonthlyPayments();
 
       expect(paymentStore.recentPayments).toEqual([{

@@ -27,6 +27,12 @@ export default class InquiryStore extends Store {
     this.publish();
   }
 
+  async fetchMyInquiries() {
+    this.inquiryPosts = await apiService.fetchMyInquiries();
+
+    this.publish();
+  }
+
   async fetchInquiriesByLectureId({ lectureId }) {
     this.inquiryPosts = await apiService.fetchInquiriesByLectureId({ lectureId });
 
@@ -72,6 +78,18 @@ export default class InquiryStore extends Store {
 
     this.inquiryPosts = [...this.inquiryPosts].filter((c) => c.id !== inquiryId);
     this.inquiryPosts = [...this.inquiryPosts, updated];
+
+    this.publish();
+  }
+
+  async toggleSolved({ inquiryId }) {
+    this.inquiry = await apiService.toggleSolved({ inquiryId });
+
+    this.publish();
+  }
+
+  async increaseHits({ inquiryId }) {
+    this.inquiry = await apiService.increaseHits({ inquiryId });
 
     this.publish();
   }

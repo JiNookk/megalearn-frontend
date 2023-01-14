@@ -2,13 +2,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SubTitle from '../components/ui/\bSubTitle';
+import SubTitle from '../components/ui/SubTitle';
 import Button from '../components/ui/Button';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import useCourseStore from '../hooks/useCourseStore';
 import useRatingStore from '../hooks/useRatingStore';
 import getQueryParam from '../utils/getQueryParam';
-import numberFormat from '../utils/numberFormat';
+import Courses from '../components/Courses';
 
 const Container = styled.div`
   display: flex;
@@ -84,34 +84,23 @@ const LevelFilter = styled(PrimaryButton)`
   border-radius: 2rem;
 `;
 
-const List = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 20px;
-`;
-
 const PageLinks = styled.div`
   display: flex;
   justify-content: space-between;
-
+  
   margin-block-start: 4rem;
-
+  
   a{
     display: block;
     padding: .4rem;
     border: 1px solid #d5dbe2;
     border-radius: 4px;
   }
-`;
+  `;
 
 const Pages = styled.ul`
   display: flex;
-`;
-
-const Image = styled.img`
-  width: 100px;
-  height: 60px;
-`;
+  `;
 
 const RefreshButton = styled.button`
   display: block;
@@ -123,7 +112,6 @@ const RefreshButton = styled.button`
 export default function CoursesPage() {
   const [filter, setFilter] = useState({});
 
-  const path = window.location.pathname.split('/')[2];
   const page = getQueryParam({ category: 'page' });
 
   const courseStore = useCourseStore();
@@ -140,9 +128,6 @@ export default function CoursesPage() {
     커리어: '/career',
     교양: '/life',
   };
-
-  const getKey = (url) => Object.keys(category)
-    .find((key) => category[key].substring(1) === url);
 
   const handleFilterSkill = (skill) => {
     setFilter({ ...filter, skill });
@@ -175,10 +160,6 @@ export default function CoursesPage() {
   const handleRefreshFilter = () => {
     setFilter({});
   };
-  useEffect(() => {
-    console.log(getKey(path));
-    console.log(path);
-  }, [path]);
 
   useEffect(() => {
     courseStore.fetchCourses({ page, filter });
@@ -256,45 +237,7 @@ export default function CoursesPage() {
             ♻️
           </RefreshButton>
         </Filters>
-        <List>
-          {courseStore.courses.length
-            ? courseStore.courses
-              .filter((course) => course.category === (getKey(path) || course.category))
-              .map((course) => (
-                <li key={course.id} className="item">
-                  <Link to={`/courses/${course.id}`}>
-                    <Image src="/assets/images/test.jpg" alt="course-items" />
-                    <h3>{course.title}</h3>
-                    <p>{course.instructor}</p>
-                    <p>
-                      {(ratingStore.ratings
-                        .filter((rating) => rating.courseId === course.id)
-                        .reduce((acc, cur) => acc + cur.rating, 0)
-                / ratingStore.ratings
-                  .filter((rating) => rating.courseId === course.id)
-                  .length || 0)
-                        .toFixed(2) }
-                    </p>
-                    <p>
-                      ₩
-                      {numberFormat(course.price)}
-                    </p>
-                  </Link>
-                </li>
-              ))
-            : (
-              <li>
-                <p>
-                  <strong>
-                    🙈 검색 결과가 없어요! 🙊
-                  </strong>
-                </p>
-                <p>
-                  필터를 다시 적용해보시거나 카테고리를 이동해보세요
-                </p>
-              </li>
-            )}
-        </List>
+        <Courses />
         <PageLinks>
           {page > 1 ? (
             <Link to="/courses?page=">

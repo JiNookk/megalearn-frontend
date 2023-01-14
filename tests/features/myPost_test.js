@@ -31,7 +31,7 @@ Scenario('시나리오 #2 - 질문 상세페이지', ({ I }) => {
 
   // THEN
   I.see('미해결');
-  I.see('tester1');
+  I.see('publisher');
   I.see('강의 1');
   I.see('답변');
 });

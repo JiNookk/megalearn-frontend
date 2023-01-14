@@ -13,7 +13,7 @@ const Panel = styled.div`
   color : white;
 `;
 
-export default function InstructorBanner({ title }) {
+export default function DefaultBanner({ title }) {
   return (
     <Panel>
       <h2>{title}</h2>

@@ -1,6 +1,6 @@
 export default function useLectureStore() {
   return {
-    fetchLectures: jest.fn(),
+    fetchLecturesByCourseId: jest.fn(),
     lections: [{
       id: 1,
     }, {

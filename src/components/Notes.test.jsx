@@ -7,12 +7,8 @@ import defaultTheme from '../styles/defaultTheme';
 
 import Notes from './Notes';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    state: { courseId: 1, lectureId: 1 },
-  }),
-}));
+delete window.location;
+window.location = new URL('http://localhost:8080/courses/1/lectures/1');
 
 const onNavigate = jest.fn();
 

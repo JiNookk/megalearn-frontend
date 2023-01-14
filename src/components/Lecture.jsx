@@ -2,6 +2,7 @@ import ReactPlayer from 'react-player';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect } from 'react';
+import { useInterval } from 'usehooks-ts';
 import useProgressStore from '../hooks/useProgressStore';
 import useLectureStore from '../hooks/useLectureStore';
 import useVideoStore from '../hooks/useVideoStore';
@@ -69,15 +70,10 @@ export default function Lecture() {
   const videoStore = useVideoStore();
   const progressStore = useProgressStore();
 
-  useEffect(() => {
-    lectureStore.fetchLectures({ courseId });
-    lectureStore.fetchLecture({ courseId, lectureId });
-  }, []);
-
   const handleLectureComplete = () => {
     progressStore.completeLecture({ progressId: progressStore.progress.id })
       .then(() => {
-        sectionStore.fetchSections({ courseId });
+        sectionStore.fetchSectionsByCourseId({ courseId });
         progressStore.fetchProgresses({ courseId });
       });
   };
@@ -97,6 +93,19 @@ export default function Lecture() {
       state: { courseId, lectureId: nextLecture.id },
     });
   };
+
+  useInterval(() => {
+    progressStore.updateTime({
+      time: videoStore.currentTime(),
+      progressId: progressStore.progress.id,
+    });
+  }, 10000);
+
+  useEffect(() => {
+    lectureStore.fetchLecturesByCourseId({ courseId });
+    lectureStore.fetchLecture({ courseId, lectureId })
+      .then(() => videoStore.play({ lectureTime: videoStore.lectureTime }));
+  }, []);
 
   useEffect(() => {
     progressStore.fetchProgress({ lectureId });

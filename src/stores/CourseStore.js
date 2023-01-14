@@ -60,13 +60,19 @@ export default class CourseStore extends Store {
   }
 
   async fetchMyCourses() {
-    this.myCourses = await apiService.fetchMycourses();
+    this.courses = await apiService.fetchMycourses();
 
     this.publish();
   }
 
   async fetchUploadedCourses({ filter } = {}) {
     this.uploadedCourses = await apiService.fetchUploadedCourses({ filter });
+
+    this.publish();
+  }
+
+  async fetchWishList() {
+    this.courses = await apiService.fetchWishList();
 
     this.publish();
   }

@@ -1,11 +1,9 @@
-import { useLocation } from 'react-router-dom';
 import useNoteFormStore from '../../hooks/useNoteFormStore';
 import useNoteStore from '../../hooks/useNoteStore';
 import useVideoStore from '../../hooks/useVideoStore';
 
 export default function NoteForm() {
-  const { state } = useLocation();
-  const { lectureId } = state;
+  const lectureId = window.location.pathname.split('/')[4];
 
   const videoStore = useVideoStore();
   const noteFormStore = useNoteFormStore();

@@ -46,6 +46,16 @@ describe('InquiryStore', () => {
     });
   });
 
+  describe('fetchMyInquiries', () => {
+    it('loads inquiries Information', async () => {
+      await inquiryStore.fetchMyInquiries();
+
+      const { inquiryPosts } = inquiryStore;
+
+      expect(inquiryPosts.length).toBeTruthy();
+    });
+  });
+
   describe('fetchInquiriesByLectureId', () => {
     it('loads inquiries Information', async () => {
       await inquiryStore.fetchInquiriesByLectureId({ lectureId: 1 });
@@ -102,6 +112,30 @@ describe('InquiryStore', () => {
       });
 
       expect(inquiryStore.inquiryPosts[0].content).toBe('update');
+    });
+  });
+
+  describe('toggleSolved', () => {
+    it('it toggles Inquiry status', async () => {
+      await inquiryStore.fetchInquiry({ inquiryId: 1 });
+
+      expect(inquiryStore.inquiry.status.solved).toBe('processing');
+
+      await inquiryStore.toggleSolved({ inquiryId: 1 });
+
+      expect(inquiryStore.inquiry.status.solved).toBe('completed');
+    });
+  });
+
+  describe('increaseHits', () => {
+    it('it toggles Inquiry status', async () => {
+      await inquiryStore.fetchInquiry({ inquiryId: 1 });
+
+      expect(inquiryStore.inquiry.hits).toBe(0);
+
+      await inquiryStore.increaseHits({ inquiryId: 1 });
+
+      expect(inquiryStore.inquiry.hits).toBe(1);
     });
   });
 

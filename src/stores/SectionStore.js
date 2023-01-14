@@ -9,8 +9,14 @@ export default class SectionStore extends Store {
     this.modifyingSection = {};
   }
 
-  async fetchSections({ courseId }) {
-    this.sections = await apiService.fetchSections({ courseId });
+  async fetchSections() {
+    this.sections = await apiService.fetchSections();
+
+    this.publish();
+  }
+
+  async fetchSectionsByCourseId({ courseId }) {
+    this.sections = await apiService.fetchSectionsByCourseId({ courseId });
 
     this.publish();
   }

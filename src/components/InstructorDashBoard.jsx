@@ -133,7 +133,6 @@ export default function InstructorDashBoard() {
           원
         </article>
       </Preview>
-
       <h2>강의 수익</h2>
       <MonthlyRevenue>
         <article>

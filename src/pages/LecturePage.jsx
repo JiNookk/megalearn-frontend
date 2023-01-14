@@ -26,7 +26,7 @@ export default function LecturePage() {
 
     lectureStore.fetchLecture({ courseId, lectureId });
 
-    lectureStore.fetchLectures({ courseId });
+    lectureStore.fetchLecturesByCourseId({ courseId });
   }, [lectureId]);
 
   return (

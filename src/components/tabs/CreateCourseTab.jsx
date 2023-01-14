@@ -46,8 +46,8 @@ export default function CreateCourseTab() {
 
   useEffect(() => {
     courseStore.fetchCourse({ courseId });
-    sectionStore.fetchSections({ courseId });
-    lectureStore.fetchLectures({ courseId });
+    sectionStore.fetchSectionsByCourseId({ courseId });
+    lectureStore.fetchLecturesByCourseId({ courseId });
   }, []);
 
   return (

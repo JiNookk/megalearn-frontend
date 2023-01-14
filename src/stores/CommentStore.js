@@ -8,8 +8,8 @@ export default class CommentStore extends Store {
     this.comments = [];
   }
 
-  async post({ inquiryId, author, content }) {
-    const comment = await apiService.createComment({ inquiryId, author, content });
+  async post({ inquiryId, content }) {
+    const comment = await apiService.createComment({ inquiryId, content });
 
     this.comments = [...this.comments, comment];
 
@@ -25,7 +25,7 @@ export default class CommentStore extends Store {
   async updateComment({ commentId, content }) {
     const updated = await apiService.updateComment({ commentId, content });
 
-    this.comments = [...this.comments].filter((c) => c.id !== commentId);
+    // this.comments = [...this.comments].filter((c) => c.id !== commentId);
     this.comments = [...this.comments, updated];
 
     this.publish();
