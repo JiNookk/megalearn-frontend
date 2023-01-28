@@ -8,24 +8,46 @@ import { TabHeading } from './ui/Tab';
 import SearchForm from './forms/SearchForm';
 import { dateFormat } from '../utils/DateFormat';
 import useCourseStore from '../hooks/useCourseStore';
+import SecondaryButton from './ui/SecondaryButton';
 
 const Board = styled.article`
-  width: 60%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  height: 100%;
+  max-height: 100%;
+
+  >button:last-child{
+    width: 100%;
+    padding-block: 1.25rem;
+  }
 `;
 
-const List = styled.li`
-  list-style: none;
-  border-block: 1px solid black;
-  padding: 1rem;
+const List = styled.ul`
+  flex: 1;
 
-  h2{
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-block-end: 1rem;
-  }
+  li{
+    list-style: none;
+    margin-block: 1rem;
+    border: 1px solid #D3DADD;
+    border-radius: 4px;
+    
+    h2{
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding-block: .5rem;
+      margin-block-end: 1rem;
+    }
+    
+    div{
+      display: flex;
+      padding: 1rem;
+      border-block-start: 1px solid #D3DADD;
+    }
 
-  div{
-    display: flex;
+    div:first-child{
+      flex-direction: column;
+    }
   }
 `;
 
@@ -40,15 +62,8 @@ export default function InquiryBoard({ onNavigate }) {
     onNavigate({ tab: 'post', ids: { lectureId, courseId } });
   };
 
-  const handleClickInquiry = (inquiryId) => {
-    onNavigate({
-      tab: `inquiry&inquiryId=${inquiryId}`,
-      ids: { lectureId, courseId, inquiryId },
-    });
-  };
-
   useEffect(() => {
-    inquiryStore.fetchInquiriesByInstructorId();
+    inquiryStore.fetchInquiries();
   }, []);
 
   return (
@@ -57,24 +72,26 @@ export default function InquiryBoard({ onNavigate }) {
         <h2>질문 게시판</h2>
       </TabHeading>
       <SearchForm />
-      <ul>
+      <List>
         {inquiryStore.inquiryPosts.length ? (
           inquiryStore.inquiryPosts
             .filter((inquiryPost) => (lectureId
               ? inquiryPost.lectureId === +lectureId
               : inquiryPost.courseId === +courseId))
             .map((inquiryPost) => (
-              <List
-                key={inquiryPost.id}
-                // onClick={() => handleClickInquiry(inquiryPost.id)}
-              >
-                <Link to={`/inquiries/${inquiryPost.id}`}>
-                  <h2>
-                    {inquiryPost.title}
-                  </h2>
-                  <p>
-                    {inquiryPost.content}
-                  </p>
+              <li key={inquiryPost.id}>
+                <Link to={lectureId
+                  ? `/courses/${courseId}/lectures/${lectureId}?tab=inquiry&inquiryId=${inquiryPost.id}`
+                  : `/inquiries/${inquiryPost.id}`}
+                >
+                  <div>
+                    <h2>
+                      {inquiryPost.title}
+                    </h2>
+                    {/* <p>
+                      {inquiryPost.content}
+                    </p> */}
+                  </div>
                   <div>
                     <p>
                       {inquiryPost.publisher}
@@ -85,30 +102,25 @@ export default function InquiryBoard({ onNavigate }) {
                         {dateFormat.fromNow(inquiryPost.publishTime)}
                       </span>
                     </p>
-                    {' '}
-                    •
-                    {' '}
                     {lectureId
-                      ? (
+                      ? null
+                      : (
                         <p>
-                          {inquiryPost.lectureTime?.minute
-                            ? `강의시간 - ${inquiryPost.lectureTime?.minute}:${inquiryPost.lectureTime?.second}`
-                            : null}
-                        </p>
-                      ) : (
-                        <p>
+                          {' '}
+                          •
+                          {' '}
                           {courseStore.course.title}
                         </p>
                       )}
                   </div>
                 </Link>
-              </List>
+              </li>
             ))) : '질문이 존재하지 않습니다.'}
-      </ul>
+      </List>
       {lectureId ? (
-        <button type="button" onClick={handleClickPostInquiry}>
+        <SecondaryButton type="button" onClick={handleClickPostInquiry}>
           글 작성하기
-        </button>
+        </SecondaryButton>
       ) : null}
     </Board>
   );

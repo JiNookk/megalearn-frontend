@@ -12,8 +12,6 @@ test('Questions', async () => {
   screen.getByText('전체');
   screen.getByText('전체강의');
   screen.getByText('최신순');
-  // screen.getByLabelText('내용');
-  // screen.getByText('검색');
 
   screen.getByText('강의명');
   screen.getByText('수업명');

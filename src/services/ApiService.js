@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import axios from 'axios';
-import baseUrl from '../config';
+import baseUrl, { config } from '../config';
 
 export default class ApiService {
   constructor() {
@@ -74,10 +74,10 @@ export default class ApiService {
 
   async updateCourse({
     title = '', category = '', description = '', imagePath = '', price = 0,
-    status = '', level = '', skill = '', courseId,
+    status = '', level = '', skills = [], courseId,
   }) {
     const { data } = await axios.patch(`${baseUrl}/courses/${courseId}`, {
-      title, category, description, imagePath, price, status, level, skill,
+      title, category, description, imagePath, price, status, level, skills,
     }, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
@@ -150,10 +150,10 @@ export default class ApiService {
   }
 
   async updateLecture({
-    title, videoUrl, lectureNote, filePath, lectureId,
+    title, videoUrl, lectureNote, lectureTime, filePath, lectureId,
   }) {
     const { data } = await axios.patch(`${baseUrl}/lectures/${lectureId}`, {
-      title, videoUrl, lectureNote, filePath,
+      title, videoUrl, lectureNote, lectureTime, filePath,
     }, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
@@ -210,10 +210,10 @@ export default class ApiService {
   }
 
   async createInquiryPost({
-    title, publisher, lectureId, hashTags, content, anonymous, minute, second,
+    title, publisher, courseId, lectureId, hashTags, content, anonymous, minute, second,
   }) {
     const { data } = await axios.post(`${baseUrl}/inquiries`, {
-      title, publisher, lectureId, hashTags, content, anonymous, minute, second,
+      title, publisher, courseId, lectureId, hashTags, content, anonymous, minute, second,
     }, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
@@ -505,6 +505,18 @@ export default class ApiService {
     return data.courses;
   }
 
+  async rate({ content, courseId, rating }) {
+    const { data } = await axios.post(`${baseUrl}/ratings`, {
+      content, courseId, rating,
+    }, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data;
+  }
+
   async fetchRating() {
     const { data } = await axios.get(`${baseUrl}/instructor/my-rating`, {
       headers: {
@@ -521,6 +533,16 @@ export default class ApiService {
     return data.ratings;
   }
 
+  async fetchMyReviews() {
+    const { data } = await axios.get(`${baseUrl}/ratings/me`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    });
+
+    return data.ratings;
+  }
+
   async fetchRatingsByInstructorId({ courseId }) {
     const query = courseId ? `?courseId=${courseId}` : '';
 
@@ -531,6 +553,12 @@ export default class ApiService {
     });
 
     return data.ratings;
+  }
+
+  async fetchAllPayments() {
+    const { data } = await axios.get(`${baseUrl}/payments`);
+
+    return data.payments;
   }
 
   async fetchPayments({ courseId }) {
@@ -590,7 +618,7 @@ export default class ApiService {
       },
     });
 
-    return data;
+    return data.payments;
   }
 
   async addItem({ productId }) {
@@ -655,6 +683,63 @@ export default class ApiService {
     });
 
     return data;
+  }
+
+  async upload(imageFile) {
+    const { cloudinaryName, cloudinaryKey } = config;
+
+    const url = `https://api.cloudinary.com/v1_1/${cloudinaryName}/image/upload/`;
+
+    const formData = new FormData();
+
+    formData.append('api_key', cloudinaryKey);
+    formData.append('upload_preset', 'jingwook');
+    formData.append('timestamp', (Date.now() / 1000) || 0);
+    formData.append('file', imageFile);
+
+    const configOfUpload = {
+      header: { 'Content-Type': 'multipart/form-data' },
+    };
+
+    const { data } = await axios.post(url, formData, configOfUpload);
+
+    return data.url;
+  }
+
+  async login({ email, password }) {
+    const { data } = await axios.post(`${baseUrl}/session`, {
+      email, password,
+    });
+
+    return data;
+  }
+
+  async requestToken({ authCode }) {
+    const { data } = await axios.post(`${baseUrl}/auth/token?code=${authCode}`);
+
+    return data;
+  }
+
+  async register({
+    name, userName, phoneNumber, password,
+  }) {
+    const { data } = await axios.post(`${baseUrl}/account`, {
+      name, userName, phoneNumber, password,
+    });
+
+    return data;
+  }
+
+  async fetchCategories() {
+    const { data } = await axios.get(`${baseUrl}/categories`);
+
+    return data.categories;
+  }
+
+  async fetchSkillTags() {
+    const { data } = await axios.get(`${baseUrl}/skills`);
+
+    return data.skills;
   }
 }
 

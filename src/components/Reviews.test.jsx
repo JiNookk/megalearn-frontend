@@ -1,5 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 import Reviews from './Reviews';
 
 delete window.location;
@@ -8,7 +10,9 @@ window.location = new URL('http://localhost:8080/courses/1');
 test('Reviews', async () => {
   render((
     <MemoryRouter>
-      <Reviews />
+      <ThemeProvider theme={defaultTheme}>
+        <Reviews />
+      </ThemeProvider>
     </MemoryRouter>
   ));
 

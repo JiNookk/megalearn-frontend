@@ -9,8 +9,10 @@ import useVideoStore from '../hooks/useVideoStore';
 import useSectionStore from '../hooks/useSectionStore';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  
+  height: 100vh;
   color: white;
   background-color: black;
 `;
@@ -18,14 +20,12 @@ const Container = styled.div`
 const Heading = styled.div`
   padding-left: 1rem;
   font-size: 1.5rem;
-
   height: 4rem;
   line-height: 4rem;
   background-color: rgb(33,37,41);
 
   h2{
     display: inline-block;
-
     margin-left: 2rem;
   }
 
@@ -36,24 +36,21 @@ const Heading = styled.div`
 `;
 
 const Media = styled.div`
-  padding-inline : 2rem ;
+  flex: 1;
+  padding-inline : 2rem;
 `;
 
 const ButtonContainer = styled.article`
-  padding-left: 5rem;
   font-size: 1.5rem;
-
-  height: 3rem;
-  line-height: 3rem;
-
+  padding-left: 5rem;
+  padding-block: 1.4rem;
   text-align: center;
-  background-color : rgb(95,95,95);  
+  background-color : #5F5F5F;  
 
   button{
     font-size: 1rem;
     background: none;
     border: none;
-
     margin-inline-end: 2rem;
     color: white;
   }
@@ -71,7 +68,11 @@ export default function Lecture() {
   const progressStore = useProgressStore();
 
   const handleLectureComplete = () => {
-    progressStore.completeLecture({ progressId: progressStore.progress.id })
+    const progressId = progressStore.progresses
+      .find((progress) => progress.lectureId === +lectureId)
+      .id;
+
+    progressStore.completeLecture({ progressId })
       .then(() => {
         sectionStore.fetchSectionsByCourseId({ courseId });
         progressStore.fetchProgresses({ courseId });

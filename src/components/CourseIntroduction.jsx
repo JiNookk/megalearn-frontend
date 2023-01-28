@@ -17,8 +17,12 @@ const Introduction = styled(Container)`
   }
 `;
 
-const Description = styled.div`
+const DescriptionWrapper = styled.div`
   margin-block-end: 4rem;
+
+  h2{
+    margin-block-end: 2rem;
+  }
 `;
 
 const Goals = styled.div`
@@ -41,6 +45,12 @@ const Goals = styled.div`
   }
 `;
 
+const Description = styled.div`
+  padding: 1rem;
+  white-space: pre-wrap;
+  background: #f8f9fa;
+`;
+
 export default function CourseIntroduction() {
   const courseId = window.location.pathname.split('/')[2];
 
@@ -52,7 +62,7 @@ export default function CourseIntroduction() {
 
   return (
     <Introduction>
-      <Description>
+      <DescriptionWrapper>
         <h2>
           <strong>
             {courseStore.course.level}
@@ -67,6 +77,11 @@ export default function CourseIntroduction() {
             ] 강의 입니다.
           </strong>
         </h2>
+        <Description>
+          <p>
+            {courseStore.course.description}
+          </p>
+        </Description>
         <Goals>
           <h3>
             ✍️
@@ -76,20 +91,17 @@ export default function CourseIntroduction() {
             배워요!
           </h3>
           <ul>
-            {courseStore.course.goals
+            {courseStore.course.skillSets
               ?.map((goal, i) => (
                 <li key={i}>
-                  ✅
+                  <img src="/assets/images/check.png" alt="" />
                   {' '}
                   {goal}
                 </li>
               ))}
           </ul>
         </Goals>
-        <p>
-          {courseStore.course.description}
-        </p>
-      </Description>
+      </DescriptionWrapper>
       <CurriCulum />
       <Reviews />
     </Introduction>

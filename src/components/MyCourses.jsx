@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useCourseStore from '../hooks/useCourseStore';
 import useLectureStore from '../hooks/useLectureStore';
+import usePaymentStore from '../hooks/usePaymentStore';
 import useProgressStore from '../hooks/useProgressStore';
 import percentageFormat from '../utils/percentageFormat';
 import SubTitle from './ui/SubTitle';
@@ -21,6 +22,7 @@ const Courses = styled.ul`
 `;
 
 export default function MyCourses() {
+  const paymentStore = usePaymentStore();
   const courseStore = useCourseStore();
   const progressStore = useProgressStore();
   const lectureStore = useLectureStore();
@@ -37,7 +39,7 @@ export default function MyCourses() {
         ?.map((course) => (
           <li key={course.id}>
             <Link to={`/courses/${course.id}`}>
-              <Image src="/assets/images/test.jpg" alt="course-thumbnail" />
+              <Image src={course.coverImage || '/assets/images/test.jpg'} alt="course-thumbnail" />
               <SubTitle>{course.title}</SubTitle>
               <p>
                 진행률:

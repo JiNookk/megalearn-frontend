@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CircularProgressbar } from 'react-circular-progressbar';
 import useCourseStore from '../hooks/useCourseStore';
 import useInquiryStore from '../hooks/useInquiryStore';
 import useLectureStore from '../hooks/useLectureStore';
@@ -8,6 +9,8 @@ import useProgressStore from '../hooks/useProgressStore';
 import { dateFormat } from '../utils/DateFormat';
 import { timeFormat } from '../utils/TimeFormat';
 import CurriCulum from './CurriCulum';
+import 'react-circular-progressbar/dist/styles.css';
+import percentageFormat from '../utils/percentageFormat';
 
 const Container = styled.div`
   padding: 3rem;
@@ -29,6 +32,7 @@ const DashBoard = styled.div`
 const MyStudy = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: end;
 
   text-align: center;
   p{
@@ -52,26 +56,47 @@ const RecentQuestions = styled.article`
   a{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     
     div{
       display: flex;
+      align-items: center;
     }
   }
 `;
 
 const Image = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  margin-right: 1rem;
 `;
 
 const News = styled.ul`
   li{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     div{
       display: flex;
+      align-items: center;
     }
+  }  
+`;
+
+const ProgressBarWrapper = styled.div`
+  width: 60px;
+  height: 60px;
+  margin-bottom: .5rem;
+`;
+
+const MyStatistic = styled.article`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h2{
+    margin: 0;
   }  
 `;
 
@@ -102,7 +127,7 @@ export default function CourseDashBoard() {
               .map((post) => (
                 <li key={post.id}>
                   <div>
-                    <Image src="/assets/images/test.jpg" alt="" />
+                    <Image src="/assets/images/default-profile.png" alt="" />
                     <p>
                       {post.title}
                     </p>
@@ -114,7 +139,7 @@ export default function CourseDashBoard() {
               ))}
           </News>
         </article>
-        <article>
+        <MyStatistic>
           <Title>
             내 학습상황
           </Title>
@@ -137,10 +162,18 @@ export default function CourseDashBoard() {
             <div>
               <p>
                 <strong>
-                  {timeFormat.hourMinute(progressStore.progresses
-                    .filter((progress) => progress.courseId === +courseId)
-                    .reduce((acc, cur) => acc + (cur.lectureTime.minute * 60)
-                    + cur.lectureTime.second, 0))}
+                  {timeFormat.hourMinute(
+                    lectureStore.lectures
+                      .filter((lecture) => (
+                        progressStore.progresses
+                          .filter((progress) => progress.courseId === +courseId)
+                          .filter((progress) => progress.status === 'completed')
+                          .map((progress) => progress.lectureId)
+                          .reduce(((acc, lectureId) => acc || lecture.id === lectureId), false)
+                      ))
+                      .reduce((acc, cur) => acc + (cur.lectureTime.minute * 60)
+                    + cur.lectureTime.second, 0),
+                  )}
                 </strong>
               </p>
               <p>
@@ -148,19 +181,27 @@ export default function CourseDashBoard() {
               </p>
             </div>
             <div>
-              <strong>
-                {(progressStore.progresses
-                  .filter((progress) => progress.courseId === +courseId)
-                  .filter((progress) => progress.status === 'completed')
-                  .length
-              / lectureStore.lectures.length) || 0}
-              </strong>
+              <ProgressBarWrapper>
+                <CircularProgressbar
+                  value={percentageFormat((progressStore.progresses
+                    .filter((progress) => progress.courseId === +courseId)
+                    .filter((progress) => progress.status === 'completed')
+                    .length
+              / lectureStore.lectures.length)) || 0}
+                  text={`${percentageFormat((progressStore.progresses
+                    .filter((progress) => progress.courseId === +courseId)
+                    .filter((progress) => progress.status === 'completed')
+                    .length
+          / lectureStore.lectures.length))}%` || `${0}%`}
+                />
+
+              </ProgressBarWrapper>
               <p>
                 수료증
               </p>
             </div>
           </MyStudy>
-        </article>
+        </MyStatistic>
         <RecentQuestions>
           <Title>
             최근 질문
@@ -172,7 +213,7 @@ export default function CourseDashBoard() {
                 <li key={inquiry.id}>
                   <Link to={`/inquiries/${inquiry.id}`}>
                     <div>
-                      <Image src="/assets/images/test.jpg" alt="" />
+                      <Image src="/assets/images/default-profile.png" alt="" />
                       <p>{inquiry.title}</p>
                     </div>
                     <p>{dateFormat.fromNow(inquiry.publishTime)}</p>

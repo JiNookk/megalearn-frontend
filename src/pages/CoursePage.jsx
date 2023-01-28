@@ -11,12 +11,16 @@ import InquiryBoard from '../components/InquiryBoard';
 import Container from '../components/ui/Container';
 import useCourseStore from '../hooks/useCourseStore';
 import useLectureStore from '../hooks/useLectureStore';
+import Padding from '../components/ui/Padding';
+import usePaymentStore from '../hooks/usePaymentStore';
+
+const Navigation = styled.nav`
+  border: 1px solid #e1e1e1;
+`;
 
 const List = styled.ul`
   display: flex;
-  
-  padding: 1.4rem 3rem;
-  border: 1px solid #e1e1e1;
+  padding-block: 1.4rem;
 
   li{
     margin-inline-end: 2rem;
@@ -25,10 +29,9 @@ const List = styled.ul`
 
 const Main = styled.div`
   display: grid;
-
   grid : 1fr / 7fr 3fr;
   gap: 40px;
-  padding: 3rem;
+  padding-block: 3rem;
 `;
 
 export default function CoursePage() {
@@ -54,56 +57,62 @@ export default function CoursePage() {
   return (
     <Container>
       <CourseBanner />
-      <nav>
-        <List>
-          {courseStore.course.isPurchased && (
+      <Navigation>
+        <Padding>
+          <List>
+            {courseStore.course.isPurchased && (
+              <li>
+                <Link to={`/courses/${courseId}/dashboard`}>
+                  대시보드
+                </Link>
+              </li>
+            )}
             <li>
-              <Link to={`/courses/${courseId}/dashboard`}>
-                대시보드
+              <Link to={`/courses/${courseId}`}>
+                강의소개
               </Link>
             </li>
-          )}
-          <li>
-            <Link to={`/courses/${courseId}`}>
-              강의소개
-            </Link>
-          </li>
-          <li>
-            <HashLink to={`/courses/${courseId}#curriculum`}>
-              커리큘럼
-            </HashLink>
-          </li>
-          <li>
-            <HashLink to={`/courses/${courseId}#reviews`}>
-              수강평
-            </HashLink>
-          </li>
-          <li>
-            <Link to={`/courses/${courseId}/inquiries`}>
-              질문 게시판
-            </Link>
-          </li>
-          <li>
-            <Link to={`/courses/${courseId}/news`}>
-              새소식
-            </Link>
-          </li>
-          {courseStore.course.isInstructor && (
             <li>
-              <Link to={`/courses/${courseId}/edit/course_info`}>
-                강의수정
+              <HashLink to={`/courses/${courseId}#curriculum`}>
+                커리큘럼
+              </HashLink>
+            </li>
+            <li>
+              <HashLink to={`/courses/${courseId}#reviews`}>
+                수강평
+              </HashLink>
+            </li>
+            <li>
+              <Link to={`/courses/${courseId}/inquiries`}>
+                질문 게시판
               </Link>
             </li>
-          )}
-        </List>
-      </nav>
+            <li>
+              <Link to={`/courses/${courseId}/news`}>
+                새소식
+              </Link>
+            </li>
+            {courseStore.course.isInstructor && (
+              <li>
+                <Link to={`/courses/${courseId}/edit/course_info`}>
+                  강의수정
+                </Link>
+              </li>
+            )}
+          </List>
+        </Padding>
+      </Navigation>
       {category !== 'dashboard' ? (
-        <Main>
-          <Component />
-          <PurchaseBanner />
-        </Main>
+        <Padding>
+          <Main>
+            <Component />
+            <PurchaseBanner />
+          </Main>
+        </Padding>
       ) : (
-        <Component />
+        <Padding>
+          <Component />
+        </Padding>
       )}
     </Container>
   );

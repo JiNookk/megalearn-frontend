@@ -6,7 +6,7 @@ const defaultTheme = {
     primary: 'white',
     primaryBorder: '1px solid #d5dbe2',
     primaryText: '#3a3a3a',
-    secondary: '#1ec078',
+    secondary: '#75E6C7',
     secondaryText: '#FFF',
     disabled: '#888',
     disabledText: '#FFF',

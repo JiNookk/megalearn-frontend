@@ -60,9 +60,9 @@ export default function CourseNews() {
                   <p>
                     {post.content}
                   </p>
-                  <p>
-                    이 소식이 도움이 되었나요? ❤️(4)
-                  </p>
+                  {/* <p>
+                    이 소식이 도움이 되었나요?
+                  </p> */}
                 </div>
               </li>
             ))

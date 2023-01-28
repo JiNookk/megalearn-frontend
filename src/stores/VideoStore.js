@@ -8,13 +8,13 @@ export default class VideoStore extends Store {
     this.ref = React.createRef();
     this.isPlay = true;
     this.control = true;
-    this.width = '90%';
-    this.height = '90vh';
+    this.width = '100%';
+    this.height = '100%';
     this.lectureTime = {};
   }
 
   play({ lectureTime }) {
-    this.ref.current.seekTo(lectureTime.minute * 60 + lectureTime.second);
+    this.ref.current?.seekTo(lectureTime.minute * 60 + lectureTime.second);
     this.isPlay = true;
     this.publish();
   }
@@ -29,6 +29,12 @@ export default class VideoStore extends Store {
     this.lectureTime = lectureTime;
 
     this.publish();
+  }
+
+  totalTime() {
+    const totalTime = this.ref.current.getDuration();
+
+    return totalTime;
   }
 }
 

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
 import Image from '../components/ui/Image';
 import SubTitle from '../components/ui/SubTitle';
 import Title from '../components/ui/Title';
@@ -9,9 +10,14 @@ import { dateFormat } from '../utils/DateFormat';
 import useCommentStore from '../hooks/useCommentStore';
 import InlineBlock from '../components/ui/InlineBlock';
 import useCommentFormStore from '../hooks/useCommentFormStore';
+import TextEditor from '../utils/TextEditor';
+import Padding from '../components/ui/Padding';
+import useAccountStore from '../hooks/useAccountStore';
+import SecondaryButton from '../components/ui/SecondaryButton';
 
 const Container = styled.div`
-  padding: 2rem 15rem;
+  position: relative;
+  padding-block: 2rem;
 `;
 
 const Header = styled.div`
@@ -19,10 +25,20 @@ const Header = styled.div`
   padding-block: 1rem;
 `;
 
+const Logo = styled.span`
+  font-size: 2.5rem;
+  margin-right: .5rem;
+  color: #75E6C7;
+`;
+
 const List = styled.ul`
   display : flex;
   align-items: center;
   color: #8d959c;
+
+  li{
+    margin-inline: 1rem;
+  }
 
   button{
     border: none;
@@ -33,15 +49,57 @@ const List = styled.ul`
 
 const Content = styled.div`
   padding-block: 2rem;
+  white-space: pre-wrap;
 `;
 
 const Reply = styled.div`
-  border-block-start: 1px solid #f1f3f5; 
   padding-block: 2rem;
+  margin-top: 9rem;
+  background: #F8F9FA;
 `;
 
 const ReplyForm = styled.form`
   margin-block: 2rem;
+  text-align: end;
+  
+
+  label{
+    display: block;
+  }
+  
+  img{
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+
+  input{
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding-inline: 1rem;
+    margin-left: 1rem;
+    border: 1px solid #D3DADD;
+    border-radius: 4px;
+  }
+`;
+
+const InputWrapper = styled.button`
+    display: flex;
+    width: 100%;
+    border: none;
+    background: none;
+`;
+
+const ButtonsWrapper = styled.div`
+  button{
+    padding: .75rem 2rem;
+    margin-left: .5rem;
+  }  
+`;
+
+const Mint = styled.strong`
+  color: #75E6C7;
 `;
 
 const Replys = styled.ul`
@@ -49,6 +107,7 @@ const Replys = styled.ul`
     border: 1px solid #e8ecef; 
     border-radius: 6px;
     padding: 2rem;
+    background: white;
 
     > div:last-child{
       padding-block-start: 2rem;
@@ -68,24 +127,23 @@ const ReplyHeader = styled.div`
 `;
 
 const SolveButton = styled(PrimaryButton)`
-  z-index: 999;
-  
-  position: fixed;
-  top: 6rem;
-  right: 3rem;
-  transform: translate(-50%, -50%);
-
+  position: absolute;
+  top: 10%; 
+  right: 5%;
+  /* transform: translate(-50%, -50%); */
   padding: .8rem 1.5rem;
-
-  text-align: center;
+  /* text-align: center; */
+  /* z-index: 999; */
 `;
 
 export default function InquiryPage() {
   const inquiryId = window.location.pathname.split('/')[2];
 
+  const [editorOn, setEditorOn] = useState(false);
   const inquiryStore = useInquiryStore();
   const commentStore = useCommentStore();
   const commentFormStore = useCommentFormStore();
+  const accountStore = useAccountStore();
 
   const handleUpdateInquiry = () => {
 
@@ -106,6 +164,8 @@ export default function InquiryPage() {
     commentStore.post(comment);
 
     commentFormStore.reset();
+
+    setEditorOn(!editorOn);
   };
 
   const handleToggleSolved = () => {
@@ -119,84 +179,113 @@ export default function InquiryPage() {
 
   return (
     <Container>
-      <Header>
-        <Title>
-          {inquiryStore.inquiry.title}
-        </Title>
-        <SubTitle>
-          {inquiryStore.inquiry.publisher}
-        </SubTitle>
-        <InlineBlock>
-          <List>
-            <li>
-              작성일
-              {' '}
-              {dateFormat.defaultFormat(inquiryStore.inquiry.publishTime)}
-            </li>
-            <li>
-              조회수
-              {' '}
-              {inquiryStore.inquiry.hits}
-            </li>
-          </List>
-          <List>
-            <li>
-              <button type="button" onClick={handleUpdateInquiry}>
-                수정
-              </button>
-            </li>
-            <li>
-              <button type="button" onClick={handleDeleteInquiry}>
-                삭제
-              </button>
-            </li>
-          </List>
-        </InlineBlock>
-      </Header>
-      <Content>
-        {inquiryStore.inquiry.content}
-      </Content>
-      <Reply>
-        <SubTitle>
-          답변
-          {' '}
-          {commentStore.comments.length}
-        </SubTitle>
-        <ReplyForm onSubmit={handleSubmitReply}>
-          <label htmlFor="input-reply">답변</label>
-          <input
-            placeholder="답변을 작성해보세요."
-            name="reply"
-            id="input-reply"
-            type="text"
-            value={commentFormStore.content}
-            onChange={(e) => commentFormStore.changeContent(e.target.value)}
-          />
-        </ReplyForm>
-        <Replys>
-          {commentStore.comments.map((comment) => (
-            <li key={comment.id}>
-              <ReplyHeader>
-                <Image src="/assets/images/test.jpg" alt="thumbnail" />
-                <div>
-                  <h4>
-                    {comment.author}
-                  </h4>
-                  <p>
-                    {dateFormat.defaultFormat(comment.publishTime)}
-                  </p>
-                </div>
-              </ReplyHeader>
-              <div>
-                {comment.content}
-              </div>
-            </li>
-          ))}
-        </Replys>
-      </Reply>
       <SolveButton type="button" onClick={handleToggleSolved}>
         {inquiryStore.inquiry.status?.solved === 'processing' ? '미해결' : '해결'}
       </SolveButton>
+      <Padding>
+        <Header>
+          <Title>
+            <Logo>
+              Q
+            </Logo>
+            {' '}
+            {inquiryStore.inquiry.title}
+          </Title>
+          <SubTitle>
+            {inquiryStore.inquiry.publisher}
+          </SubTitle>
+          <InlineBlock>
+            <List>
+              <li>
+                작성일
+                {' '}
+                {moment(inquiryStore.inquiry.publishTime).format('YY.MM.DD hh:mm')}
+              </li>
+              <li>
+                조회수
+                {' '}
+                {inquiryStore.inquiry.hits}
+              </li>
+            </List>
+            <List>
+              <li>
+                <button type="button" onClick={handleUpdateInquiry}>
+                  수정
+                </button>
+              </li>
+              <li>
+                <button type="button" onClick={handleDeleteInquiry}>
+                  삭제
+                </button>
+              </li>
+            </List>
+          </InlineBlock>
+        </Header>
+      </Padding>
+      <Padding>
+        <Content>
+          {inquiryStore.inquiry.content}
+        </Content>
+      </Padding>
+      <Reply>
+        <Padding>
+          <SubTitle>
+            답변
+            {' '}
+            <Mint>
+              {commentStore.comments.length}
+            </Mint>
+          </SubTitle>
+          <ReplyForm onSubmit={handleSubmitReply}>
+            {editorOn ? (
+              <div>
+                <InputWrapper type="button">
+                  <TextEditor type="comment" height={200} />
+                </InputWrapper>
+                <ButtonsWrapper>
+                  <PrimaryButton type="button" onClick={() => setEditorOn(!editorOn)}>
+                    취소
+                  </PrimaryButton>
+                  <SecondaryButton type="submit">
+                    등록
+                  </SecondaryButton>
+                </ButtonsWrapper>
+              </div>
+            ) : (
+              <InputWrapper type="button" onClick={() => setEditorOn(!editorOn)}>
+                <label htmlFor="input-comment">
+                  <img src="/assets/images/default-profile.png" alt="profile" />
+                </label>
+                <input
+                  placeholder={`${accountStore.name}님, 답변을 작성해보세요`}
+                  type="text"
+                  id="input-comment"
+                />
+              </InputWrapper>
+            )}
+          </ReplyForm>
+          <Replys>
+            {commentStore.comments.map((comment) => (
+              <li key={comment.id}>
+                <ReplyHeader>
+                  <Image src="/assets/images/test.jpg" alt="thumbnail" />
+                  <div>
+                    <h4>
+                      {comment.author}
+                    </h4>
+                    <p>
+                      {dateFormat.defaultFormat(comment.publishTime)}
+                    </p>
+                  </div>
+                </ReplyHeader>
+                <div>
+                  {comment.content}
+                </div>
+              </li>
+            ))}
+          </Replys>
+        </Padding>
+      </Reply>
     </Container>
   );
 }

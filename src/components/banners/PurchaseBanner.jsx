@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLocalStorage } from 'usehooks-ts';
 import useCartStore from '../../hooks/useCartStore';
 import useCourseStore from '../../hooks/useCourseStore';
 import useLectureStore from '../../hooks/useLectureStore';
 import useLikeStore from '../../hooks/useLikeStore';
+import useProgressStore from '../../hooks/useProgressStore';
 import numberFormat from '../../utils/numberFormat';
 import PrimaryButton from '../ui/PrimaryButton';
 import SecondaryButton from '../ui/SecondaryButton';
@@ -12,22 +14,20 @@ import SecondaryButton from '../ui/SecondaryButton';
 const Panel = styled.div`
   position: sticky;
   top: 5%;
-
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  margin-block-start: 6rem;
-  border: 1px solid #f1f3f5;  
+  border: 1px solid #D9D9D9;  
   border-radius: .5rem;
-`;
+  `;
 
 const PurchaseWindow = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  border-bottom: 1px solid #D9D9D9;  
 
   p{
     font-size: 2rem;
@@ -36,8 +36,12 @@ const PurchaseWindow = styled.div`
   }
 
   button{
-    padding: 1rem 5rem;
+    padding: 1rem 4rem;
     margin-block-start: .5rem;
+  }
+
+  a{
+    color:white;
   }
 `;
 
@@ -68,6 +72,7 @@ const CourseInformation = styled.ul`
 `;
 
 export default function PurchaseBanner() {
+  const [accessToken] = useLocalStorage('accessToken');
   const navigate = useNavigate();
 
   const courseId = window.location.pathname.split('/')[2];
@@ -76,12 +81,23 @@ export default function PurchaseBanner() {
   const lectureStore = useLectureStore();
   const cartStore = useCartStore();
   const likeStore = useLikeStore();
+  const progressStore = useProgressStore();
 
   const handleAddCourseToCart = () => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
     cartStore.addItem({ productId: courseStore.course.id });
   };
 
   const handlePurchaseCourse = () => {
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
     cartStore.addItem({ productId: courseStore.course.id });
 
     navigate('/carts');
@@ -95,6 +111,7 @@ export default function PurchaseBanner() {
     cartStore.fetchCart();
     likeStore.fetchCourseLikes();
     likeStore.fetchMyCourseLike({ courseId });
+    progressStore.fetchProgresses();
   }, []);
 
   return (
@@ -107,7 +124,12 @@ export default function PurchaseBanner() {
           </p>
           {courseStore.course.isPurchased ? (
             <SecondaryButton>
-              이어 학습하기
+              <Link to={`/courses/${courseId}/lectures/${progressStore.progresses
+                .filter((progress) => progress.courseId === +courseId)[0]
+                ?.lectureId}`}
+              >
+                이어 학습하기
+              </Link>
             </SecondaryButton>
           ) : (
             <>

@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
   body{
     background: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.text};
-    height: 100%;
+    min-height: 100vh;
   }
   a{
     color: ${(props) => props.theme.colors.text};
@@ -20,8 +20,14 @@ const GlobalStyle = createGlobalStyle`
   strong{
     font-weight: bold;
   }
+  small{
+    font-weight: normal;
+  }
   #app{
-    height: 100%;
+    min-height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
   }
 `;
 

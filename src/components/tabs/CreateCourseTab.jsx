@@ -8,28 +8,39 @@ import CourseSubmitModal from '../modals/CourseSubmitModal';
 import Button from '../ui/Button';
 
 const Tab = styled.aside`
-  padding-block-start: 1rem;
-  margin-inline-end: 2rem;
+  display: block;
+  width: 140px;
+  margin-inline-end: 4rem;
 `;
 
 const Heading = styled.h2`
   font-size: 1.3rem;
   font-weight: bold;
-
-  margin-block-end: 2rem;
+  margin-block-end: 1.5rem;
 `;
 
 const List = styled.ul`
+  margin-block-end: 3rem;
+
   li{
     margin-block-end: 1rem;
+
+    a{
+      display: flex;
+      align-items: center;
+
+      p{
+        margin-inline-end: .5rem
+      }
+    }
   }
 `;
 
 const SubmitButton = styled(Button)`
-  padding: 1rem 1rem;
-  
+  width: 100%;
+  padding-block: 1rem;
   color: #FFF;
-  background: #fb6351;
+  background: #EE806D;
 `;
 
 export default function CreateCourseTab() {
@@ -56,34 +67,66 @@ export default function CreateCourseTab() {
       <List>
         <li>
           <Link to={`/courses/${courseId}/edit/course_info`}>
-            {courseStore.course.title && courseStore.course.category
-              ? '✅ '
-              : '❎ '}
-            강의정보
+            <p>
+              {courseStore.course.title && courseStore.course.category
+                ? (
+                  <img src="/assets/images/qualified.png" alt="qualified" />
+                )
+                : (
+                  <img src="/assets/images/unqualified.png" alt="unqualified" />
+                )}
+            </p>
+            <p>
+              강의정보
+            </p>
           </Link>
         </li>
         <li>
           <Link to={`/courses/${courseId}/edit/description`}>
-            {courseStore.course.description
-              ? '✅ '
-              : '❎ '}
-            상세소개
+            <p>
+              {courseStore.course.description
+                ? (
+                  <img src="/assets/images/qualified.png" alt="qualified" />
+                )
+                : (
+                  <img src="/assets/images/unqualified.png" alt="unqualified" />
+                )}
+            </p>
+            <p>
+              상세소개
+            </p>
           </Link>
         </li>
         <li>
           <Link to={`/courses/${courseId}/edit/curriculum`}>
-            {lectureStore.lectures?.length > 1 && sectionStore.sections?.length > 1
-              ? '✅ '
-              : '❎ '}
-            커리큘럼
+            <p>
+              {lectureStore.lectures?.length > 1 && sectionStore.sections?.length > 1
+                ? (
+                  <img src="/assets/images/qualified.png" alt="qualified" />
+                )
+                : (
+                  <img src="/assets/images/unqualified.png" alt="unqualified" />
+                )}
+            </p>
+            <p>
+              커리큘럼
+            </p>
           </Link>
         </li>
         <li>
           <Link to={`/courses/${courseId}/edit/cover_image`}>
-            {courseStore.course.coverImage
-              ? '✅ '
-              : '❎ '}
-            커버 이미지
+            <p>
+              {courseStore.course.coverImage
+                ? (
+                  <img src="/assets/images/qualified.png" alt="qualified" />
+                )
+                : (
+                  <img src="/assets/images/unqualified.png" alt="unqualified" />
+                )}
+            </p>
+            <p>
+              커버 이미지
+            </p>
           </Link>
         </li>
       </List>
@@ -91,29 +134,28 @@ export default function CreateCourseTab() {
       <List>
         <li>
           <Link to={`/courses/${courseId}/edit/course_setting`}>
-            {courseStore.course.price === 0 || courseStore.course.price
-              ? '✅ '
-              : '❎ '}
-            강의설정
+            <p>
+              {courseStore.course.price === 0 || courseStore.course.price
+                ? (
+                  <img src="/assets/images/qualified.png" alt="qualified" />
+                )
+                : (
+                  <img src="/assets/images/unqualified.png" alt="unqualified" />
+                )}
+            </p>
+            <p>
+              강의설정
+            </p>
           </Link>
         </li>
-        {/* <li>
-          <Link to="/courses/:courseId/edit/description">
-            상세소개
-          </Link>
-        </li>
-        <li>
-          <Link to="/courses/:courseId/edit/curriculum">
-            커리큘럼
-          </Link>
-        </li>
-        <li>
-          <Link to="/courses/:courseId/edit/cover_image">
-            커버이미지
-          </Link>
-        </li> */}
       </List>
-      <SubmitButton type="button" onClick={handleSubmit}>제출하기</SubmitButton>
+      <SubmitButton
+        disabled={courseStore.isDisabled || lectureStore.isDisabled || sectionStore.isDisabled}
+        type="button"
+        onClick={handleSubmit}
+      >
+        제출하기
+      </SubmitButton>
       {isModal && (
         <CourseSubmitModal courseId={courseId} onIsModal={setIsModal} />
       )}

@@ -7,6 +7,7 @@ export default class LectureModifyingFormStore extends Store {
     this.title = '';
     this.videoUrl = '';
     this.lectureNote = '';
+    this.lectureTime = 0;
     this.filePath = '';
     this.error = { message: '' };
   }
@@ -29,6 +30,12 @@ export default class LectureModifyingFormStore extends Store {
     this.publish();
   }
 
+  changeLectureTime(lectureTime) {
+    this.lectureTime = lectureTime || '';
+
+    this.publish();
+  }
+
   changeFilePath(filePath) {
     this.filePath = filePath || '';
 
@@ -39,6 +46,7 @@ export default class LectureModifyingFormStore extends Store {
     this.title = '';
     this.videoUrl = '';
     this.lectureNote = '';
+    this.lectureTime = 0;
     this.filePath = '';
 
     this.publish();

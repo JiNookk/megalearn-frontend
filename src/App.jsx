@@ -31,15 +31,25 @@ import PurchaseSuccessPage from './pages/PurchaseSuccessPage';
 import NotePage from './pages/NotePage';
 import InquiryPage from './pages/InquiryPage';
 import OrderPage from './pages/OrderPage';
+import RegisterPage from './pages/RegisterPage';
+import useCategoryStore from './hooks/useCategoryStore';
+import usePaymentStore from './hooks/usePaymentStore';
 
 export default function App() {
   const [themeName] = useLocalStorage('theme', 'default');
-  const [, setAccessToken] = useLocalStorage('accessToken');
+  // const [, setAccessToken] = useLocalStorage('accessToken');
+
+  const categoryStore = useCategoryStore();
+  const paymentStore = usePaymentStore();
 
   useEffect(() => {
     // setAccessToken('');
+    categoryStore.fetchCategories();
   }, []);
 
+  useEffect(() => {
+    console.log(paymentStore.payments);
+  });
   const theme = themeName === 'dark' ? darkTheme : defaultTheme;
 
   return (
@@ -56,14 +66,14 @@ export default function App() {
         <Route path="/account/likes" element={<MyAccountPage />} />
         <Route path="/carts" element={<CartPage />} />
         <Route path="/courses" element={<CoursesPage />} />
-        <Route path="/courses/it-programming" element={<CoursesPage />} />
-        <Route path="/courses/it" element={<CoursesPage />} />
-        <Route path="/courses/data-science" element={<CoursesPage />} />
-        <Route path="/courses/game-dev" element={<CoursesPage />} />
-        <Route path="/courses/creative" element={<CoursesPage />} />
-        <Route path="/courses/business" element={<CoursesPage />} />
-        <Route path="/courses/career" element={<CoursesPage />} />
-        <Route path="/courses/life" element={<CoursesPage />} />
+        {categoryStore.categories
+          .map((category) => (
+            <Route
+              key={category.id}
+              path={`/courses${category.url ? `/${category.url}` : ''}`}
+              element={<CoursesPage />}
+            />
+          ))}
         <Route path="/courses/:courseId" element={<CoursePage />} />
         <Route path="/courses/:courseId/inquiries" element={<CoursePage />} />
         <Route path="/courses/:courseId/news" element={<CoursePage />} />
@@ -77,14 +87,15 @@ export default function App() {
         <Route path="/create_course" element={<CourseTitlePage />} />
         <Route path="/inquiries/:inquiryId" element={<InquiryPage />} />
         <Route path="/instructor" element={<InstructorPage Component={InstructorDashBoard} />} />
-        <Route path="/instructor/questions" element={<InstructorPage Component={Questions} />} />
         <Route path="/instructor/courses" element={<InstructorPage Component={UploadedCourses} />} />
+        <Route path="/instructor/questions" element={<InstructorPage Component={Questions} />} />
         <Route path="/instructor/ratings" element={<InstructorPage Component={RatingList} />} />
         <Route path="/instructor/profits" element={<InstructorPage Component={Profits} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/mynote" element={<NotePage />} />
         <Route path="/my-orders" element={<OrderPage />} />
         <Route path="/purchaseSuccess" element={<PurchaseSuccessPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </ThemeProvider>
   );
