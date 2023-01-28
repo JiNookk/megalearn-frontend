@@ -1,23 +1,47 @@
+import { apiService } from '../services/ApiService';
 import Store from './Store';
 
 export default class AccountStore extends Store {
   constructor() {
     super();
-    this.name = 'tester';
+
+    this.name = '';
+    this.userName = '';
+    this.phoneNumber = '';
   }
 
-  login({ userName, password }) {
-    if (userName === 'test123' && password === 'Password123!') {
-      return { accessToken: 'ACCESS.TOKEN' };
-    }
-    if (userName === 'test2' && password === 'Password123!') {
-      return { accessToken: 'ACCESS.TOKEN2' };
-    }
-    if (userName === 'test3' && password === 'Password123!') {
-      return { accessToken: 'ACCESS.TOKEN3' };
-    }
+  async register({
+    name, userName, phoneNumber, password, passwordCheck,
+  }) {
+    await apiService.register({
+      name, userName, phoneNumber, password, passwordCheck,
+    });
 
-    return { accessToken: '' };
+    this.publish();
+  }
+
+  async login({ userName: email, password }) {
+    const {
+      phoneNumber, userName, name, accessToken,
+    } = await apiService.login({ email, password });
+
+    this.phoneNumber = phoneNumber;
+    this.userName = userName;
+    this.name = name;
+
+    return accessToken;
+  }
+
+  async requestToken({ authCode }) {
+    const {
+      phoneNumber, userName, name, accessToken,
+    } = await apiService.requestToken({ authCode });
+
+    this.phoneNumber = phoneNumber;
+    this.userName = userName;
+    this.name = name;
+
+    return accessToken;
   }
 }
 

@@ -14,7 +14,7 @@ Scenario('시나리오 #1 - 상세화면 진입(다른 지식공유자의 강의
   I.click('강의');
 
   // WHEN
-  I.click('강의 1');
+  I.click('강의 3');
 
   // THEN
   I.see('강의소개');
@@ -22,7 +22,7 @@ Scenario('시나리오 #1 - 상세화면 진입(다른 지식공유자의 강의
   I.see('수강평');
   I.see('질문 게시판');
   I.see('새소식');
-  I.see('49,000원');
+  I.see('24,000원');
   I.see('수강신청 하기');
   I.see('바구니에 담기');
 });
@@ -44,7 +44,7 @@ Scenario('시나리오 #2 - 상세화면 진입(내가 올린 강의)', ({ I }) 
 Scenario('시나리오 #3 - 상세화면 진입(내가 구매한 강의)', ({ I }) => {
   // Given
   I.login({ userName: 'test3', password: 'Password123!' });
-  I.click('마이페이지');
+  I.click('#dashboard');
 
   // WHEN
   I.click('내 학습');

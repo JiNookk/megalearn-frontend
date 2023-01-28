@@ -1,3 +1,4 @@
+import { apiService } from '../../services/ApiService';
 import Store from '../Store';
 
 export default class CourseFormStore extends Store {
@@ -10,7 +11,7 @@ export default class CourseFormStore extends Store {
     this.price = 0;
     this.thumbnail = '';
     this.level = '';
-    this.skill = '';
+    this.skills = new Set();
     this.error = { message: '' };
   }
 
@@ -32,8 +33,17 @@ export default class CourseFormStore extends Store {
     this.publish();
   }
 
-  changeThumbnailPath(thumbnail) {
+  changeThumbnail(thumbnail) {
     this.thumbnail = thumbnail;
+
+    this.publish();
+  }
+
+  async changeThumbnailPath(file) {
+    const thumbnail = await apiService.upload(file);
+
+    this.changeThumbnail(thumbnail);
+    console.log(this.thumbnail);
 
     this.publish();
   }
@@ -51,7 +61,20 @@ export default class CourseFormStore extends Store {
   }
 
   changeSkill(skill) {
-    this.skill = skill;
+    if (this.skills.has(skill)) {
+      this.skills.delete(skill);
+
+      this.publish();
+      return;
+    }
+
+    this.skills.add(skill);
+
+    this.publish();
+  }
+
+  setSkill(skillSets) {
+    this.skills = new Set(skillSets);
 
     this.publish();
   }
@@ -83,7 +106,7 @@ export default class CourseFormStore extends Store {
     this.thumbnail = '';
     this.price = 0;
     this.level = '';
-    this.skill = '';
+    this.skills = new Set();
 
     this.publish();
   }

@@ -10,10 +10,10 @@ export default class InquiryStore extends Store {
   }
 
   async post({
-    title, lectureId, hashTags, content, anonymous, minute, second,
+    title, courseId, lectureId, hashTags, content, anonymous, minute, second,
   }) {
     const inquiry = await apiService.createInquiryPost({
-      title, lectureId, hashTags, content, anonymous, minute, second,
+      title, courseId, lectureId, hashTags, content, anonymous, minute, second,
     });
 
     this.inquiryPosts = [...this.inquiryPosts, inquiry];

@@ -10,35 +10,36 @@ import CurriCulumTab from './CurriCulumTab';
 import { TabContainer } from '../ui/Tab';
 
 const Article = styled.article`
-  height: 100%;
+  min-height: 100vh;
   width: 30vw;
-  padding: 0 3rem;
-  
   position: relative;
 `;
 
-const TabButtons = styled.article`
+const TabButtonWrapper = styled.article`
   display: flex;
   flex-direction: column;
+  padding: 2rem 1.5rem;
+  border: 1px solid #b5b5b5;
+  background-color: #F8F9FA;
 
-  background-color: rgb(248,249,250);
+  button{
+    height: 28px;
+    margin-bottom: 3rem;
+    border: none;
+    background: none;
+  }
 `;
 
 const ExitButton = styled.button`
-  width: 30px;
-  height: 30px;
-  
+  font-size: large;
   z-index: 999;
-  
   position: absolute;
   top: 2%;
-  right: 5%;
+  right: 0%;
   transform: translate(-50%, -50%);
-    
-  background-color: white;
-  border: 1px solid black;
+  background: none;
+  border: none;
   border-radius: 8px;
-
   text-align: center;
 `;
 
@@ -100,18 +101,17 @@ export default function LectureTab() {
           <ExitButton type="button" onClick={handleTabOff}>X</ExitButton>
         </Article>
       )}
-
-      <TabButtons>
+      <TabButtonWrapper>
         <button type="button" onClick={handleClickCurriCulum}>
-          목차
+          <img src="/assets/images/chapter.png" alt="chapter" />
         </button>
         <button type="button" onClick={handleClickInquiryBoard}>
-          질문하기
+          <img src="/assets/images/inquiry.png" alt="inquiry" />
         </button>
         <button type="button" onClick={handleClickNotes}>
-          노트
+          <img src="/assets/images/note.png" alt="note" />
         </button>
-      </TabButtons>
+      </TabButtonWrapper>
     </TabContainer>
   );
 }

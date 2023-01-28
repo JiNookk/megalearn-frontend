@@ -1,4 +1,5 @@
 import { apiService } from '../services/ApiService';
+import { timeFormat } from '../utils/TimeFormat';
 import Store from './Store';
 
 export default class LectureStore extends Store {
@@ -49,10 +50,12 @@ export default class LectureStore extends Store {
   }
 
   async update({
-    title, videoUrl, lectureNote, filePath, lectureId,
+    title, videoUrl, lectureNote, lectureTime, filePath, lectureId,
   }) {
+    const minute = timeFormat.getMinutes({ seconds: lectureTime });
+    const second = timeFormat.getSeconds({ seconds: lectureTime });
     const updated = await apiService.updateLecture({
-      title, videoUrl, lectureNote, filePath, lectureId,
+      title, videoUrl, lectureNote, lectureTime: { minute, second }, filePath, lectureId,
     });
 
     this.lectures = this.lectures
@@ -88,6 +91,10 @@ export default class LectureStore extends Store {
     this.modifyingLecture = lecture;
 
     this.publish();
+  }
+
+  get isDisabled() {
+    return this.lectures?.length <= 1;
   }
 }
 

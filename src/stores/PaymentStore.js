@@ -5,9 +5,16 @@ export default class PaymentStore extends Store {
   constructor() {
     super();
 
+    this.wholePayments = [];
     this.payments = [];
     this.recentPayments = [];
     this.monthlyProfit = 1;
+  }
+
+  async fetchAllPayments() {
+    this.wholePayments = await apiService.fetchAllPayments();
+
+    this.publish();
   }
 
   async fetchPayments({ courseId } = {}) {
@@ -37,7 +44,9 @@ export default class PaymentStore extends Store {
   }
 
   async requestPurchase({ pgToken }) {
-    this.url = await apiService.requestPurchase({ pgToken });
+    const purchased = await apiService.requestPurchase({ pgToken });
+
+    this.payments = [...this.payments, ...purchased];
 
     this.publish();
   }

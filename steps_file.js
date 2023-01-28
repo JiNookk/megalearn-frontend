@@ -5,7 +5,7 @@ module.exports = function () {
       this.click('로그인');
       this.fillField('아이디', userName);
       this.fillField('비밀번호', password);
-      this.click('[type=submit]');
+      this.click('#login-button');
     },
 
     postInquiry({ title, body, lectureTime }) {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useLectureStore from '../hooks/useLectureStore';
 import useSectionStore from '../hooks/useSectionStore';
+import { timeFormat } from '../utils/TimeFormat';
 
 const Container = styled.article`
   border: 1px solid #e8ecef;
@@ -39,7 +40,7 @@ const Table = styled.table`
     justify-content: space-between;
     width: 100%;
     padding: .5rem;
-    border: 1px solid #e8ecef;
+    border: 1px solid #E4E3E5;
   }
 
   td{
@@ -48,7 +49,19 @@ const Table = styled.table`
 `;
 
 const Section = styled.tr`
-  background: #f8f9fa;
+  font-weight: bold;
+  background: #F8F9FA;
+`;
+
+const Lecture = styled.tr`
+  td{
+    width: 100%;
+  }
+
+  a{
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export default function CurriCulum() {
@@ -92,19 +105,34 @@ export default function CurriCulum() {
                     {lectureStore.lectures
                       .filter((lecture) => lecture.sectionId === section.id)
                       .length}
-                    강
+                    강•
+                    {timeFormat.getMinutes({
+                      seconds: lectureStore.lectures
+                        .filter((lecture) => lecture.sectionId === section.id)
+                        .reduce((acc, lecture) => (
+                          acc + lecture.lectureTime.minute * 60 + lecture.lectureTime.second
+                        ), 0),
+                    })}
+                    분
                   </td>
                 </Section>
                 {lectureStore.lectures
                   .filter((lecture) => lecture.sectionId === section.id)
                   .map((lecture) => (
-                    <tr key={lecture.id}>
+                    <Lecture key={lecture.id}>
                       <td>
                         <Link to={`/courses/${courseId}/lectures/${lecture.id}`}>
-                          {lecture.title}
+                          <p>
+                            {lecture.title}
+                          </p>
+                          <p>
+                            {lecture.lectureTime.minute}
+                            :
+                            {lecture.lectureTime.second}
+                          </p>
                         </Link>
                       </td>
-                    </tr>
+                    </Lecture>
                   ))}
               </Fragment>
             ))}

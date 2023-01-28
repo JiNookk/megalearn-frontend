@@ -8,7 +8,7 @@ import SubTitle from './ui/SubTitle';
 
 const Notes = styled.div`
   width: 100%;
-  border: 1px solid #e8ecef;
+  /* border: 1px solid #e8ecef; */
   
   > * {
     padding-inline: 2rem;
@@ -31,7 +31,7 @@ const Filter = styled.ul`
 
 const Questions = styled.ul`
   padding-block-end: 2rem;
-  border-block-end: 1px solid #e8ecef;
+  border: 1px solid #e8ecef;
 `;
 
 const List = styled.ul`
@@ -58,7 +58,7 @@ export default function MyPosts() {
 
   return (
     <Notes>
-      <Filter>
+      {/* <Filter>
         <li>
           전체
         </li>
@@ -68,12 +68,12 @@ export default function MyPosts() {
         <li>
           미해결
         </li>
-      </Filter>
+      </Filter> */}
       <Questions>
         {inquiryStore.inquiryPosts
           .map((inquiry) => (
             <li key={inquiry.id}>
-              <Link to={`/inquiries/${1}`}>
+              <Link to={`/inquiries/${inquiry.id}`}>
                 <SubTitle>
                   {inquiry.title}
                 </SubTitle>

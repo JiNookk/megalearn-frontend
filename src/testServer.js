@@ -16,16 +16,8 @@ const server = setupServer(
 
   rest.get(`${baseUrl}/account/my-courses`, (req, res, ctx) => res(ctx.json({
     courses: [{
-      id: 1, title: '강의 1', imagePath: '이미지 패스', progress: 50,
-    }, {
-      id: 2, title: '강의 2', imagePath: '이미지 패스', progress: 70,
-    }],
-  }))),
-
-  rest.get(`${baseUrl}/courses`, (req, res, ctx) => res(ctx.json({
-    courses: [{
       id: 1,
-      recentlySeenLectureId: 135,
+      skillSets: ['JavaScript', 'React', 'Python'],
       category: '개발,프로그래밍 > 백엔드',
       title: '강의 1',
       stars: 5.0,
@@ -36,7 +28,7 @@ const server = setupServer(
       hashTags: ['단백질', '득근'],
     }, {
       id: 2,
-      recentlySeenLectureId: 135,
+      skillSets: ['JavaScript', 'React', 'Python'],
       category: '개발,프로그래밍 > 백엔드',
       title: '강의 2',
       stars: 5.0,
@@ -47,7 +39,44 @@ const server = setupServer(
       hashTags: ['단백질', '득근'],
     }, {
       id: 3,
-      recentlySeenLectureId: 135,
+      skillSets: ['JavaScript', 'React', 'Python'],
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 3',
+      stars: 5.0,
+      price: 24000,
+      studentCount: 1234,
+      instructor: '오진성',
+      level: '중급이상',
+      hashTags: ['단백질', '득근'],
+    }],
+  }))),
+
+  rest.get(`${baseUrl}/courses`, (req, res, ctx) => res(ctx.json({
+    courses: [{
+      id: 1,
+      skillSets: ['JavaScript', 'React', 'Python'],
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 1',
+      stars: 5.0,
+      price: 35000,
+      studentCount: 1234,
+      instructor: '오진성',
+      level: '입문',
+      hashTags: ['단백질', '득근'],
+    }, {
+      id: 2,
+      skillSets: ['JavaScript', 'React', 'Python'],
+      category: '개발,프로그래밍 > 백엔드',
+      title: '강의 2',
+      stars: 5.0,
+      price: 49000,
+      studentCount: 1234,
+      instructor: '오진성',
+      level: '초급',
+      hashTags: ['단백질', '득근'],
+    }, {
+      id: 3,
+      skillSets: ['JavaScript', 'React', 'Python'],
       category: '개발,프로그래밍 > 백엔드',
       title: '강의 3',
       stars: 5.0,
@@ -62,7 +91,7 @@ const server = setupServer(
   rest.get(`${baseUrl}/courses/wishes`, (req, res, ctx) => res(ctx.json({
     courses: [{
       id: 1,
-      recentlySeenLectureId: 135,
+      skillSets: ['JavaScript', 'React', 'Python'],
       category: '개발,프로그래밍 > 백엔드',
       title: '강의 1',
       stars: 5.0,
@@ -73,7 +102,7 @@ const server = setupServer(
       hashTags: ['단백질', '득근'],
     }, {
       id: 2,
-      recentlySeenLectureId: 135,
+      skillSets: ['JavaScript', 'React', 'Python'],
       category: '개발,프로그래밍 > 백엔드',
       title: '강의 2',
       stars: 5.0,
@@ -84,7 +113,7 @@ const server = setupServer(
       hashTags: ['단백질', '득근'],
     }, {
       id: 3,
-      recentlySeenLectureId: 135,
+      skillSets: ['JavaScript', 'React', 'Python'],
       category: '개발,프로그래밍 > 백엔드',
       title: '강의 3',
       stars: 5.0,
@@ -102,7 +131,7 @@ const server = setupServer(
     if (courseId === '1') {
       return res(ctx.json({
         courseId,
-        recentlySeenLectureId: 135,
+        skillSets: ['JavaScript', 'React', 'Python'],
         price: 35000,
         category: '개발,프로그래밍 > 백엔드',
         title: '강의 1',
@@ -782,7 +811,7 @@ const server = setupServer(
       return res(ctx.json({
         courses: [{
           id: 1,
-          recentlySeenLectureId: 135,
+          skillSets: ['JavaScript', 'React', 'Python'],
           price: 35000,
           category: '개발,프로그래밍 > 백엔드',
           title: '강의 1',
@@ -792,7 +821,7 @@ const server = setupServer(
           hashTags: ['단백질', '득근'],
         }, {
           id: 2,
-          recentlySeenLectureId: 135,
+          skillSets: ['JavaScript', 'React', 'Python'],
           price: 35000,
           category: '개발,프로그래밍 > 백엔드',
           title: '강의 2',
@@ -802,7 +831,7 @@ const server = setupServer(
           hashTags: ['단백질', '득근'],
         }, {
           id: 3,
-          recentlySeenLectureId: 135,
+          skillSets: ['JavaScript', 'React', 'Python'],
           price: 35000,
           category: '개발,프로그래밍 > 백엔드',
           title: '강의 3',

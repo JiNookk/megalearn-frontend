@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import moment from 'moment';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useCourseStore from '../hooks/useCourseStore';
@@ -144,6 +144,8 @@ const List = styled.ul`
 `;
 
 export default function DashBoard() {
+  const [hover, setHover] = useState(0);
+
   const courseStore = useCourseStore();
   const dateStore = useDateStore();
   const inquiryStore = useInquiryStore();
@@ -161,14 +163,6 @@ export default function DashBoard() {
     dateStore.nextWeek();
     noteStore.fetchWeeklyNotes({ date: dateStore.instance.format() });
     progressStore.fetchWeeklyProgresses({ date: dateStore.instance.format() });
-  };
-
-  const handleLastYearData = () => {
-
-  };
-
-  const handleNextYearData = () => {
-
   };
 
   useEffect(() => {
@@ -207,6 +201,7 @@ export default function DashBoard() {
                   {' '}
                   {progressStore.progresses
                     .filter((progress) => progress.courseId === course.id)
+                    .filter((progress) => progress.status === 'completed')
                     .length}
                   강 /
                   {' '}
@@ -217,6 +212,7 @@ export default function DashBoard() {
                   {
                     percentageFormat(progressStore.progresses
                       .filter((progress) => progress.courseId === course.id)
+                      .filter((progress) => progress.status === 'completed')
                       .length
                       / lectureStore.lectures
                         .filter((lecture) => lecture.courseId === course.id)
@@ -265,8 +261,11 @@ export default function DashBoard() {
                 <p>
                   {day}
                 </p>
-                {/* <div> */}
                 <WeeklyChart
+                  hover={hover}
+                  setHover={setHover}
+                  id={i + 1}
+                  date={dateStore.instance.day(i).format()}
                   lectureCount={progressStore.progresses
                     .filter((progress) => (
                       dateStore.instance.day(i).format('YY.MM.DD')
@@ -431,7 +430,7 @@ export default function DashBoard() {
               📝 노트
             </h4>
             <p>
-              2
+              {noteStore.notes.length}
             </p>
           </li>
           <li>
@@ -439,7 +438,9 @@ export default function DashBoard() {
               ✅ 완강
             </h4>
             <p>
-              1
+              {progressStore.progresses
+                .filter((progress) => progress.status === 'completed')
+                .length}
             </p>
           </li>
         </TotalRecord>

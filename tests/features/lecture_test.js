@@ -9,7 +9,7 @@ Scenario('watch lecture', ({ I }) => {
 
   // - 웹 사이트에 접속해서 로그인함.
   I.amOnPage('/');
-  // I.login({ userName: 'test123', password: 'Password123!' });
+  I.login({ userName: 'test123', password: 'Password123!' });
 
   I.click('마이페이지');
   I.click('내 학습');

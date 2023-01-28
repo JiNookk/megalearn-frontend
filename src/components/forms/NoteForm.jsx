@@ -1,6 +1,20 @@
+import styled from 'styled-components';
 import useNoteFormStore from '../../hooks/useNoteFormStore';
 import useNoteStore from '../../hooks/useNoteStore';
 import useVideoStore from '../../hooks/useVideoStore';
+import TextEditor from '../../utils/TextEditor';
+
+const Form = styled.form`
+  text-align: end;
+  background: white;
+
+  button{
+    padding: .8rem 1rem;
+    border-radius: .25rem;
+    background: #495057;
+    color: white;
+  }
+`;
 
 export default function NoteForm() {
   const lectureId = window.location.pathname.split('/')[4];
@@ -14,29 +28,24 @@ export default function NoteForm() {
 
     const { content } = noteFormStore;
 
+    if (!content) {
+      return;
+    }
+
     noteStore.save({ lectureId, content, lectureTime: videoStore.currentTime() });
 
     noteFormStore.reset();
   };
 
   return (
-    <div>
-      <form>
-        <label hidden htmlFor="input-note">
-          노트
-        </label>
-        <textarea
-          id="input-note"
-          rows="10"
-          cols="30"
-          placeholder="마크다운, 단축키를 이용해서 편리하게 글을 작성할 수 있어요."
-          value={noteFormStore.content}
-          onChange={(e) => noteFormStore.changeContent(e.target.value)}
-        />
-        <div>
-          <button type="submit" onClick={handleSubmitNote}>노트 입력</button>
-        </div>
-      </form>
-    </div>
+    <Form onSubmit={handleSubmitNote}>
+      <TextEditor
+        type="note"
+        height={200}
+      />
+      <div>
+        <button type="submit">노트 입력</button>
+      </div>
+    </Form>
   );
 }

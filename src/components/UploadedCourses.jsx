@@ -5,13 +5,51 @@ import useCourseStore from '../hooks/useCourseStore';
 import useInquiryStore from '../hooks/useInquiryStore';
 import usePaymentStore from '../hooks/usePaymentStore';
 import useRatingStore from '../hooks/useRatingStore';
+import averageFormat from '../utils/averageFormat';
 import CourseDeleteModal from './modals/CourseDeleteModal';
 
+// const Table = styled.table`
+//   margin-top: 2rem;
+
+//   td{
+//     padding: .5rem 1rem;
+//   }
+// `;
+
+const Container = styled.div`
+  flex: 1;  
+`;
+
 const Table = styled.table`
-  margin-top: 2rem;
+  display: block;
+  padding-block: 2rem;
+
+  thead, tbody{
+    display: block;
+    width: 100%;
+  }
+
+  th{
+    text-align: start;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: gray;
+  }
+
+  tr{
+    display: grid;
+    grid-template-columns: 1fr 2fr repeat(6, 1fr);
+    padding: 1rem;
+    align-items: center;
+    border: 1px solid #D3DADD;
+    border-collapse: collapse;
+  }
 
   td{
-    padding: .5rem 1rem;
+    >div{
+      display: flex;
+      align-items: center;
+    }
   }
 `;
 
@@ -55,7 +93,7 @@ export default function UploadedCourses() {
   }, []);
 
   return (
-    <article>
+    <Container>
       <label hidden htmlFor="select-status">강의 상태</label>
       <select id="select-status" onChange={handleChangeStatus}>
         <option value="all">전체상태</option>
@@ -97,7 +135,7 @@ export default function UploadedCourses() {
             .map((course) => (
               <tr key={course.id}>
                 <td>
-                  <Image src="/assets/images/test.jpg" alt="course" />
+                  <Image src={course.coverImage || '/assets/images/test.jpg'} alt="course" />
                 </td>
                 <td>
                   <Link to={`/courses/${course.id}`}>
@@ -106,11 +144,8 @@ export default function UploadedCourses() {
                 </td>
                 <td>
                   <Link to={`/courses/${course.id}#reviews`}>
-                    {(ratingStore.ratings
-                      .filter((rating) => rating.courseId === course.id)
-                      .reduce((acc, cur) => (acc + cur.rating), 0)
-                    / ratingStore.ratings.length)
-                      .toFixed(2) || 0}
+                    {averageFormat(ratingStore.ratings
+                      .filter((rating) => rating.courseId === course.id)) || 0}
                   </Link>
                 </td>
                 <td>
@@ -148,6 +183,6 @@ export default function UploadedCourses() {
       {isModal && (
         <CourseDeleteModal onIsModal={setIsModal} courseId={courseId} />
       )}
-    </article>
+    </Container>
   );
 }

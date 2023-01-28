@@ -7,6 +7,15 @@ export default class RatingStore extends Store {
 
     this.rating = 0;
     this.ratings = [];
+    this.myReviews = [];
+  }
+
+  async rate({ content, courseId, rating }) {
+    const saved = await apiService.rate({ content, courseId, rating });
+
+    this.ratings = [...this.ratings, saved];
+
+    this.publish();
   }
 
   async fetchRating() {
@@ -18,6 +27,12 @@ export default class RatingStore extends Store {
 
   async fetchRatings() {
     this.ratings = await apiService.fetchRatings();
+
+    this.publish();
+  }
+
+  async fetchMyReviews() {
+    this.myReviews = await apiService.fetchMyReviews();
 
     this.publish();
   }

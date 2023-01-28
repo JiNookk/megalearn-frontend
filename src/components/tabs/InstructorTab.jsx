@@ -4,10 +4,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
   margin-inline-end: 2rem;
-  padding-block-start: 2rem;
-  padding-inline-start: 2.5rem;
   width: 11rem;
 
   a{
@@ -20,9 +17,7 @@ const Container = styled.div`
 
 const Category = styled.h2`
   font-size: 1rem;
-
   margin-block: 1rem;
-
   color: #e3e3e3;
 `;
 

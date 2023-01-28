@@ -35,10 +35,10 @@ export default class CourseStore extends Store {
   }
 
   async update({
-    title, category, description, courseId, imagePath, price, level, skill,
+    title, category, description, courseId, imagePath, price, level, skills,
   }) {
     this.course = await apiService.updateCourse({
-      title, description, category, courseId, imagePath, price, level, skill,
+      title, description, category, courseId, imagePath, price, level, skills,
     });
 
     this.publish();
@@ -81,6 +81,11 @@ export default class CourseStore extends Store {
     this.course = await apiService.deleteSkill({ courseId, skill });
 
     this.publish();
+  }
+
+  get isDisabled() {
+    return !(this.course.title && this.course.category && this.course.description
+    && this.course.coverImage && (this.course.price === 0 || this.course.price));
   }
 }
 

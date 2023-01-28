@@ -31,6 +31,14 @@ describe('LectureModifyingFormStore', () => {
     });
   });
 
+  describe('changeLectureTime', () => {
+    it('changes lectureTime', () => {
+      lectureModifyingFormStore.changeLectureTime(10);
+
+      expect(lectureModifyingFormStore.lectureTime).toBe(10);
+    });
+  });
+
   describe('changeFilePath', () => {
     it('changes filePath', () => {
       lectureModifyingFormStore.changeFilePath('hi');
@@ -44,12 +52,14 @@ describe('LectureModifyingFormStore', () => {
       lectureModifyingFormStore.changeTitle('hi');
       lectureModifyingFormStore.changeVideoUrl('hi');
       lectureModifyingFormStore.changeLectureNote('hi');
+      lectureModifyingFormStore.changeLectureTime(10);
       lectureModifyingFormStore.changeFilePath('hi');
       lectureModifyingFormStore.reset();
 
       expect(lectureModifyingFormStore.title).toBe('');
       expect(lectureModifyingFormStore.videoUrl).toBe('');
       expect(lectureModifyingFormStore.lectureNote).toBe('');
+      expect(lectureModifyingFormStore.lectureTime).toBe(0);
       expect(lectureModifyingFormStore.filePath).toBe('');
     });
   });

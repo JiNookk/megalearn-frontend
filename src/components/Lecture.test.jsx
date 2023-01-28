@@ -3,7 +3,6 @@ import {
   render, screen, waitFor,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { lectureStore } from '../stores/LectureStore';
 import Lecture from './Lecture';
 
 delete window.location;

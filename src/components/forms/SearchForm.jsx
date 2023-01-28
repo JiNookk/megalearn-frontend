@@ -6,6 +6,24 @@ const Form = styled.form`
   margin-block-end: 3rem;
 `;
 
+const Content = styled.div`
+  display: flex;
+  padding: 1rem;
+  margin-block: 2rem 2rem;
+  border: 1px solid #D3DADD;
+  border-radius: 4px;
+
+  input{
+    width: 100%;
+    border: none;
+  }  
+
+  button{
+    background: none;
+    border: none;
+  }
+`;
+
 export default function SearchForm() {
   const lectureId = window.location.pathname.split('/')[4];
 
@@ -29,7 +47,7 @@ export default function SearchForm() {
 
   return (
     <Form onSubmit={handleSubmitSearchForm}>
-      {lectureId && (
+      {/* {lectureId && (
         <div>
           <label htmlFor="input-searchTime">
             강의 시간
@@ -42,8 +60,8 @@ export default function SearchForm() {
             onChange={(e) => searchFormStore.changeLectureTime(e.target.value)}
           />
         </div>
-      )}
-      <div>
+      )} */}
+      <Content>
         <label hidden htmlFor="input-searchContent">
           검색
         </label>
@@ -54,8 +72,10 @@ export default function SearchForm() {
           value={searchFormStore.content}
           onChange={(e) => searchFormStore.changeContent(e.target.value)}
         />
-        <button type="submit">검색하기</button>
-      </div>
+        <button type="submit">
+          <img src="/assets/images/search.png" alt="search" />
+        </button>
+      </Content>
     </Form>
   );
 }

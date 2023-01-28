@@ -1,10 +1,10 @@
-import { useLocation } from 'react-router-dom';
 import useCommentFormStore from '../../hooks/useCommentFormStore';
 import useCommentStore from '../../hooks/useCommentStore';
+import getQueryParam from '../../utils/getQueryParam';
+import TextEditor from '../../utils/TextEditor';
 
 export default function CommentForm() {
-  const { state } = useLocation();
-  const { inquiryId } = state;
+  const inquiryId = getQueryParam({ category: 'inquiryId' });
 
   const commentFormStore = useCommentFormStore();
   const commentStore = useCommentStore();
@@ -26,14 +26,7 @@ export default function CommentForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label hidden htmlFor="input-content">댓글 입력란</label>
-      <input
-        id="input-content"
-        type="text"
-        placeholder="답변을 입력해주세요"
-        value={commentFormStore.content}
-        onChange={(e) => commentFormStore.changeContent(e.target.value)}
-      />
+      <TextEditor height={200} type="comment" />
       <button type="submit">댓글 입력</button>
     </form>
   );

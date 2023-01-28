@@ -62,6 +62,10 @@ export default class SectionStore extends Store {
 
     this.publish();
   }
+
+  get isDisabled() {
+    return this.sections?.length <= 1;
+  }
 }
 
 export const sectionStore = new SectionStore();

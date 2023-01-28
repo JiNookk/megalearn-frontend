@@ -6,11 +6,40 @@ import useinquiryFilterFormStore from '../hooks/useInquiryFilterFormStore';
 import useInquiryStore from '../hooks/useInquiryStore';
 import useLectureStore from '../hooks/useLectureStore';
 
+const Container = styled.div`
+  flex: 1;
+`;
+
 const Table = styled.table`
-  margin-top: 2rem;
+  display: block;
+  padding-block: 2rem;
+
+  thead, tbody{
+    display: block;
+    width: 100%;
+  }
+
+  th{
+    text-align: start;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: gray;
+  }
+
+  tr{
+    display: grid;
+    grid-template-columns: 2fr 2fr repeat(3, 1fr);
+    padding: 1rem;
+    align-items: center;
+    border: 1px solid #D3DADD;
+    border-collapse: collapse;
+  }
 
   td{
-    padding: 2rem;
+    >div{
+      display: flex;
+      align-items: center;
+    }
   }
 `;
 
@@ -69,7 +98,7 @@ export default function Questions() {
   }, []);
 
   return (
-    <div>
+    <Container>
       <form onSubmit={handleSubmit}>
         <label hidden htmlFor="select-question-type">질문 타입</label>
         <select
@@ -145,6 +174,6 @@ export default function Questions() {
             ))}
         </tbody>
       </Table>
-    </div>
+    </Container>
   );
 }
