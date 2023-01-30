@@ -14,6 +14,10 @@ export default class DateFormat {
   slashFormat(date) {
     return moment(date).locale('ko').format('YYYY/MM/DD');
   }
+
+  hi() {
+    console.log('hi');
+  }
 }
 
 export const dateFormat = new DateFormat();

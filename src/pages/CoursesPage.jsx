@@ -94,18 +94,6 @@ export default function CoursesPage() {
   const categoryStore = useCategoryStore();
   const skillTagStore = useSkillTagStore();
 
-  // const category = {
-  //   '전체 강의': '',
-  //   '개발 • 프로그래밍': '/it-programming',
-  //   '보안 • 네트워크': '/it',
-  //   '데이터 사이언스': '/data-science',
-  //   '게임 개발': '/game-dev',
-  //   크리에이티브: '/creative',
-  //   '직무 • 마케팅': '/business',
-  //   커리어: '/career',
-  //   교양: '/life',
-  // };
-
   const handleSearchContent = (event) => {
     event.preventDefault();
 
@@ -115,11 +103,13 @@ export default function CoursesPage() {
   };
 
   useEffect(() => {
+    console.log('hi');
     courseStore.fetchCourses({ page, filter });
     ratingStore.fetchRatings();
   }, [page, filter]);
 
   useEffect(() => {
+    console.log('hi');
     categoryStore.fetchCategories();
     skillTagStore.fetchSkillTags();
   }, []);

@@ -124,6 +124,10 @@ export default function HomePage() {
 
     courseStore.fetchCourses();
     ratingStore.fetchRatings();
+
+    console.log('hi');
+    console.log(`js-key: ${process.env.REACT_APP_KAKAO_JS_KEY}`);
+    console.log(`redirect-url: ${process.env.REACT_APP_KAKAO_REDIRECT_URL}`);
   }, []);
 
   return (

@@ -33,7 +33,6 @@ import InquiryPage from './pages/InquiryPage';
 import OrderPage from './pages/OrderPage';
 import RegisterPage from './pages/RegisterPage';
 import useCategoryStore from './hooks/useCategoryStore';
-import usePaymentStore from './hooks/usePaymentStore';
 import CommunityPage from './pages/CommunityPage';
 
 export default function App() {
@@ -41,16 +40,11 @@ export default function App() {
   // const [, setAccessToken] = useLocalStorage('accessToken');
 
   const categoryStore = useCategoryStore();
-  const paymentStore = usePaymentStore();
 
   useEffect(() => {
-    // setAccessToken('');
     categoryStore.fetchCategories();
   }, []);
 
-  useEffect(() => {
-    console.log(paymentStore.payments);
-  });
   const theme = themeName === 'dark' ? darkTheme : defaultTheme;
 
   return (

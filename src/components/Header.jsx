@@ -124,13 +124,13 @@ export default function Header() {
                   </Link>
                 </h3>
               </li>
-              <li>
+              {/* <li>
                 <h3>
                   <Link to="/community">
                     커뮤니티
                   </Link>
                 </h3>
-              </li>
+              </li> */}
             </List>
             {accessToken ? (
               <List>
