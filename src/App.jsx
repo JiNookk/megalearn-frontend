@@ -34,6 +34,7 @@ import OrderPage from './pages/OrderPage';
 import RegisterPage from './pages/RegisterPage';
 import useCategoryStore from './hooks/useCategoryStore';
 import usePaymentStore from './hooks/usePaymentStore';
+import CommunityPage from './pages/CommunityPage';
 
 export default function App() {
   const [themeName] = useLocalStorage('theme', 'default');
@@ -85,6 +86,7 @@ export default function App() {
         <Route path="/courses/:courseId/edit/cover_image" element={<CreateCoursePage Component={UploadCoverImage} />} />
         <Route path="/courses/:courseId/edit/course_setting" element={<CreateCoursePage Component={CourseSetting} />} />
         <Route path="/create_course" element={<CourseTitlePage />} />
+        <Route path="/community" element={<CommunityPage />} />
         <Route path="/inquiries/:inquiryId" element={<InquiryPage />} />
         <Route path="/instructor" element={<InstructorPage Component={InstructorDashBoard} />} />
         <Route path="/instructor/courses" element={<InstructorPage Component={UploadedCourses} />} />
