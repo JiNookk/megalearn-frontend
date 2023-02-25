@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import LoginForm from './LoginForm';
 
 const Container = styled.div`
@@ -58,8 +59,13 @@ export default function LoginPage() {
     }&response_type=code&`
     + 'scope=account_email profile_nickname profile_image';
 
+    // console.log(url);
     window.location.href = url;
   };
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_KAKAO_REDIRECT_URL);
+  });
 
   return (
     <Container>

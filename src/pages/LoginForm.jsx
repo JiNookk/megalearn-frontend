@@ -29,6 +29,8 @@ export default function LoginForm({ handleAccessToken, navigate }) {
 
     const { userName, password } = loginFormStore;
 
+    // if(userName, password)
+
     const accessToken = await accountStore.login({ userName, password });
 
     handleAccessToken(accessToken);

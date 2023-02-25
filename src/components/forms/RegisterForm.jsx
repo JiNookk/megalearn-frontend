@@ -26,6 +26,16 @@ export default function RegisterForm({ navigate }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (registerFormStore.error.password) {
+      return;
+    }
+
+    if (!registerFormStore.name || !registerFormStore.userName
+      || !registerFormStore.phoneNumber || !registerFormStore.password
+      || !registerFormStore.passwordCheck) {
+      return;
+    }
+
     const {
       name, userName, phoneNumber, password, passwordCheck,
     } = registerFormStore;

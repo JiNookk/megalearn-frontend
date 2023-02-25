@@ -126,7 +126,7 @@ export default function Header() {
               </li>
               {/* <li>
                 <h3>
-                  <Link to="/">
+                  <Link to="/community">
                     커뮤니티
                   </Link>
                 </h3>
