@@ -16,7 +16,12 @@ const Form = styled.form`
   button{
     width: 100%;
     padding-block: 1.5rem;
-    margin-block: 2rem;
+    /* margin-block: .5rem; */
+  }
+  
+  button:last-child{
+    margin-block-start: 1.5rem;
+    margin-block-end: .5rem;
   }
 `;
 
@@ -24,13 +29,7 @@ export default function LoginForm({ handleAccessToken, navigate }) {
   const accountStore = useAccountStore();
   const loginFormStore = useLoginFormStore();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const { userName, password } = loginFormStore;
-
-    // if(userName, password)
-
+  const login = async (userName, password) => {
     const accessToken = await accountStore.login({ userName, password });
 
     handleAccessToken(accessToken);
@@ -40,6 +39,14 @@ export default function LoginForm({ handleAccessToken, navigate }) {
       loginFormStore.reset();
       navigate('/');
     }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { userName, password } = loginFormStore;
+
+    await login(userName, password);
   };
 
   return (
