@@ -3,6 +3,10 @@ import { useLocalStorage } from 'usehooks-ts';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import LoginForm from './LoginForm';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import useAccountStore from '../hooks/useAccountStore';
+import { apiService } from '../services/ApiService';
+import useLoginFormStore from '../hooks/useLoginFormStore';
 
 const Container = styled.div`
   display: flex;
@@ -35,6 +39,20 @@ const Notice = styled.div`
   }
 `;
 
+const LoginButtons = styled.ul`
+  display: flex;
+  align-items: center;
+`;
+
+const TestButton = styled(PrimaryButton)`
+  width: 100%;
+
+  padding-block: 1.5rem;
+  margin-block-start: .5rem;
+  margin-block-end: 2rem;
+  /* border-radius: 50%; */
+`;
+
 const Icons = styled.div`
   display: flex;
   justify-content: space-around;
@@ -47,9 +65,27 @@ const Icons = styled.div`
 `;
 
 export default function LoginPage() {
+  const accountStore = useAccountStore();
+  const loginFormStore = useLoginFormStore();
   const [, setAccessToken] = useLocalStorage('accessToken');
 
   const navigate = useNavigate();
+
+  const login = async (userName, password) => {
+    const accessToken = await accountStore.login({ userName, password });
+
+    setAccessToken(accessToken);
+    apiService.setAccessToken(accessToken);
+
+    if (accessToken) {
+      loginFormStore.reset();
+      navigate('/');
+    }
+  };
+
+  const handleTestLogin = async () => {
+    await login('tester123@naver.com', 'password123');
+  };
 
   const handleKakaoLogin = () => {
     const url = `https://kauth.kakao.com/oauth/authorize?client_id=${
@@ -71,18 +107,28 @@ export default function LoginPage() {
     <Container>
       <Image src="/assets/images/megalearn.png" alt="" />
       <LoginForm handleAccessToken={setAccessToken} navigate={navigate} />
-      <Notice>
-        <img src="/assets/images/horizontalLine.png" alt="" />
-        <p>
-          간편 로그인
-        </p>
-        <img src="/assets/images/horizontalLine.png" alt="" />
-      </Notice>
-      <Icons>
-        <button type="button" onClick={handleKakaoLogin}>
-          <img src="/assets/images/kakao.png" alt="kakao-login" />
-        </button>
-      </Icons>
+      <div>
+        <TestButton id="test-login-button" type="click" onClick={handleTestLogin}>
+          테스터 로그인
+        </TestButton>
+        <Notice>
+          <img src="/assets/images/horizontalLine.png" alt="" />
+          <p>
+            간편 로그인
+          </p>
+          <img src="/assets/images/horizontalLine.png" alt="" />
+        </Notice>
+      </div>
+      <LoginButtons>
+        <li />
+        <li>
+          <Icons>
+            <button type="button" onClick={handleKakaoLogin}>
+              <img src="/assets/images/kakao.png" alt="kakao-login" />
+            </button>
+          </Icons>
+        </li>
+      </LoginButtons>
     </Container>
   );
 }

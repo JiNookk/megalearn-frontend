@@ -43,10 +43,11 @@ export default class RegisterFormStore extends Store {
 
   validatePassword() {
     // eslint-disable-next-line no-unused-expressions
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
 
-    if (this.password === this.passwordCheck) {
+    if (this.password !== this.passwordCheck) {
       this.error.password = '비밀번호가 일치하지 않습니다!';
+
       this.publish();
 
       return;
@@ -54,6 +55,7 @@ export default class RegisterFormStore extends Store {
 
     if (!this.password.match(passwordPattern)) {
       this.error.password = '소문자와 숫자를 조합하여 7자 이상의 비밀번호를 입력해주세요';
+
       this.publish();
 
       return;

@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useLocalStorage } from 'usehooks-ts';
 import styled from 'styled-components';
-import LoginForm from './LoginForm';
 import RegisterForm from '../components/forms/RegisterForm';
 
 const Container = styled.div`
@@ -10,40 +8,13 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  /* padding-top: 200px; */
+  padding-top: 4rem;
 `;
 
 const Image = styled.img`
     width: 120px;
     height: 25px;
     margin-bottom: 3rem;
-`;
-
-const Notice = styled.div`
-  display: flex;
-  align-items: center;
-  margin-block-end: 2rem;
-
-  img{
-    display: block;
-    height: 1px;
-  }
-
-  p{
-    margin-inline: 1rem;
-    color: #A0A0A0;
-  }
-`;
-
-const Icons = styled.div`
-  display: flex;
-  justify-content: space-around;
-
-  button{
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
 `;
 
 export default function RegisterPage() {

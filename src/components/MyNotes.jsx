@@ -71,7 +71,7 @@ export default function MyNotes() {
                   </p>
                 </div>
                 <div>
-                  <Image src="/assets/images/test.jpg" alt="course-thumbnail" />
+                  <Image src={course.coverImage || '/assets/images/test.jpg'} alt="course-thumbnail" />
                   <p>{'>'}</p>
                 </div>
               </Link>

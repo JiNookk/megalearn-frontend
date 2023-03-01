@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,12 +9,9 @@ import useLectureStore from '../hooks/useLectureStore';
 import usePaymentStore from '../hooks/usePaymentStore';
 import useRatingStore from '../hooks/useRatingStore';
 import averageFormat from '../utils/averageFormat';
-import WeeklyBarChart from '../utils/BarChart';
 import Chart from '../utils/Chart';
 import { dateFormat } from '../utils/DateFormat';
 import numberFormat from '../utils/numberFormat';
-
-import percentageFormat from '../utils/percentageFormat';
 
 const Container = styled.div`
   width: 100%;
@@ -113,11 +109,6 @@ const UnRepliedInquiries = styled.article`
   }
 `;
 
-const WeeklyBarChartWrapper = styled.div`
-  flex: 1;
-  width: 100%;
-`;
-
 const Table = styled.table`
   width: 100%;
   border: 1px solid #d3ddaa;
@@ -158,7 +149,6 @@ export default function InstructorDashBoard() {
 
   useEffect(() => {
     courseStore.fetchUploadedCourses();
-    ratingStore.fetchRating();
     ratingStore.fetchRatings();
     paymentStore.fetchPayments();
     paymentStore.fetchMonthlyPayments();
@@ -215,8 +205,7 @@ export default function InstructorDashBoard() {
           </Category>
           <div>
             <p>
-              {paymentStore.monthlyProfit}
-              원
+              {`${paymentStore.monthlyProfit}원`}
             </p>
             <Chart
               cost={paymentStore.monthlyProfit}

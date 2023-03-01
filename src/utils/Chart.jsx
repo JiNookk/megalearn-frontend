@@ -28,8 +28,7 @@ export default function Chart({ ratioArray, cost }) {
       <PieCharts.Wrapper>
         <PieCharts.Heading>
           <PieCharts.Title>
-            {numberFormat(cost) }
-            원
+            {/* {numberFormat(cost) ? `${numberFormat(cost)}원` : '' } */}
           </PieCharts.Title>
         </PieCharts.Heading>
         <PieCharts.RatioWrapper>
