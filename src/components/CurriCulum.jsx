@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useLectureStore from '../hooks/useLectureStore';
+import usePaymentStore from '../hooks/usePaymentStore';
 import useSectionStore from '../hooks/useSectionStore';
 import { timeFormat } from '../utils/TimeFormat';
 
@@ -64,15 +65,23 @@ const Lecture = styled.tr`
   }
 `;
 
+const CourseLink = styled(Link)`
+pointer-events: ${(props) => (props.payments
+    .filter((payment) => payment.courseId === +props.courseId)
+    .length ? 'all' : 'none')};
+`;
+
 export default function CurriCulum() {
   const courseId = window.location.pathname.split('/')[2];
 
   const sectionStore = useSectionStore();
   const lectureStore = useLectureStore();
+  const paymentStore = usePaymentStore();
 
   useEffect(() => {
     sectionStore.fetchSectionsByCourseId({ courseId });
     lectureStore.fetchLecturesByCourseId({ courseId });
+    paymentStore.fetchMyPayments();
   }, []);
 
   return (
@@ -121,7 +130,11 @@ export default function CurriCulum() {
                   .map((lecture) => (
                     <Lecture key={lecture.id}>
                       <td>
-                        <Link to={`/courses/${courseId}/lectures/${lecture.id}`}>
+                        <CourseLink
+                          courseId={courseId}
+                          payments={paymentStore.payments}
+                          to={`/courses/${courseId}/lectures/${lecture.id}`}
+                        >
                           <p>
                             {lecture.title}
                           </p>
@@ -130,7 +143,7 @@ export default function CurriCulum() {
                             :
                             {lecture.lectureTime.second}
                           </p>
-                        </Link>
+                        </CourseLink>
                       </td>
                     </Lecture>
                   ))}

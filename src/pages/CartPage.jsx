@@ -230,12 +230,6 @@ export default function CartPage() {
               <dd>
                 {accountStore.userName}
               </dd>
-              <dt>
-                휴대폰번호
-              </dt>
-              <dd>
-                {accountStore.phoneNumber}
-              </dd>
             </Information>
           </SideBar>
           <SideBar>
