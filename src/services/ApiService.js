@@ -5,30 +5,30 @@ import baseUrl, { config } from '../config';
 export default class ApiService {
   constructor() {
     this.accessToken = '';
+    this.authorizationHeader = {};
   }
 
   setAccessToken(accessToken) {
     this.accessToken = accessToken;
+
+    this.authorizationHeader = this.accessToken ? {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    }
+      : {};
   }
 
   async createCourse({ title }) {
     const { data } = await axios.post(`${baseUrl}/courses`, {
       title,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
 
   async fetchMycourses() {
-    const { data } = await axios.get(`${baseUrl}/account/my-courses`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/account/my-courses`, this.authorizationHeader);
 
     return data.courses;
   }
@@ -53,21 +53,13 @@ export default class ApiService {
   }
 
   async fetchWishList() {
-    const { data } = await axios.get(`${baseUrl}/courses/wishes`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/courses/wishes`, this.authorizationHeader);
 
     return data.courses;
   }
 
   async fetchCourse({ courseId }) {
-    const { data } = await axios.get(`${baseUrl}/courses/${courseId}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}`, this.authorizationHeader);
 
     return data;
   }
@@ -78,11 +70,7 @@ export default class ApiService {
   }) {
     const { data } = await axios.patch(`${baseUrl}/courses/${courseId}`, {
       title, category, description, imagePath, price, status, level, skills,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
@@ -90,11 +78,7 @@ export default class ApiService {
   async deleteCourse({ courseId }) {
     const { data } = await axios.delete(`${baseUrl}/courses/${courseId}`, {
       courseId,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
@@ -102,11 +86,7 @@ export default class ApiService {
   async createLecture({ courseId, sectionId, title }) {
     const { data } = await axios.post(`${baseUrl}/lectures`, {
       courseId, sectionId, title,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
@@ -124,21 +104,13 @@ export default class ApiService {
   }
 
   async fetchMyLectures() {
-    const { data } = await axios.get(`${baseUrl}/lectures/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/lectures/me`, this.authorizationHeader);
 
     return data.lectures;
   }
 
   async fetchLecturesByInstructorId() {
-    const { data } = await axios.get(`${baseUrl}/lectures/instructor`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/lectures/instructor`, this.authorizationHeader);
 
     return data.lectures;
   }
@@ -154,21 +126,13 @@ export default class ApiService {
   }) {
     const { data } = await axios.patch(`${baseUrl}/lectures/${lectureId}`, {
       title, videoUrl, lectureNote, lectureTime, filePath,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
 
   async deleteLecture({ lectureId }) {
-    const { data } = await axios.delete(`${baseUrl}/lectures/${lectureId}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.delete(`${baseUrl}/lectures/${lectureId}`, this.authorizationHeader);
 
     return data;
   }
@@ -176,21 +140,13 @@ export default class ApiService {
   async createComment({ inquiryId, content }) {
     const { data } = await axios.post(`${baseUrl}/comments`, {
       inquiryId, content,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
 
   async fetchComments({ inquiryId }) {
-    const { data } = await axios.get(`${baseUrl}/inquiries/${inquiryId}/comments`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/inquiries/${inquiryId}/comments`, this.authorizationHeader);
 
     return data.comments;
   }
@@ -214,11 +170,7 @@ export default class ApiService {
   }) {
     const { data } = await axios.post(`${baseUrl}/inquiries`, {
       title, publisher, courseId, lectureId, hashTags, content, anonymous, minute, second,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
@@ -230,11 +182,7 @@ export default class ApiService {
   }
 
   async fetchMyInquiries() {
-    const { data } = await axios.get(`${baseUrl}/inquiries/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/inquiries/me`, this.authorizationHeader);
 
     return data.inquiries;
   }
@@ -259,11 +207,7 @@ export default class ApiService {
         ), '').substring(1)}`
       : '';
 
-    const { data } = await axios.get(`${baseUrl}/inquiries${query}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/inquiries${query}`, this.authorizationHeader);
 
     return data.inquiries;
   }
@@ -320,31 +264,19 @@ export default class ApiService {
       content,
       lectureTime,
       lectureId,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
 
   async fetchNotesByLectureId({ lectureId }) {
-    const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/notes`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/notes`, this.authorizationHeader);
 
     return data.notes;
   }
 
   async fetchMyNotes() {
-    const { data } = await axios.get(`${baseUrl}/notes/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/notes/me`, this.authorizationHeader);
 
     return data.notes;
   }
@@ -352,11 +284,7 @@ export default class ApiService {
   async fetchWeeklyNotes({ date }) {
     const query = date ? `?date=${date}` : '';
 
-    const { data } = await axios.get(`${baseUrl}/notes/me${query}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/notes/me${query}`, this.authorizationHeader);
 
     return data.notes;
   }
@@ -382,11 +310,7 @@ export default class ApiService {
   }
 
   async fetchSectionsByCourseId({ courseId }) {
-    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/sections`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/sections`, this.authorizationHeader);
 
     return data.sections;
   }
@@ -396,11 +320,7 @@ export default class ApiService {
   }) {
     const { data } = await axios.post(`${baseUrl}/sections`, {
       title, courseId, goal,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
@@ -422,21 +342,13 @@ export default class ApiService {
   }
 
   async fetchProgress({ lectureId }) {
-    const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/progress`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/lectures/${lectureId}/progress`, this.authorizationHeader);
 
     return data;
   }
 
   async fetchProgresses() {
-    const { data } = await axios.get(`${baseUrl}/progresses`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/progresses`, this.authorizationHeader);
 
     return data.progresses;
   }
@@ -444,31 +356,19 @@ export default class ApiService {
   async fetchWeeklyProgresses({ date }) {
     const query = date ? `?date=${date}` : '';
 
-    const { data } = await axios.get(`${baseUrl}/progresses${query}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/progresses${query}`, this.authorizationHeader);
 
     return data.progresses;
   }
 
   async fetchProgressesByCourseId({ courseId }) {
-    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/progresses`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/progresses`, this.authorizationHeader);
 
     return data.progresses;
   }
 
   async completeLecture({ progressId }) {
-    const { data } = await axios.patch(`${baseUrl}/progresses/${progressId}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.patch(`${baseUrl}/progresses/${progressId}`, this.authorizationHeader);
 
     return data;
   }
@@ -496,11 +396,7 @@ export default class ApiService {
       ? `?type=${filter}`
       : '';
 
-    const { data } = await axios.get(`${baseUrl}/instructor/my-courses${query}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/instructor/my-courses${query}`, this.authorizationHeader);
 
     return data.courses;
   }
@@ -508,21 +404,13 @@ export default class ApiService {
   async rate({ content, courseId, rating }) {
     const { data } = await axios.post(`${baseUrl}/ratings`, {
       content, courseId, rating,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data;
   }
 
   async fetchRating() {
-    const { data } = await axios.get(`${baseUrl}/instructor/my-rating`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/instructor/my-rating`, this.authorizationHeader);
 
     return data;
   }
@@ -534,11 +422,7 @@ export default class ApiService {
   }
 
   async fetchMyReviews() {
-    const { data } = await axios.get(`${baseUrl}/ratings/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/ratings/me`, this.authorizationHeader);
 
     return data.ratings;
   }
@@ -546,11 +430,7 @@ export default class ApiService {
   async fetchRatingsByInstructorId({ courseId }) {
     const query = courseId ? `?courseId=${courseId}` : '';
 
-    const { data } = await axios.get(`${baseUrl}/instructor/ratings${query}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/instructor/ratings${query}`, this.authorizationHeader);
 
     return data.ratings;
   }
@@ -564,31 +444,19 @@ export default class ApiService {
   async fetchPayments({ courseId }) {
     const query = courseId ? `?courseId=${courseId}` : '';
 
-    const { data } = await axios.get(`${baseUrl}/instructor/payments${query}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/instructor/payments${query}`, this.authorizationHeader);
 
     return data.payments;
   }
 
   async fetchMyPayments() {
-    const { data } = await axios.get(`${baseUrl}/payments/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/payments/me`, this.authorizationHeader);
 
     return data.payments;
   }
 
   async fetchMonthlyPayments() {
-    const { data } = await axios.get(`${baseUrl}/instructor/monthly-total-payments`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/instructor/monthly-total-payments`, this.authorizationHeader);
 
     return data.monthlyPayments;
   }
@@ -600,11 +468,7 @@ export default class ApiService {
   async requestPaymentUrl({ courseIds }) {
     const { data } = await axios.post(`${baseUrl}/payments/kakao-ready`, {
       courseIds,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data.paymentUrl;
   }
@@ -612,21 +476,13 @@ export default class ApiService {
   async requestPurchase({ pgToken }) {
     const { data } = await axios.post(`${baseUrl}/payments`, {
       pgToken,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data.payments;
   }
 
   async addItem({ productId }) {
-    const { data } = await axios.patch(`${baseUrl}/carts/me/add-item/${productId}`, {}, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.patch(`${baseUrl}/carts/me/add-item/${productId}`, {}, this.authorizationHeader);
 
     return data.itemIds;
   }
@@ -634,21 +490,13 @@ export default class ApiService {
   async removeItem({ productIds }) {
     const { data } = await axios.patch(`${baseUrl}/carts/me/remove-item`, {
       itemIds: productIds,
-    }, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    }, this.authorizationHeader);
 
     return data.itemIds;
   }
 
   async fetchCart() {
-    const { data } = await axios.get(`${baseUrl}/carts/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/carts/me`, this.authorizationHeader);
 
     return data.itemIds;
   }
@@ -666,21 +514,13 @@ export default class ApiService {
   }
 
   async fetchMyCourseLike({ courseId }) {
-    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/likes/me`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.get(`${baseUrl}/courses/${courseId}/likes/me`, this.authorizationHeader);
 
     return data;
   }
 
   async toggleLike({ id }) {
-    const { data } = await axios.patch(`${baseUrl}/likes/${id}`, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const { data } = await axios.patch(`${baseUrl}/likes/${id}`, this.authorizationHeader);
 
     return data;
   }
