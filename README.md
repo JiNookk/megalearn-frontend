@@ -3,6 +3,11 @@
 ## 프로젝트 소개
 megalearn은 누구나 간편하게 강의를 시청하고 공유할 수 있는데 초점을 두고 만든 웹 서비스 입니다.
 
+
+<img width="366" alt="image" src="https://user-images.githubusercontent.com/82752544/227905063-f3426595-d306-45aa-b134-0618314ca67c.png">
+
+테스트 로그인을 통해 간편하게 로그인할 수 있습니다!
+
 ### 배포 URL
 - 사용자 : [https://megalearn-frontend.fly.dev/](https://megalearn-frontend.fly.dev/)
 - 어드민 : [https://megalearn-admin.fly.dev/](https://megalearn-admin.fly.dev/)
