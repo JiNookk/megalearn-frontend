@@ -46,6 +46,7 @@ Flux Architecture를 참고했습니다.
 2. Dispatcher
 3. Store
 
+<br>
 
 ## 프론트엔드 프로젝트 특징
 
