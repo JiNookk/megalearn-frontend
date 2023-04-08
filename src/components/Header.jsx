@@ -86,7 +86,8 @@ export default function Header() {
 
   const handleLogout = () => {
     setAccessToken('');
-    apiService.accessToken(accessToken);
+
+    apiService.setAccessToken(accessToken);
 
     navigate('/');
   };
