@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import styled from 'styled-components';
 import Padding from './ui/Padding';
+import { apiService } from '../services/ApiService';
 
 const Navigation = styled.nav`
   >div:first-child{
@@ -85,6 +86,8 @@ export default function Header() {
 
   const handleLogout = () => {
     setAccessToken('');
+    apiService.setAccessToken(accessToken);
+
     navigate('/');
   };
 

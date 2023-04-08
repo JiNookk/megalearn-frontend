@@ -11,6 +11,7 @@ import useRatingStore from '../hooks/useRatingStore';
 import averageFormat from '../utils/averageFormat';
 import getQueryParam from '../utils/getQueryParam';
 import numberFormat from '../utils/numberFormat';
+import { apiService } from '../services/ApiService';
 
 const HomeBanner = styled.div`
     background: #48A0F8 url('/assets/images/rocket.png') no-repeat right 10rem bottom -2rem;
@@ -115,6 +116,7 @@ export default function HomePage() {
     const accessToken = await accountStore.requestToken({ authCode });
 
     setAccessToken(accessToken);
+    apiService.setAccessToken(accessToken);
   }
 
   useEffect(() => {
@@ -124,10 +126,6 @@ export default function HomePage() {
 
     courseStore.fetchCourses();
     ratingStore.fetchRatings();
-
-    console.log('hi');
-    console.log(`js-key: ${process.env.REACT_APP_KAKAO_JS_KEY}`);
-    console.log(`redirect-url: ${process.env.REACT_APP_KAKAO_REDIRECT_URL}`);
   }, []);
 
   return (

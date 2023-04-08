@@ -6,6 +6,7 @@ import useCartStore from '../../hooks/useCartStore';
 import useCourseStore from '../../hooks/useCourseStore';
 import useLectureStore from '../../hooks/useLectureStore';
 import useLikeStore from '../../hooks/useLikeStore';
+import usePaymentStore from '../../hooks/usePaymentStore';
 import useProgressStore from '../../hooks/useProgressStore';
 import numberFormat from '../../utils/numberFormat';
 import PrimaryButton from '../ui/PrimaryButton';
@@ -81,6 +82,7 @@ export default function PurchaseBanner() {
   const lectureStore = useLectureStore();
   const cartStore = useCartStore();
   const likeStore = useLikeStore();
+  const paymentStore = usePaymentStore();
   const progressStore = useProgressStore();
 
   const handleAddCourseToCart = () => {
@@ -111,6 +113,7 @@ export default function PurchaseBanner() {
     cartStore.fetchCart();
     likeStore.fetchCourseLikes();
     likeStore.fetchMyCourseLike({ courseId });
+    paymentStore.fetchMyPayments();
     progressStore.fetchProgresses();
   }, []);
 
@@ -122,31 +125,32 @@ export default function PurchaseBanner() {
             {numberFormat(courseStore.course.price)}
             원
           </p>
-          {courseStore.course.isPurchased ? (
-            <SecondaryButton>
-              <Link to={`/courses/${courseId}/lectures/${progressStore.progresses
-                .filter((progress) => progress.courseId === +courseId)[0]
-                ?.lectureId}`}
-              >
-                이어 학습하기
-              </Link>
-            </SecondaryButton>
-          ) : (
-            <>
-              <SecondaryButton onClick={handlePurchaseCourse}>
-                {cartStore.cart.items
-                  .filter((item) => item.productId === +courseId)
-                  .length ? '수강 바구니로 이동' : '수강신청 하기'}
+          {paymentStore.payments
+            .filter((payment) => payment.courseId === +courseId).length ? (
+              <SecondaryButton>
+                <Link to={`/courses/${courseId}/lectures/${progressStore.progresses
+                  .filter((progress) => progress.courseId === +courseId)[0]
+                  ?.lectureId}`}
+                >
+                  이어 학습하기
+                </Link>
               </SecondaryButton>
-              {!cartStore.cart.items
-                .filter((item) => item.productId === +courseId)
-                .length && (
-                <PrimaryButton onClick={handleAddCourseToCart}>
-                  바구니에 담기
-                </PrimaryButton>
-              )}
-            </>
-          )}
+            ) : (
+              <>
+                <SecondaryButton onClick={handlePurchaseCourse}>
+                  {cartStore.cart.items
+                    .filter((item) => item.productId === +courseId)
+                    .length ? '수강 바구니로 이동' : '수강신청 하기'}
+                </SecondaryButton>
+                {!cartStore.cart.items
+                  .filter((item) => item.productId === +courseId)
+                  .length && (
+                  <PrimaryButton onClick={handleAddCourseToCart}>
+                    바구니에 담기
+                  </PrimaryButton>
+                )}
+              </>
+            )}
           <Like>
             <button type="button" onClick={handleToggleLike}>
               {likeStore.like.clicked ? '❤️' : '🤍'}
