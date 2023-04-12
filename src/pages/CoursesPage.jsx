@@ -103,13 +103,11 @@ export default function CoursesPage() {
   };
 
   useEffect(() => {
-    console.log('hi');
     courseStore.fetchCourses({ page, filter });
     ratingStore.fetchRatings();
   }, [page, filter]);
 
   useEffect(() => {
-    console.log('hi');
     categoryStore.fetchCategories();
     skillTagStore.fetchSkillTags();
   }, []);
