@@ -1,6 +1,43 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable class-methods-use-this */
 import axios from 'axios';
 import baseUrl, { config } from '../config';
+
+axios.defaults.withCredentials = true;
+
+// 401에러 발생
+// 에러 발생했으니 -> 에러로 분기
+// try-catch문 존재 ㅌ
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response && error.response.status === 401) {
+      const reissued = await apiService.reissueAccessToken();
+
+      originalRequest.headers.Authorization = `Bearer ${reissued}`;
+
+      const response = await axios(originalRequest);
+
+      return response;
+    }
+
+    if (error.response && error.response.status === 498) {
+      await apiService.reissueRefreshToken();
+
+      const reissued = await apiService.reissueAccessToken();
+
+      originalRequest.headers.Authorization = `Bearer ${reissued}`;
+
+      const response = await axios(originalRequest);
+
+      return response;
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 export default class ApiService {
   constructor() {
@@ -19,6 +56,23 @@ export default class ApiService {
       : {};
   }
 
+  async reissueAccessToken() {
+    const { data: accessToken } = await axios.post(`${baseUrl}/accessToken`);
+    const { localStorage } = window;
+
+    localStorage.setItem('accessToken', JSON.stringify(accessToken));
+
+    this.setAccessToken(accessToken);
+
+    return accessToken;
+  }
+
+  // async reissueRefreshToken() {
+  //   await axios.post(`${baseUrl}/refreshToken`, {
+
+  //   });
+  // }
+
   async createCourse({ title }) {
     const { data } = await axios.post(`${baseUrl}/courses`, {
       title,
@@ -28,6 +82,8 @@ export default class ApiService {
   }
 
   async fetchMycourses() {
+    // authorization header가 있는 친구들 -> 요청전에 액세스토큰 만료 확인 보내기
+
     const { data } = await axios.get(`${baseUrl}/account/my-courses`, this.authorizationHeader);
 
     return data.courses;
@@ -356,7 +412,9 @@ export default class ApiService {
   async fetchWeeklyProgresses({ date }) {
     const query = date ? `?date=${date}` : '';
 
-    const { data } = await axios.get(`${baseUrl}/progresses${query}`, this.authorizationHeader);
+    const response = await axios.get(`${baseUrl}/progresses${query}`, this.authorizationHeader);
+
+    const { data } = response;
 
     return data.progresses;
   }
@@ -381,11 +439,8 @@ export default class ApiService {
       {
         second, minute,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-        },
-      },
+
+      this.authorizationHeader,
     );
 
     return data;

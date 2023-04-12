@@ -4,7 +4,9 @@ import App from './App';
 import { apiService } from './services/ApiService';
 
 const data = localStorage.getItem('accessToken');
+// const accessToken = typeof (data) === 'object' ? JSON.parse(data) : data;
 const accessToken = JSON.parse(data);
+
 apiService.setAccessToken(accessToken);
 
 const container = document.getElementById('app');
