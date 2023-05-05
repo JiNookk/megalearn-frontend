@@ -12,19 +12,25 @@ export default class PaymentStore extends Store {
   }
 
   async fetchAllPayments() {
-    this.wholePayments = await apiService.fetchAllPayments();
+    const fetched = await apiService.fetchAllPayments();
+
+    this.wholePayments = fetched.filter((payment) => payment.status === 'SUCCESS');
 
     this.publish();
   }
 
   async fetchPayments({ courseId } = {}) {
-    this.payments = await apiService.fetchPayments({ courseId });
+    const fetched = await apiService.fetchPayments({ courseId });
+
+    this.payments = fetched.filter((payment) => payment.status === 'SUCCESS');
 
     this.publish();
   }
 
   async fetchMyPayments() {
-    this.payments = await apiService.fetchMyPayments();
+    const fetched = await apiService.fetchMyPayments();
+
+    this.payments = fetched.filter((payment) => payment.status === 'SUCCESS');
 
     this.publish();
   }
@@ -46,7 +52,9 @@ export default class PaymentStore extends Store {
   async requestPurchase({ pgToken }) {
     const purchased = await apiService.requestPurchase({ pgToken });
 
-    this.payments = [...this.payments, ...purchased];
+    const filtered = purchased.filter((payment) => payment.status === 'SUCCESS');
+
+    this.payments = [...this.payments, ...filtered];
 
     this.publish();
   }
