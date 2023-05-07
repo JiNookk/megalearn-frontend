@@ -58,25 +58,6 @@ export default class WeeklyBarChart extends PureComponent {
     const dates = [-6, -5, -4, -3, -2, -1, 0]
       .map((number) => moment().add(number, 'd').format('YY-MM-DD'));
 
-    // { name : 2023/01/13, itemname1: 3500, itemname2: 2200, }
-    // 우리가 필요한 것 : 강의 이름과 가격
-
-    // const paymentData = dates.reduce((acc, date) => ([
-    //   ...acc,
-
-    // ]),[]);
-
-    // const paymentData = payments
-    // .reduce((acc, payment) => ({
-    //   ...acc,
-    //   (dates[3] === moment(payment.createdAt).format('YY-MM-DD'))
-    //   ? [payment.courseTitle]: payment.cost
-    //   :
-    // }),{name: dates[3]})
-
-    // console.log(payments);
-    // console.log(dates);
-
     return (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart

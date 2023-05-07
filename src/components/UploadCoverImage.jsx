@@ -100,11 +100,7 @@ export default function UploadCoverImage() {
   };
 
   useEffect(() => {
-    courseStore.fetchCourse({ courseId })
-      .then(() => {
-        courseFormStore.changeThumbnail(courseStore.course.coverImage);
-        console.log(courseFormStore.thumbnail);
-      });
+    courseStore.fetchCourse({ courseId });
   }, []);
 
   return (

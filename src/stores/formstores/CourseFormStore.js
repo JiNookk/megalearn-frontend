@@ -43,7 +43,6 @@ export default class CourseFormStore extends Store {
     const thumbnail = await apiService.upload(file);
 
     this.changeThumbnail(thumbnail);
-    console.log(this.thumbnail);
 
     this.publish();
   }
